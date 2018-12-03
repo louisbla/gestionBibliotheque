@@ -27,14 +27,14 @@ public class PanelAccueil extends JPanel {
         myLbl.setForeground(Color.BLACK);
         myLbl.setHorizontalAlignment(JLabel.CENTER);
 
-        Connection conn = DBManager.getInstance().getConnection();
+        /*Connection conn = DBManager.getInstance().getConnection();
         try {
             PreparedStatement statement = conn.prepareStatement("SELECT * FROM livre");
             ResultSet resultSet = statement.executeQuery();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
 
         this.add(myLbl);
 

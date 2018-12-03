@@ -20,12 +20,13 @@ public class FrameMain extends JFrame {
 
     private JPanel myMenu;
     private JPanel myDesktop;
+    private JPanel panelUtilisateurs;
 
     private JButton myBtAccueil=new JButton();
     private JButton myBtCategorie=new JButton();
     private JButton myBtAuteur=new JButton();
     private JButton myBtLivre=new JButton();
-    private JButton myBtAdherent=new JButton();
+    private JButton myBtUtilisateurs=new JButton();
     private JButton myBtEmprunt=new JButton();
     private JButton myBtReparation=new JButton();
 
@@ -34,7 +35,7 @@ public class FrameMain extends JFrame {
     public FrameMain(ControllerManager controller) {
         this.ca=controller;
 
-        this.setTitle("Gestionnaire de Bibliothèque");
+        this.setTitle("Gestionnaire de Bibliotheque");
         this.setSize(1024, 768);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -68,25 +69,43 @@ public class FrameMain extends JFrame {
         myBtAccueil.setText("Accueil");
         myBtAccueil.setBounds(0, 0, 146, 30);
         myBtAccueil.setEnabled(false);
+        
+        myBtUtilisateurs.setText("Utilisateur");
+        myBtUtilisateurs.setBounds(146, 0, 146, 30);
+        myBtUtilisateurs.setEnabled(true);
+        
         myBtAccueil.addActionListener(new ActionListener(){
-
             public void actionPerformed(ActionEvent e) {
+            	allEnabled();
                 myBtAccueil.setEnabled(false);
-                myBtCategorie.setEnabled(true);
-                myBtAuteur.setEnabled(true);
-                myBtLivre.setEnabled(true);
-                myBtAdherent.setEnabled(true);
-                myBtEmprunt.setEnabled(true);
-                myBtReparation.setEnabled(true);
-
                 ca.accueil();
+            }
+        });
+        
+        myBtUtilisateurs.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+            	allEnabled();
+                myBtUtilisateurs.setEnabled(false);
+                ca.utilisateurs();
             }
 
         });
 
         myMenu.add(myBtAccueil);
+        myMenu.add(myBtUtilisateurs);
     }
 
+    //////////////////////////////////////////////////////
+    
+    private void allEnabled() {
+    	myBtAccueil.setEnabled(true);
+        myBtCategorie.setEnabled(true);
+        myBtAuteur.setEnabled(true);
+        myBtLivre.setEnabled(true);
+        myBtUtilisateurs.setEnabled(true);
+        myBtEmprunt.setEnabled(true);
+        myBtReparation.setEnabled(true);
+    }
     //////////////////////////////////////////////////////
 
     public JPanel getMenuContainer() {

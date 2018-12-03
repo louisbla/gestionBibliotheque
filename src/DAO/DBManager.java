@@ -34,7 +34,7 @@ public class DBManager {
             try {
                 String host = "jdbc:derby://localhost:3306/bibliotheque2";
                 String username = "root";
-                String password = "";
+                String password = "root";
                 con = DriverManager.getConnection(host, username, password);
             } catch (SQLException ex) {
                 Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -43,4 +43,6 @@ public class DBManager {
 
         return con;
     }
+    
+    
 }

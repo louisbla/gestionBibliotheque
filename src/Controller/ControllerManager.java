@@ -7,6 +7,7 @@ public class ControllerManager {
     private FrameMain frame;
 
     private ControllerAccueil ca;
+    private ControllerUtilisateurs cu;
 
     /////////////////////////////////////////////////////
 
@@ -22,6 +23,10 @@ public class ControllerManager {
 
     public void accueil() {
         ca = new ControllerAccueil(this, frame);
+    }
+    
+    public void utilisateurs() {
+    	cu = new ControllerUtilisateurs(this, frame);
     }
 
 
