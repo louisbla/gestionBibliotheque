@@ -1,14 +1,10 @@
 package View;
 
-import DAO.DBManager;
-
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,8 +12,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+
+import DAO.DBManager;
 
 public class PanelLivre extends JPanel {
 
@@ -50,21 +48,57 @@ public class PanelLivre extends JPanel {
         JButton delete = new JButton();
         delete.setText("Delete");
         
+        //Database
+        DBManager dao = new DBManager();
+        
+        Object[][] data = new Object[0][0];
+        
+
+        try {
+			Statement statement = DBManager.connectDataBase().createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM livre");
+			int nbLivres = 0;
+			if(resultSet.next()) {
+        		nbLivres = resultSet.getInt(1);
+        	}
+			data = new Object[nbLivres][6];
+        	
+			statement = DBManager.connectDataBase().createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM livre");
+			int i = 0;
+			while (resultSet.next()) {
+				data[i][0] = resultSet.getString("id_livre");
+				data[i][1] = resultSet.getString("auteur");
+				data[i][2] = "j";
+				data[i][3] = resultSet.getString("titre");
+				data[i][4] = resultSet.getString("isbn");
+				if(resultSet.getString("est_disponible") == "1")
+					data[i][5] = "Disponible";
+				else
+					data[i][5] = "Non disponible";
+				i++;
+				
+		          String author = resultSet.getString("auteur");
+		          String title = resultSet.getString("titre");
+		          System.out.println("Auteur : " + author);
+		          System.out.println("Titre : " + title);
+		        }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			dao.close();
+		}
+        
         table = new JTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setModel(new DefaultTableModel(
-        	new Object[][] {
-        		{"1", "Harry Potter", "A l'ecole des sorcies", "J K Rowling", "54454548", delete},
-        		{null, null, null, null, null, null},
-        		{null, "", null, null, null, null},
-        		{null, null, null, null, null, null},
-        		{null, null, null, null, null, null},
-        		{null, null, null, null, null, null},
-        		{null, null, null, null, null, null},
-        		{null, null, null, null, null, null},
-        	},
+        	data,
         	new String[] {
-        		"id", "Titre", "Sous-titre", "Auteur", "ISBN", "Editer"
+        		"id", "Titre", "Sous-titre", "Auteur", "ISBN", "Disponibilité"
         	}
         ) {
         	boolean[] columnEditables = new boolean[] {

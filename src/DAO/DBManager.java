@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class DBManager {
 
-	private Connection connect = null;
+	private static Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
@@ -23,7 +23,7 @@ public class DBManager {
 
     }
 
-    public Connection connectDataBase() throws Exception {
+    public static Connection connectDataBase() throws Exception {
     	try {
     		Class.forName("com.mysql.jdbc.Driver");
 
