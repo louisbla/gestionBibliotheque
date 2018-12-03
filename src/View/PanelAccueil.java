@@ -25,27 +25,12 @@ public class PanelAccueil extends JPanel {
 
         JLabel myLbl = new JLabel();
         myLbl.setBounds(0, 315, 998, 60);
-        myLbl.setText("Bienvenue");
+        myLbl.setText("Bienvenue dans le gestionnaire de biblioth�que");
         myLbl.setFont(new Font("Times New Roman", Font.BOLD, 60));
         myLbl.setForeground(Color.BLACK);
         myLbl.setHorizontalAlignment(JLabel.CENTER);
 
-        //Database
-        DBManager dao = new DBManager();
-
-        try {
-			statement = dao.connectDataBase().createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM livre");
-			writeResultSet(resultSet);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			dao.close();
-		}
+       
         this.add(myLbl);
     }
 
