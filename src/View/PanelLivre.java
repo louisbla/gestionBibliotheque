@@ -49,7 +49,6 @@ public class PanelLivre extends JPanel {
         delete.setText("Delete");
         
         //Database
-        DBManager dao = new DBManager();
         
         Object[][] data = new Object[0][0];
         
@@ -90,7 +89,6 @@ public class PanelLivre extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			dao.close();
 		}
         
         table = new JTable();

@@ -29,6 +29,7 @@ public class DBManager {
     	} catch (Exception e) {
     		e.printStackTrace();
         }
+		return connect;
     }
 
     public void closeDatabase() {
