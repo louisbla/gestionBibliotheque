@@ -34,15 +34,9 @@ public class PanelAccueil extends JPanel {
         this.add(myLbl);
     }
 
-    //R�cup�re les strings dans le resultSet
-    private void writeBooks(ResultSet resultSet) throws SQLException {
-        while (resultSet.next()) {
-        	String author = resultSet.getString("auteur");
-        	String title = resultSet.getString("titre");
-        	System.out.println("Auteur : " + author);
-        	System.out.println("Titre : " + title);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    }
 
   //R�cup�re les strings dans le resultSet
     private void writeUsers(ResultSet resultSet) throws SQLException {

@@ -7,6 +7,9 @@ public class ControllerManager {
     private FrameMain frame;
 
     private ControllerAccueil ca;
+    //private ControlleurLivre cl;
+    private ControllerUtilisateurs cu;
+    private ControllerEmprunts ce;
     private ControllerLivre cl;
 
     /////////////////////////////////////////////////////
@@ -19,10 +22,26 @@ public class ControllerManager {
         frame.setVisible(true);
     }
 
+    public void clear() {
+		frame.getDesktopContainer().removeAll();
+
+		ca = null;
+		//cl = null;
+		cu = null;
+		ce = null;
+	}
     /////////////////////////////////////////////////////
 
     public void accueil() {
         ca = new ControllerAccueil(this, frame);
+    }
+    
+    public void utilisateurs() {
+    	cu = new ControllerUtilisateurs(this, frame);
+    }
+    
+    public void emprunts() {
+    	ce = new ControllerEmprunts(this, frame);
     }
 
 	public void livre() {

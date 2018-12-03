@@ -20,14 +20,15 @@ public class FrameMain extends JFrame {
 
     private JPanel myMenu;
     private JPanel myDesktop;
+    private JPanel panelUtilisateurs;
 
     private JButton myBtAccueil=new JButton();
-    private JButton myBtCategorie=new JButton();
-    private JButton myBtAuteur=new JButton();
     private JButton myBtLivre=new JButton();
-    private JButton myBtAdherent=new JButton();
+    private JButton myBtUtilisateurs=new JButton();
     private JButton myBtEmprunt=new JButton();
-    private JButton myBtReparation=new JButton();
+    
+    private final int ongletLargeur = 146;
+    private final int ongletHauteur = 30;
 
     //////////////////////////////////////////////////////
 
@@ -65,12 +66,14 @@ public class FrameMain extends JFrame {
     //////////////////////////////////////////////////////
 
     private void initMenu(){
+    	allEnabled();
+    	
         myBtAccueil.setText("Accueil");
-        myBtAccueil.setBounds(0, 0, 146, 30);
+        myBtAccueil.setBounds(0, 0, ongletLargeur, ongletHauteur);
         myBtAccueil.setEnabled(false);
         myBtAccueil.addActionListener(new ActionListener(){
-
             public void actionPerformed(ActionEvent e) {
+            	allEnabled();
                 myBtAccueil.setEnabled(false);
                 myBtCategorie.setEnabled(true);
                 myBtAuteur.setEnabled(true);
@@ -83,10 +86,35 @@ public class FrameMain extends JFrame {
                 
                 ca.accueil();
             }
+        });
+        
+        myBtUtilisateurs.setText("Utilisateur");
+        myBtUtilisateurs.setBounds(ongletLargeur*2, 0, ongletLargeur, ongletHauteur);
+        myBtUtilisateurs.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+            	allEnabled();
+                myBtUtilisateurs.setEnabled(false);
+                ca.clear();
+                ca.utilisateurs();
+            }
 
         });
 
+        myBtEmprunt.setText("Emprunts");
+        myBtEmprunt.setBounds(ongletLargeur*3, 0, ongletLargeur, ongletHauteur);
+        myBtEmprunt.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+            	allEnabled();
+                myBtEmprunt.setEnabled(false);
+                ca.clear();
+                ca.emprunts();
+            }
+
+        });
+        
         myMenu.add(myBtAccueil);
+        myMenu.add(myBtUtilisateurs);
+        myMenu.add(myBtEmprunt);
         
         myBtLivre.setText("Livres");
         myBtLivre.setBounds(147, 0, 146, 30);
@@ -112,6 +140,15 @@ public class FrameMain extends JFrame {
         myMenu.add(myBtLivre);
     }
 
+    //////////////////////////////////////////////////////
+    
+    private void allEnabled() {
+    	myBtAccueil.setEnabled(true);
+        myBtLivre.setEnabled(true);
+        myBtUtilisateurs.setEnabled(true);
+        myBtEmprunt.setEnabled(true);
+    }
+    
     //////////////////////////////////////////////////////
 
     public JPanel getMenuContainer() {
