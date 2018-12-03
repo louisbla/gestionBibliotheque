@@ -23,12 +23,9 @@ public class FrameMain extends JFrame {
     private JPanel panelUtilisateurs;
 
     private JButton myBtAccueil=new JButton();
-    private JButton myBtCategorie=new JButton();
-    private JButton myBtAuteur=new JButton();
     private JButton myBtLivre=new JButton();
     private JButton myBtUtilisateurs=new JButton();
     private JButton myBtEmprunt=new JButton();
-    private JButton myBtReparation=new JButton();
     
     private final int ongletLargeur = 146;
     private final int ongletHauteur = 30;
@@ -74,10 +71,6 @@ public class FrameMain extends JFrame {
         myBtAccueil.setText("Accueil");
         myBtAccueil.setBounds(0, 0, ongletLargeur, ongletHauteur);
         myBtAccueil.setEnabled(false);
-        
-        myBtUtilisateurs.setText("Utilisateur");
-        myBtUtilisateurs.setBounds(ongletLargeur*2, 0, ongletLargeur, ongletHauteur);
-        
         myBtAccueil.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
             	allEnabled();
@@ -87,6 +80,8 @@ public class FrameMain extends JFrame {
             }
         });
         
+        myBtUtilisateurs.setText("Utilisateur");
+        myBtUtilisateurs.setBounds(ongletLargeur*2, 0, ongletLargeur, ongletHauteur);
         myBtUtilisateurs.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
             	allEnabled();
@@ -97,20 +92,30 @@ public class FrameMain extends JFrame {
 
         });
 
+        myBtEmprunt.setText("Emprunts");
+        myBtEmprunt.setBounds(ongletLargeur*3, 0, ongletLargeur, ongletHauteur);
+        myBtEmprunt.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+            	allEnabled();
+                myBtEmprunt.setEnabled(false);
+                ca.clear();
+                ca.emprunts();
+            }
+
+        });
+        
         myMenu.add(myBtAccueil);
         myMenu.add(myBtUtilisateurs);
+        myMenu.add(myBtEmprunt);
     }
 
     //////////////////////////////////////////////////////
     
     private void allEnabled() {
     	myBtAccueil.setEnabled(true);
-        myBtCategorie.setEnabled(true);
-        myBtAuteur.setEnabled(true);
         myBtLivre.setEnabled(true);
         myBtUtilisateurs.setEnabled(true);
         myBtEmprunt.setEnabled(true);
-        myBtReparation.setEnabled(true);
     }
     
     //////////////////////////////////////////////////////

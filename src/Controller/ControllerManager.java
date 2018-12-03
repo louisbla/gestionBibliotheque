@@ -9,6 +9,7 @@ public class ControllerManager {
     private ControllerAccueil ca;
     //private ControlleurLivre cl;
     private ControllerUtilisateurs cu;
+    private ControllerEmprunts ce;
 
     /////////////////////////////////////////////////////
 
@@ -26,6 +27,7 @@ public class ControllerManager {
 		ca = null;
 		//cl = null;
 		cu = null;
+		ce = null;
 	}
     /////////////////////////////////////////////////////
 
@@ -36,6 +38,9 @@ public class ControllerManager {
     public void utilisateurs() {
     	cu = new ControllerUtilisateurs(this, frame);
     }
-
+    
+    public void emprunts() {
+    	ce = new ControllerEmprunts(this, frame);
+    }
 
 }
