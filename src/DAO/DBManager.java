@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public class DBManager {
 
-    private static DBManager dbIsntance;
+    /*private static DBManager dbIsntance;
     private static Connection con ;
 
     private DBManager() {
@@ -42,7 +42,7 @@ public class DBManager {
         }
 
         return con;
-    }
+    }*/
     
     
 }
