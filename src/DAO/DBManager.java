@@ -2,45 +2,57 @@ package DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Statement;
+import java.util.Date;
 
 public class DBManager {
 
-    private static DBManager dbIsntance;
-    private static Connection con ;
+	private Connection connect = null;
+	private Statement statement = null;
+	private PreparedStatement preparedStatement = null;
+	private ResultSet resultSet = null;
 
-    private DBManager() {
-        // private constructor //
+	static String host = "jdbc:mysql://localhost/bibliotheque2";
+	static String user = "root";
+	static String passwd = "";
+
+    public DBManager() {
+
     }
 
-    public static DBManager getInstance(){
-        if(dbIsntance==null){
-            try {
-				DriverManager.registerDriver(new org.apache.derby.jdbc.ClientDriver());
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-            dbIsntance= new DBManager();
+    public Connection connectDataBase() throws Exception {
+    	try {
+    		Class.forName("com.mysql.jdbc.Driver");
+
+        	connect = DriverManager
+        	          .getConnection("jdbc:mysql://localhost:3306/bibliotheque2?autoReconnect=true&useSSL=false","root", "root");
+        	System.out.println("Database is connected !");
+        	return connect;
+    	} catch (Exception e) {
+    	      throw e;
         }
-        return dbIsntance;
     }
 
-    public  Connection getConnection() {
+    public void close() {
+    	try {
+    		if (resultSet != null) {
+    			resultSet.close();
+    		}
+    		if (statement != null) {
+    			statement.close();
+    		}
+    		if (connect != null) {
+    			connect.close();
+    		}
+        } catch (Exception e) {
 
-        if (con == null) {
-            try {
-                String host = "jdbc:derby://localhost:3306/bibliotheque2";
-                String username = "root";
-                String password = "";
-                con = DriverManager.getConnection(host, username, password);
-            } catch (SQLException ex) {
-                Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
-
-        return con;
     }
+
+    /*public ResultSet getAllUsers() {
+
+    }*/
 }
