@@ -25,34 +25,16 @@ public class PanelAccueil extends JPanel {
 
         JLabel myLbl = new JLabel();
         myLbl.setBounds(0, 315, 998, 60);
-        myLbl.setText("Bienvenue");
+        myLbl.setText("Bienvenue dans le gestionnaire de bibliothï¿½que");
         myLbl.setFont(new Font("Times New Roman", Font.BOLD, 60));
         myLbl.setForeground(Color.BLACK);
         myLbl.setHorizontalAlignment(JLabel.CENTER);
 
+       
         this.add(myLbl);
-
-        //Database Test
-        DBManager dao = new DBManager();
-        try {
-        	try {
-    			dao.connectDataBase();
-    		} catch (Exception e1) {
-    			// TODO Auto-generated catch block
-    			e1.printStackTrace();
-    		}
-        	writeBooks(dao.getAllBook());
-        	writeUsers(dao.getAllUser());
-        	dao.addUser("RAFA14129609", "Axel", "Raffatin", "root", 0);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			dao.closeDatabase();
-		}
     }
 
-    //Récupère les strings dans le resultSet
+    //Rï¿½cupï¿½re les strings dans le resultSet
     private void writeBooks(ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
         	String author = resultSet.getString("auteur");
@@ -62,7 +44,7 @@ public class PanelAccueil extends JPanel {
         }
     }
 
-  //Récupère les strings dans le resultSet
+  //Rï¿½cupï¿½re les strings dans le resultSet
     private void writeUsers(ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
         	String code = resultSet.getString("codePermanent");
@@ -70,7 +52,7 @@ public class PanelAccueil extends JPanel {
         	String name = resultSet.getString("nom");
         	int pay = resultSet.getInt("solde");
         	System.out.println("Code permanent : " + code);
-        	System.out.println("Prénom : " + firstname);
+        	System.out.println("Prï¿½nom : " + firstname);
         	System.out.println("Nom : " + name);
         	System.out.println("Solde : " + pay);
         }
