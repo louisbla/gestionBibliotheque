@@ -17,7 +17,12 @@ public class DBManager {
 
     public static DBManager getInstance(){
         if(dbIsntance==null){
-            DriverManager.registerDriver(new org.apache.derby.jdbc.ClientDriver());
+            try {
+				DriverManager.registerDriver(new org.apache.derby.jdbc.ClientDriver());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             dbIsntance= new DBManager();
         }
         return dbIsntance;

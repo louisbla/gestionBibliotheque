@@ -26,7 +26,7 @@ public class PanelAccueil extends JPanel {
         myLbl.setFont(new Font("Times New Roman", Font.BOLD, 60));
         myLbl.setForeground(Color.BLACK);
         myLbl.setHorizontalAlignment(JLabel.CENTER);
-/*
+
         Connection conn = DBManager.getInstance().getConnection();
         try {
             PreparedStatement statement = conn.prepareStatement("SELECT * FROM livre");
@@ -34,7 +34,7 @@ public class PanelAccueil extends JPanel {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
 
         this.add(myLbl);
 
