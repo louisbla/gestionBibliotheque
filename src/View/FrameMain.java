@@ -29,6 +29,9 @@ public class FrameMain extends JFrame {
     private JButton myBtUtilisateurs=new JButton();
     private JButton myBtEmprunt=new JButton();
     private JButton myBtReparation=new JButton();
+    
+    private final int ongletLargeur = 146;
+    private final int ongletHauteur = 30;
 
     //////////////////////////////////////////////////////
 
@@ -66,18 +69,20 @@ public class FrameMain extends JFrame {
     //////////////////////////////////////////////////////
 
     private void initMenu(){
+    	allEnabled();
+    	
         myBtAccueil.setText("Accueil");
-        myBtAccueil.setBounds(0, 0, 146, 30);
+        myBtAccueil.setBounds(0, 0, ongletLargeur, ongletHauteur);
         myBtAccueil.setEnabled(false);
         
         myBtUtilisateurs.setText("Utilisateur");
-        myBtUtilisateurs.setBounds(146, 0, 146, 30);
-        myBtUtilisateurs.setEnabled(true);
+        myBtUtilisateurs.setBounds(ongletLargeur*2, 0, ongletLargeur, ongletHauteur);
         
         myBtAccueil.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
             	allEnabled();
                 myBtAccueil.setEnabled(false);
+                ca.clear();
                 ca.accueil();
             }
         });
@@ -86,6 +91,7 @@ public class FrameMain extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	allEnabled();
                 myBtUtilisateurs.setEnabled(false);
+                ca.clear();
                 ca.utilisateurs();
             }
 
@@ -106,6 +112,7 @@ public class FrameMain extends JFrame {
         myBtEmprunt.setEnabled(true);
         myBtReparation.setEnabled(true);
     }
+    
     //////////////////////////////////////////////////////
 
     public JPanel getMenuContainer() {
