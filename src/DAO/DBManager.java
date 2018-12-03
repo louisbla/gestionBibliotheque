@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class DBManager {
 
-	private Connection connect = null;
+	private static Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
@@ -19,7 +19,7 @@ public class DBManager {
 
     }
 
-    public void connectDataBase() throws Exception {
+    public static Connection connectDataBase() throws Exception {
     	try {
     		Class.forName("com.mysql.jdbc.Driver");
 
@@ -58,7 +58,7 @@ public class DBManager {
 		    preparedStatement.setString(4, password);
 		    preparedStatement.setInt(5, pay);
 		    preparedStatement.executeUpdate();
-		    System.out.println("Utilisateur ajouté");
+		    System.out.println("Utilisateur ajoutï¿½");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,7 +76,7 @@ public class DBManager {
 		    preparedStatement.setString(4, title);
 		    preparedStatement.setInt(5, available);
 		    preparedStatement.executeUpdate();
-		    System.out.println("Livre ajouté");
+		    System.out.println("Livre ajoutï¿½");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,7 +96,7 @@ public class DBManager {
 		}
     }
 
-    //Récupère les utilisateur dans un ResultSet
+    //Rï¿½cupï¿½re les utilisateur dans un ResultSet
     public ResultSet getAllUser() {
     	try {
 			statement = connect.createStatement();
@@ -110,7 +110,7 @@ public class DBManager {
     	return resultSet;
     }
 
-    //Récupère les livres dans un ResultSet
+    //Rï¿½cupï¿½re les livres dans un ResultSet
     public ResultSet getAllBook() {
     	try {
 			statement = connect.createStatement();
