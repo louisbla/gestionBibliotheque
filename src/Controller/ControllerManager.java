@@ -7,6 +7,7 @@ public class ControllerManager {
     private FrameMain frame;
 
     private ControllerAccueil ca;
+    private ControllerLivre cl;
 
     /////////////////////////////////////////////////////
 
@@ -24,5 +25,16 @@ public class ControllerManager {
         ca = new ControllerAccueil(this, frame);
     }
 
+	public void livre() {
+		cl = new ControllerLivre(this, frame);
+		
+	}
+
+	public void clear() {
+		frame.getDesktopContainer().removeAll();
+
+		ca = null;
+		cl = null;
+	}
 
 }

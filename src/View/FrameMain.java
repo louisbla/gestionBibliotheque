@@ -34,7 +34,7 @@ public class FrameMain extends JFrame {
     public FrameMain(ControllerManager controller) {
         this.ca=controller;
 
-        this.setTitle("Gestionnaire de Bibliothèque");
+        this.setTitle("Gestionnaire de Bibliotheque");
         this.setSize(1024, 768);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -79,12 +79,37 @@ public class FrameMain extends JFrame {
                 myBtEmprunt.setEnabled(true);
                 myBtReparation.setEnabled(true);
 
+                ca.clear();
+                
                 ca.accueil();
             }
 
         });
 
         myMenu.add(myBtAccueil);
+        
+        myBtLivre.setText("Livres");
+        myBtLivre.setBounds(147, 0, 146, 30);
+        myBtLivre.setEnabled(true);
+        myBtLivre.addActionListener(new ActionListener(){
+
+            public void actionPerformed(ActionEvent e) {
+                myBtAccueil.setEnabled(true);
+                myBtCategorie.setEnabled(true);
+                myBtAuteur.setEnabled(true);
+                myBtLivre.setEnabled(false);
+                myBtAdherent.setEnabled(true);
+                myBtEmprunt.setEnabled(true);
+                myBtReparation.setEnabled(true);
+
+                ca.clear();
+                
+                ca.livre();
+            }
+
+        });
+
+        myMenu.add(myBtLivre);
     }
 
     //////////////////////////////////////////////////////
