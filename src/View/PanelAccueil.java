@@ -30,7 +30,7 @@ public class PanelAccueil extends JPanel {
         myLbl.setForeground(Color.BLACK);
         myLbl.setHorizontalAlignment(JLabel.CENTER);
 
-       
+
         this.add(myLbl);
     }
 

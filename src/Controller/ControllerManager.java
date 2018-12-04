@@ -45,7 +45,7 @@ public class ControllerManager {
 
 	public void livre() {
 		cl = new ControllerLivre(this, frame);
-		
+
 	}
 
 

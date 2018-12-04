@@ -11,9 +11,9 @@ import java.util.Date;
 public class DBManager {
 
 	private static Connection connect = null;
-	private Statement statement = null;
+	private static Statement statement = null;
 	private static PreparedStatement preparedStatement = null;
-	private ResultSet resultSet = null;
+	private static ResultSet resultSet = null;
 
     public DBManager() {
 
@@ -32,7 +32,7 @@ public class DBManager {
 		return connect;
     }
 
-    public void closeDatabase() {
+    public static void closeDatabase() {
     	try {
     		if (resultSet != null) {
     			resultSet.close();
