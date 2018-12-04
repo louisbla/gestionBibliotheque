@@ -75,12 +75,8 @@ public class FrameMain extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	allEnabled();
                 myBtAccueil.setEnabled(false);
-                myBtCategorie.setEnabled(true);
-                myBtAuteur.setEnabled(true);
                 myBtLivre.setEnabled(true);
-                myBtAdherent.setEnabled(true);
                 myBtEmprunt.setEnabled(true);
-                myBtReparation.setEnabled(true);
 
                 ca.clear();
                 
@@ -123,12 +119,8 @@ public class FrameMain extends JFrame {
 
             public void actionPerformed(ActionEvent e) {
                 myBtAccueil.setEnabled(true);
-                myBtCategorie.setEnabled(true);
-                myBtAuteur.setEnabled(true);
                 myBtLivre.setEnabled(false);
-                myBtAdherent.setEnabled(true);
                 myBtEmprunt.setEnabled(true);
-                myBtReparation.setEnabled(true);
 
                 ca.clear();
                 

@@ -34,10 +34,6 @@ public class PanelAccueil extends JPanel {
         this.add(myLbl);
     }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
   //R�cup�re les strings dans le resultSet
     private void writeUsers(ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {

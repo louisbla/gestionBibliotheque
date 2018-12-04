@@ -7,10 +7,9 @@ public class ControllerManager {
     private FrameMain frame;
 
     private ControllerAccueil ca;
-    //private ControlleurLivre cl;
+    private ControllerLivre cl;
     private ControllerUtilisateurs cu;
     private ControllerEmprunts ce;
-    private ControllerLivre cl;
 
     /////////////////////////////////////////////////////
 
@@ -26,7 +25,7 @@ public class ControllerManager {
 		frame.getDesktopContainer().removeAll();
 
 		ca = null;
-		//cl = null;
+		cl = null;
 		cu = null;
 		ce = null;
 	}
@@ -49,11 +48,5 @@ public class ControllerManager {
 		
 	}
 
-	public void clear() {
-		frame.getDesktopContainer().removeAll();
-
-		ca = null;
-		cl = null;
-	}
 
 }
