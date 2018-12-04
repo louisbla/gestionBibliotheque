@@ -12,7 +12,7 @@ public class DBManager {
 
 	private static Connection connect = null;
 	private Statement statement = null;
-	private PreparedStatement preparedStatement = null;
+	private static PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 
     public DBManager() {
@@ -59,7 +59,7 @@ public class DBManager {
 		    preparedStatement.setString(4, password);
 		    preparedStatement.setInt(5, pay);
 		    preparedStatement.executeUpdate();
-		    System.out.println("Utilisateur ajout�");
+		    System.out.println("Utilisateur ajoute");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,17 +67,16 @@ public class DBManager {
     }
 
     //Ajoute un livre
-    public void addBook(int id, String isbn, String author, String title, int available) {
+    public static void addBook(String isbn, String author, String title, int available) {
     	try {
 			preparedStatement = connect
-			          .prepareStatement("INSERT INTO utilisateur VALUES (?, ?, ?, ?, ?)");
-			preparedStatement.setInt(1, id);
-		    preparedStatement.setString(2, isbn);
-		    preparedStatement.setString(3, author);
-		    preparedStatement.setString(4, title);
-		    preparedStatement.setInt(5, available);
+			          .prepareStatement("INSERT INTO livre VALUES (NULL, ?, ?, ?, ?)");
+		    preparedStatement.setString(1, isbn);
+		    preparedStatement.setString(2, author);
+		    preparedStatement.setString(3, title);
+		    preparedStatement.setInt(4, available);
 		    preparedStatement.executeUpdate();
-		    System.out.println("Livre ajout�");
+		    System.out.println("Livre ajoute");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

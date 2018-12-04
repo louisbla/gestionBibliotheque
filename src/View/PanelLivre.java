@@ -2,11 +2,15 @@ package View;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -23,7 +27,6 @@ public class PanelLivre extends JPanel {
     private JTable table;
 
     public PanelLivre() {
-    	
     	
         this.setOpaque(false);
         this.setLayout(null);
@@ -114,7 +117,19 @@ public class PanelLivre extends JPanel {
         table.getColumnModel().getColumn(5).setResizable(false);
         table.setBounds(0, 0, 500, 90);
         
-        scrollPane.setViewportView(table);        
+        scrollPane.setViewportView(table);
+        
+        JButton btnAjouterUnLivre = new JButton("Ajouter un livre");
+        btnAjouterUnLivre.setBounds(0, 0, 149, 32);
+        btnAjouterUnLivre.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CustomDialog dialog = new CustomDialog(new Frame());
+				dialog.show();
+			}
+		});
+        add(btnAjouterUnLivre);
         
 
     }
