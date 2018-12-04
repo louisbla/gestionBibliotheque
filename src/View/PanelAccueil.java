@@ -25,8 +25,8 @@ public class PanelAccueil extends JPanel {
 
         JLabel myLbl = new JLabel();
         myLbl.setBounds(0, 315, 998, 60);
-        myLbl.setText("Bienvenue dans le gestionnaire de biblioth�que");
-        myLbl.setFont(new Font("Times New Roman", Font.BOLD, 60));
+        myLbl.setText("Bienvenue dans le gestionnaire de bibliotheque");
+        myLbl.setFont(new Font("Times New Roman", Font.BOLD, 40));
         myLbl.setForeground(Color.BLACK);
         myLbl.setHorizontalAlignment(JLabel.CENTER);
 

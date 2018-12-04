@@ -76,6 +76,7 @@ public class DBManager {
 		    preparedStatement.setString(3, title);
 		    preparedStatement.setInt(4, available);
 		    preparedStatement.executeUpdate();
+		    System.out.println(preparedStatement.toString());
 		    System.out.println("Livre ajoute");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

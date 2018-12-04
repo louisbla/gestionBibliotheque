@@ -1,10 +1,11 @@
-package View;
+package View.dialog;
 
 import javax.swing.JOptionPane;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
 
 import DAO.DBManager;
+import View.PanelLivre;
 
 import java.beans.*; //property change stuff
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import java.awt.*;
 import java.awt.event.*;
  
 /* 1.4 example used by DialogDemo.java. */
-class CustomDialog extends JDialog
+public class CustomDialog extends JDialog
                    implements ActionListener,
                               PropertyChangeListener {
     private String titleText = null;
