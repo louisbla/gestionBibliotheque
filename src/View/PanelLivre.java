@@ -74,7 +74,7 @@ public class PanelLivre extends JPanel {
 				data[i][2] = "j";
 				data[i][3] = resultSet.getString("titre");
 				data[i][4] = resultSet.getString("isbn");
-				if(resultSet.getString("est_disponible") == "1")
+				if(resultSet.getBoolean("est_disponible") == true)
 					data[i][5] = "Disponible";
 				else
 					data[i][5] = "Non disponible";
