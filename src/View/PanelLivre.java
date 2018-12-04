@@ -1,37 +1,40 @@
 package View;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.DBManager;
 import View.dialog.CustomDialog;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
 
 public class PanelLivre extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private JTable table;
+    public static DefaultTableModel model;
 
-    public PanelLivre() {
-    	
+    public PanelLivre() {    	
 //Database
         
         Object[][] data = new Object[0][0];
@@ -87,29 +90,27 @@ public class PanelLivre extends JPanel {
                 myLbl.setFont(new Font("Times New Roman", Font.BOLD, 20));
                 myLbl.setForeground(Color.BLACK);
                 myLbl.setHorizontalAlignment(JLabel.CENTER);
-
-        JList mylist = new JList();
-        mylist.setBounds(0,60,200,200);
-        mylist.setForeground(Color.BLACK);
         
         JScrollPane scrollPane = new JScrollPane();
         add(scrollPane);
         
         table = new JTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.setModel(new DefaultTableModel(
-        	data,
-        	new String[] {
-        		"id", "Titre", "Sous-titre", "Auteur", "ISBN", "Disponibilit\u00E9"
-        	}
-        ) {
-        	boolean[] columnEditables = new boolean[] {
-        		false, false, false, false, false, false
-        	};
-        	public boolean isCellEditable(int row, int column) {
-        		return columnEditables[column];
-        	}
-        });
+        model = new DefaultTableModel(
+            	data,
+            	new String[] {
+            		"id", "Titre", "Sous-titre", "Auteur", "ISBN", "Disponibilit\u00E9"
+            	}
+            ) {
+            	boolean[] columnEditables = new boolean[] {
+            		false, false, false, false, false, false
+            	};
+            	public boolean isCellEditable(int row, int column) {
+            		return columnEditables[column];
+            	}
+            };
+        
+        table.setModel(model);
         table.getColumnModel().getColumn(0).setResizable(false);
         table.getColumnModel().getColumn(0).setPreferredWidth(31);
         table.getColumnModel().getColumn(1).setResizable(false);
@@ -133,13 +134,22 @@ public class PanelLivre extends JPanel {
 				CustomDialog dialog = new CustomDialog(new Frame());
 				dialog.show();
 			}
-		});
+		});       
         
-        JButton delete = new JButton();
-        delete.setText("Delete");
-        
-        
-        
+    	InputMap im = table.getInputMap(JTable.WHEN_FOCUSED);
+    	ActionMap am = table.getActionMap();
+    	im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "delete");
+    	am.put("delete", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int line = table.getSelectedRow();
+				Object obj = table.getModel().getValueAt(table.getSelectedRow(), 0);
+				
+				System.out.println("Delete livre id=" + obj);
+				DBManager.deleteBook(Integer.parseInt(obj.toString()));
+				PanelLivre.model.fireTableDataChanged();
+			}
+    	});
 
     }
 }

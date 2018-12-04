@@ -24,7 +24,7 @@ public class DBManager {
     		Class.forName("com.mysql.jdbc.Driver");
 
         	connect = DriverManager
-        	          .getConnection("jdbc:mysql://localhost:3306/bibliotheque2?autoReconnect=true&useSSL=false","root", "root");
+        	          .getConnection("jdbc:mysql://localhost:3306/bibliotheque2?autoReconnect=true&useSSL=false","root", "");
         	System.out.println("Database is connected !");
     	} catch (Exception e) {
     		e.printStackTrace();
@@ -85,7 +85,7 @@ public class DBManager {
     }
 
     //Supprime un livre
-    public void deleteBook(int id) {
+    public static void deleteBook(int id) {
     	try {
 			preparedStatement = connect
 				      .prepareStatement("DELETE FROM livre WHERE id_livre= ?;");

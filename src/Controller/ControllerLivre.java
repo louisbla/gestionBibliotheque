@@ -1,10 +1,9 @@
 package Controller;
 
 import View.FrameMain;
-import View.PanelAccueil;
 import View.PanelLivre;
 
-public class ControllerLivre{
+public class ControllerLivre{	
 	 public ControllerLivre(ControllerManager controller, FrameMain frame) {
 	        PanelLivre p=new PanelLivre();
 
