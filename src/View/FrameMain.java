@@ -141,6 +141,7 @@ public class FrameMain extends JFrame {
         myBtEmprunt.setEnabled(true);
     }
     
+    
     //////////////////////////////////////////////////////
 
     public JPanel getMenuContainer() {
