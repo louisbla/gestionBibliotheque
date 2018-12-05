@@ -268,4 +268,40 @@ public class DBManager {
 		}
     	return user;
 	}
+
+	public static ResultSet getEmpruntsOfUser(String identification) {
+		try {
+
+			DBManager.connectDataBase();
+
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM oeuvre, emprunt "
+					+ "WHERE emprunt.codePermanent LIKE \""+identification+"\" "
+					+ "AND emprunt.id_livre = oeuvre.id_oeuvre");
+
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resultSet;
+	}
+
+	public static int getNbEmpruntsOfUser(String identification) {
+		int nbEmprunts = 0;
+		try {
+			DBManager.connectDataBase();
+
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("SELECT COUNT(*) FROM oeuvre, emprunt "
+					+ "WHERE emprunt.codePermanent LIKE \""+identification+"\" "
+					+ "AND emprunt.id_livre = oeuvre.id_oeuvre");
+			if(resultSet.next()) {
+				nbEmprunts = resultSet.getInt(1);
+			}
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return nbEmprunts;
+	}
 }
