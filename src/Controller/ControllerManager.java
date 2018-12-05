@@ -5,7 +5,7 @@ import user.*;
 
 public class ControllerManager {
 
-	public static Utilisateur utilisateur;
+	private Utilisateur utilisateur;
 	
     private FrameMain frame;
 
@@ -57,5 +57,9 @@ public class ControllerManager {
 	
 	public void login (String identifiant, String mdp) {
 	
+	}
+	
+	public Droit getDroit() {
+		return this.utilisateur.getDroit();
 	}
 }
