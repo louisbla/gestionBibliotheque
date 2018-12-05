@@ -28,7 +28,7 @@ public class DBManager {
 
         	connect = DriverManager
         	          .getConnection("jdbc:mysql://localhost:3306/bibliotheque2?autoReconnect=true&useSSL=false","root", "");
-        	System.out.println("Database is connected !");
+        	System.out.println("Database is connected");
     	} catch (Exception e) {
     		e.printStackTrace();
         }
@@ -48,11 +48,13 @@ public class DBManager {
     		}
         } catch (Exception e) {
         	e.printStackTrace();
+        } finally {
+        	System.out.println("Database is disconnected");
         }
     }
 
     //Ajoute un utilisateur
-    public void addUser(String code, String firstname, String name, String password, int pay) {
+    public static void addUser(String code, String firstname, String name, String password, int pay) {
     	try {
 			preparedStatement = connect
 			          .prepareStatement("INSERT INTO utilisateur VALUES (?, ?, ?, ?, ?)");
@@ -101,8 +103,14 @@ public class DBManager {
     }
 
     //R�cup�re les utilisateur dans un ResultSet
-    public ResultSet getAllUser() {
+    public static ResultSet getAllUser() {
     	try {
+    		try {
+				DBManager.connectDataBase();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			statement = connect.createStatement();
 			resultSet = statement
 			          .executeQuery("SELECT * FROM utilisateur");
@@ -128,11 +136,98 @@ public class DBManager {
     }
 
     //R�cup�re les livres dans un ResultSet
-    public ResultSet getAllBook() {
+    public static ResultSet getAllBook() {
     	try {
+    		try {
+				DBManager.connectDataBase();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			statement = connect.createStatement();
-			resultSet = statement
-			          .executeQuery("SELECT * FROM livre");
+			resultSet = statement.executeQuery("SELECT * FROM livre");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resultSet;
+    }
+
+    public static ResultSet searchBook(String id, String title, String author, String isbn) {
+    	String requestId = "id_livre=?";
+    	String requestTitle = "titre=?";
+    	String requestAuthor = "auteur=?";
+    	String requestIsbn = "isbn=?";
+    	String request = "SELECT * FROM livre WHERE ";
+    	boolean isRequestId = false;
+    	boolean isrequestTitle = false;
+    	boolean isrequestAuthor = false;
+    	boolean isrequestIsbn = false;
+    	int index = 1;
+
+    	if (!id.equals("")) {
+    		request = request + requestId;
+    		isRequestId = true;
+    	}
+    	if (!title.equals("") && !id.equals("")) {
+    		request = request + " AND " + requestTitle;
+    		isrequestTitle = true;
+    	} else if (!title.equals("")){
+    		request = request + requestTitle;
+    		isrequestTitle = true;
+    	}
+    	if (!author.equals("") && (!id.equals("") || !title.equals(""))) {
+    		request = request + " AND " + requestAuthor;
+    		isrequestAuthor = true;
+    	} else if (!author.equals("")){
+    		request = request + requestAuthor;
+    		isrequestAuthor = true;
+    	}
+    	if (!isbn.equals("") && (!id.equals("") || !title.equals("") || !author.equals(""))) {
+    		request = request + " AND " + requestIsbn;
+    		isrequestIsbn = true;
+    	} else if (!isbn.equals("")){
+    		request = request + requestIsbn;
+    		isrequestIsbn = true;
+    	}
+    	if (isbn.equals("") && id.equals("") && title.equals("") && author.equals("")) {
+    		request = "SELECT * FROM livre";
+    	}
+
+    	System.out.println("ID :" + isRequestId);
+    	System.out.println("AUTEUR :" + isrequestAuthor);
+    	System.out.println("TITRE :" + isrequestTitle);
+    	System.out.println("ISBN :" + isrequestIsbn);
+    	System.out.println(request);
+
+    	try {
+    		try {
+				DBManager.connectDataBase();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		preparedStatement = connect.prepareStatement(request);
+
+    		if (isRequestId) {
+    			preparedStatement.setString(index, id);
+    			index++;
+    		}
+    		if (isrequestTitle) {
+    			preparedStatement.setString(index, title);
+    			index++;
+    		}
+    		if (isrequestAuthor) {
+    			preparedStatement.setString(index, author);
+    			index++;
+    		}
+    		if (isrequestIsbn) {
+    			preparedStatement.setString(index, isbn);
+    		}
+
+    		System.out.println("INDEX :" + index);
+    		resultSet = preparedStatement.executeQuery();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

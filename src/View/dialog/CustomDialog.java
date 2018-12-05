@@ -132,8 +132,15 @@ public class CustomDialog extends JDialog
                 String ucText = titleText.toUpperCase();
                 if (!titleField.getText().equals("") && !auteurField.getText().equals("") && !isbnField.getText().equals("")) {
                     //we're done; clear and dismiss the dialog
-                	DBManager.addBook(isbnField.getText(), auteurField.getText(), titleField.getText(), 1);
-
+                	try {
+						DBManager.connectDataBase();
+						DBManager.addBook(isbnField.getText(), auteurField.getText(), titleField.getText(), 1);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} finally {
+						DBManager.closeDatabase();
+					}
                     clearAndHide();
                 } else {
                     //text was invalid

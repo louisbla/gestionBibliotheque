@@ -8,18 +8,16 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -44,9 +42,10 @@ public class PanelLivre extends JPanel {
     private static Object[][] data = new Object[0][0];
     private JTextField textField;
 
-    public PanelLivre() {
+    @SuppressWarnings("serial")
+	public PanelLivre() {
     	//Database
-    	ConnectionToDatabaseAndRetrieveData();
+    	populateData(DBManager.getAllBook(), DBManager.getAllBook());
 
         this.setOpaque(false);
         setLayout(new BorderLayout(0, 0));
@@ -108,7 +107,7 @@ public class PanelLivre extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				CustomDialog dialog = new CustomDialog(new Frame());
 				dialog.setVisible(true);
-				ConnectionToDatabaseAndRetrieveData();
+				populateData(DBManager.getAllBook(), DBManager.getAllBook());
 				updateModel();
 				table.setModel(model);
 			}
@@ -121,16 +120,39 @@ public class PanelLivre extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int line = table.getSelectedRow();
-				Object obj = table.getModel().getValueAt(table.getSelectedRow(), 0);
+				Object obj = table.getModel().getValueAt(line, 0);
 
 				System.out.println("Delete livre id=" + obj);
-				DBManager.deleteBook(Integer.parseInt(obj.toString()));
 
-				ConnectionToDatabaseAndRetrieveData();
+				try {
+					DBManager.connectDataBase();
+					DBManager.deleteBook(Integer.parseInt(obj.toString()));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					DBManager.closeDatabase();
+				}
+
+				populateData(DBManager.getAllBook(),DBManager.getAllBook());
 				updateModel();
 				table.setModel(model);
 			}
     	});
+
+    	Scanner sc = new Scanner(System.in);
+    	System.out.println("Auteur : ");
+    	String auteur = sc.nextLine();
+    	System.out.println("Titre : ");
+    	String titre = sc.nextLine();
+    	System.out.println("Titre entr� :" + titre + ":");
+    	System.out.println("Auteur entr� :" + auteur + ":");
+    	String isbn = "";
+    	String id = "";
+
+    	populateData(DBManager.searchBook(id, titre, auteur, isbn), DBManager.searchBook(id, titre, auteur, isbn));
+    	updateModel();
+		table.setModel(model);
     	
     	//////////////gestion des elements admin///////////////
     	if(ControllerManager.utilisateur.getDroit().equals(Droit.admin)) {
@@ -140,7 +162,8 @@ public class PanelLivre extends JPanel {
     	}
     }
 
-    public void updateModel() {
+    @SuppressWarnings("serial")
+	public void updateModel() {
     	model = new DefaultTableModel(data, new String[] {"id", "Titre", "Sous-titre", "Auteur", "ISBN", "Disponibilit\u00E9"}) {
             boolean[] columnEditables = new boolean[] {
             	false, false, false, false, false, false
@@ -151,18 +174,14 @@ public class PanelLivre extends JPanel {
         };
     }
 
-    public void ConnectionToDatabaseAndRetrieveData() {
+    public void populateData(ResultSet resultSet, ResultSet count) {
         try {
-			Statement statement = DBManager.connectDataBase().createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM livre");
 			int nbLivres = 0;
-			if(resultSet.next()) {
-        		nbLivres = resultSet.getInt(1);
-        	}
+			while (count.next()) {
+				nbLivres++;
+			}
 			data = new Object[nbLivres][6];
 
-			statement = DBManager.connectDataBase().createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM livre");
 			int i = 0;
 			while (resultSet.next()) {
 				data[i][0] = resultSet.getString("id_livre");
@@ -175,16 +194,15 @@ public class PanelLivre extends JPanel {
 				else
 					data[i][5] = "Non disponible";
 				i++;
-
-		          String author = resultSet.getString("auteur");
-		          String title = resultSet.getString("titre");
-		        }
+		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			DBManager.closeDatabase();
 		}
     }
     
