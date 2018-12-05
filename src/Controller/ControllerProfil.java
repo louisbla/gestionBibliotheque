@@ -11,13 +11,13 @@ import user.Droit;
 
 public class ControllerProfil{
 
-	 public ControllerProfil(ControllerManager controller, FrameMain frame) {
+	public ControllerProfil(ControllerManager controller, FrameMain frame) {
 
 		JPanel p = new JPanel();
 		if(controller.utilisateur.getDroit().equals(Droit.visiteur)) p = new PanelProfilVisiteur();
 		else p = new PanelProfil();
 
-	        frame.getDesktopContainer().add(p);
-	        frame.getDesktopContainer().updateUI();
-	    }
+		frame.getDesktopContainer().add(p);
+		frame.getDesktopContainer().updateUI();
+	}
 }

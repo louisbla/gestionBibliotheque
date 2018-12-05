@@ -27,6 +27,7 @@ public class FrameMain extends JFrame {
     private JButton myBtUtilisateurs=new JButton();
     private JButton myBtEmprunt=new JButton();
     private JButton myBtProfil = new JButton();
+    private JButton myBtSalle = new JButton();
     
     private final int ongletLargeur = 146;
     private final int ongletHauteur = 30;
@@ -145,12 +146,40 @@ public class FrameMain extends JFrame {
 
         myMenu.add(myBtProfil);
         
+        myBtProfil.setText("Salles");
+        myBtProfil.setBounds(ongletLargeur*5, 0, ongletLargeur, ongletHauteur);
+        myBtProfil.setEnabled(true);
+        myBtProfil.addActionListener(new ActionListener(){
+
+            public void actionPerformed(ActionEvent e) {
+                allEnabled();
+                myBtSalle.setEnabled(false);
+
+                ca.clear(); 
+                ca.salle();
+            }
+
+        });
+
+        myMenu.add(myBtSalle);
+        
         /* gestion des droits */
-        if(ca.utilisateur.getDroit().equals(Droit.admin)) {
-        	myBtUtilisateurs.setVisible(true);
-        }else {
-        	myBtUtilisateurs.setVisible(false);
-        }
+       switch (ca.utilisateur.getDroit()) {
+	case admin: 
+		myBtUtilisateurs.setVisible(true);
+		myBtSalle.setVisible(true);
+		break;
+		
+	case prof: 
+		myBtUtilisateurs.setVisible(false);
+		myBtSalle.setVisible(true);
+		break;
+		
+	default:
+		myBtUtilisateurs.setVisible(false);
+		myBtSalle.setVisible(false);
+		break;
+	}
     }
 
     //////////////////////////////////////////////////////

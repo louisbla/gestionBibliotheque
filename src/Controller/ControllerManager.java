@@ -15,6 +15,7 @@ public class ControllerManager {
     private ControllerUtilisateurs cu;
     private ControllerEmprunts ce;
     private ControllerProfil cp;
+    private ControllerSalle cs;
 
     /////////////////////////////////////////////////////
 
@@ -37,6 +38,7 @@ public class ControllerManager {
 		cl = null;
 		cu = null;
 		ce = null;
+		cs = null;
 	}
     /////////////////////////////////////////////////////
 
@@ -58,6 +60,10 @@ public class ControllerManager {
 	
 	public void profil() {
 		cp = new ControllerProfil(this, frame);
+	}
+	
+	public void salle() {
+		cs = new ControllerSalle(this, frame);
 	}
 
 	////////////// utilisateur ///////////////////////////

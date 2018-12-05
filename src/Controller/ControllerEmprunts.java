@@ -11,7 +11,9 @@ import user.Droit;
 public class ControllerEmprunts {
 
 	public ControllerEmprunts(ControllerManager controller, FrameMain frame) {
+		
 		JPanel p = new JPanel();
+		
 		if(controller.utilisateur.getDroit().equals(Droit.admin)) p = new PanelEmprunt();
 		else p = new PanelEmpruntUtilisateur();
 
