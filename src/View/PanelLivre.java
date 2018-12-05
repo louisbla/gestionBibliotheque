@@ -33,6 +33,11 @@ import user.Droit;
 
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
+import java.awt.GridLayout;
+import javax.swing.SwingConstants;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class PanelLivre extends JPanel {
 
@@ -41,6 +46,11 @@ public class PanelLivre extends JPanel {
     private static DefaultTableModel model;
     private static Object[][] data = new Object[0][0];
     private JTextField textField;
+    private JTextField textField_1;
+    private JTextField textField_2;
+    private JTextField textField_3;
+    private JTextField textField_4;
+    private JTextField textField_5;
 
     @SuppressWarnings("serial")
 	public PanelLivre() {
@@ -49,6 +59,114 @@ public class PanelLivre extends JPanel {
 
         this.setOpaque(false);
         setLayout(new BorderLayout(0, 0));
+        
+        JPanel panel_2 = new JPanel();
+        add(panel_2, BorderLayout.EAST);
+        GridBagLayout gbl_panel_2 = new GridBagLayout();
+        gbl_panel_2.columnWidths = new int[]{60, 116, 0};
+        gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gbl_panel_2.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+        gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        panel_2.setLayout(gbl_panel_2);
+        
+        JLabel lblRechercherPar = new JLabel("Recherche");
+        GridBagConstraints gbc_lblRechercherPar = new GridBagConstraints();
+        gbc_lblRechercherPar.insets = new Insets(0, 0, 5, 0);
+        gbc_lblRechercherPar.gridx = 1;
+        gbc_lblRechercherPar.gridy = 0;
+        panel_2.add(lblRechercherPar, gbc_lblRechercherPar);
+        
+        JLabel lblNewLabel = new JLabel("Titre");
+        GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+        gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
+        gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNewLabel.gridx = 0;
+        gbc_lblNewLabel.gridy = 2;
+        panel_2.add(lblNewLabel, gbc_lblNewLabel);
+        
+        textField_1 = new JTextField();
+        GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+        gbc_textField_1.insets = new Insets(0, 0, 5, 0);
+        gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+        gbc_textField_1.gridx = 1;
+        gbc_textField_1.gridy = 2;
+        panel_2.add(textField_1, gbc_textField_1);
+        textField_1.setColumns(10);
+        
+        JLabel lblNewLabel_1 = new JLabel("Auteur");
+        GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+        gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
+        gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNewLabel_1.gridx = 0;
+        gbc_lblNewLabel_1.gridy = 3;
+        panel_2.add(lblNewLabel_1, gbc_lblNewLabel_1);
+        
+        textField_2 = new JTextField();
+        GridBagConstraints gbc_textField_2 = new GridBagConstraints();
+        gbc_textField_2.insets = new Insets(0, 0, 5, 0);
+        gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
+        gbc_textField_2.gridx = 1;
+        gbc_textField_2.gridy = 3;
+        panel_2.add(textField_2, gbc_textField_2);
+        textField_2.setColumns(10);
+        
+        JLabel lblNewLabel_2 = new JLabel("ISBN");
+        GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
+        gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
+        gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNewLabel_2.gridx = 0;
+        gbc_lblNewLabel_2.gridy = 4;
+        panel_2.add(lblNewLabel_2, gbc_lblNewLabel_2);
+        
+        textField_3 = new JTextField();
+        GridBagConstraints gbc_textField_3 = new GridBagConstraints();
+        gbc_textField_3.insets = new Insets(0, 0, 5, 0);
+        gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
+        gbc_textField_3.gridx = 1;
+        gbc_textField_3.gridy = 4;
+        panel_2.add(textField_3, gbc_textField_3);
+        textField_3.setColumns(10);
+        
+        JLabel lblNewLabel_3 = new JLabel("Type");
+        lblNewLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
+        GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+        gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
+        gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNewLabel_3.gridx = 0;
+        gbc_lblNewLabel_3.gridy = 5;
+        panel_2.add(lblNewLabel_3, gbc_lblNewLabel_3);
+        
+        textField_4 = new JTextField();
+        GridBagConstraints gbc_textField_4 = new GridBagConstraints();
+        gbc_textField_4.insets = new Insets(0, 0, 5, 0);
+        gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
+        gbc_textField_4.gridx = 1;
+        gbc_textField_4.gridy = 5;
+        panel_2.add(textField_4, gbc_textField_4);
+        textField_4.setColumns(10);
+        
+        JLabel lblNewLabel_4 = new JLabel("Mot-clef");
+        GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
+        gbc_lblNewLabel_4.anchor = GridBagConstraints.EAST;
+        gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNewLabel_4.gridx = 0;
+        gbc_lblNewLabel_4.gridy = 6;
+        panel_2.add(lblNewLabel_4, gbc_lblNewLabel_4);
+        
+        textField_5 = new JTextField();
+        GridBagConstraints gbc_textField_5 = new GridBagConstraints();
+        gbc_textField_5.insets = new Insets(0, 0, 5, 0);
+        gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
+        gbc_textField_5.gridx = 1;
+        gbc_textField_5.gridy = 6;
+        panel_2.add(textField_5, gbc_textField_5);
+        textField_5.setColumns(10);
+        
+        JButton btnRechercher = new JButton("Rechercher");
+        GridBagConstraints gbc_btnRechercher = new GridBagConstraints();
+        gbc_btnRechercher.gridx = 1;
+        gbc_btnRechercher.gridy = 8;
+        panel_2.add(btnRechercher, gbc_btnRechercher);
 
         JPanel panel = new JPanel();
         add(panel, BorderLayout.NORTH);
