@@ -29,6 +29,10 @@ import javax.swing.table.DefaultTableModel;
 
 import DAO.DBManager;
 import View.dialog.CustomDialog;
+import javafx.scene.input.KeyCode;
+
+import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
 
 public class PanelLivre extends JPanel {
 
@@ -36,6 +40,7 @@ public class PanelLivre extends JPanel {
     private static JTable table;
     private static DefaultTableModel model;
     private static Object[][] data = new Object[0][0];
+    private JTextField textField;
 
     public PanelLivre() {
     	//Database
@@ -54,6 +59,21 @@ public class PanelLivre extends JPanel {
                 myLbl.setFont(new Font("Times New Roman", Font.BOLD, 20));
                 myLbl.setForeground(Color.BLACK);
                 myLbl.setHorizontalAlignment(JLabel.CENTER);
+                
+                textField = new JTextField();
+                textField.addKeyListener(new KeyAdapter() {
+                	@Override
+                	public void keyPressed(KeyEvent arg0) {
+                		if(arg0.getKeyCode() == 10) {
+                			ConnectionToDatabaseAndRetrieveData(textField.getText());
+            				updateModel();
+            				table.setModel(model);
+                		}
+                	}
+                });
+                textField.setToolTipText("Rechercher");
+                panel.add(textField);
+                textField.setColumns(10);
 
         JScrollPane scrollPane = new JScrollPane();
         add(scrollPane);
@@ -134,6 +154,45 @@ public class PanelLivre extends JPanel {
 
 			statement = DBManager.connectDataBase().createStatement();
 			resultSet = statement.executeQuery("SELECT * FROM livre");
+			int i = 0;
+			while (resultSet.next()) {
+				data[i][0] = resultSet.getString("id_livre");
+				data[i][1] = resultSet.getString("titre");
+				data[i][2] = "j";
+				data[i][3] = resultSet.getString("auteur");
+				data[i][4] = resultSet.getString("isbn");
+				if(resultSet.getBoolean("est_disponible") == true)
+					data[i][5] = "Disponible";
+				else
+					data[i][5] = "Non disponible";
+				i++;
+
+		          String author = resultSet.getString("auteur");
+		          String title = resultSet.getString("titre");
+		        }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public void ConnectionToDatabaseAndRetrieveData(String keyword) {
+        try {
+			Statement statement = DBManager.connectDataBase().createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM livre WHERE auteur LIKE \"%" + keyword + "%\" OR titre LIKE \"%" + keyword + "%\"");
+			int nbLivres = 0;
+			if(resultSet.next()) {
+        		nbLivres = resultSet.getInt(1);
+        	}
+			data = new Object[nbLivres][6];
+			System.out.println("nb de livres associe a la recherche = " + nbLivres);
+
+			statement = DBManager.connectDataBase().createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM livre WHERE auteur LIKE \"%" + keyword + "%\" OR titre LIKE \"%" + keyword + "%\"");
+			System.out.println(resultSet.toString());
 			int i = 0;
 			while (resultSet.next()) {
 				data[i][0] = resultSet.getString("id_livre");

@@ -110,6 +110,19 @@ public class DBManager {
 		}
     	return resultSet;
     }
+    
+    public ResultSet getBookByKeyword(String keyword) {
+    	try {
+			statement = connect.createStatement();
+			resultSet = statement
+			          .executeQuery("SELECT * FROM livre WHERE auteur LIKE \"%?%\" OR titre LIKE \"%?%\"");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resultSet;
+    }
 
     //R�cup�re les livres dans un ResultSet
     public ResultSet getAllBook() {
