@@ -179,7 +179,7 @@ public class PanelUtilisateurs extends JPanel {
 		panel_2.add(lblNewLabel_3, gbc_lblNewLabel_3);
 
 		JComboBox<String> comboBox = new JComboBox<>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"","admin", "etudiant", "prof"}));
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"","admin", "etudiant", "professeur"}));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -213,7 +213,7 @@ public class PanelUtilisateurs extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				populateData(DBManager.searchBook(nomInput.getText(), prenomInput.getText(), codePermInput.getText(), comboBox.getSelectedItem().toString(), keywordInput.getText()), DBManager.searchBook(nomInput.getText(), prenomInput.getText(), codePermInput.getText(), comboBox.getSelectedItem().toString(), keywordInput.getText()));
+				populateData(DBManager.searchUser(nomInput.getText(), prenomInput.getText(), codePermInput.getText(), comboBox.getSelectedItem().toString(), keywordInput.getText()), DBManager.searchUser(nomInput.getText(), prenomInput.getText(), codePermInput.getText(), comboBox.getSelectedItem().toString(), keywordInput.getText()));
 				updateModel();
 				table.setModel(model);
 			}
@@ -322,6 +322,7 @@ public class PanelUtilisateurs extends JPanel {
 				data[i][2] = resultSet.getString("codePermanent");
 				data[i][3] = resultSet.getString("droit");
 				data[i][4] = resultSet.getString("solde");
+				i++;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
