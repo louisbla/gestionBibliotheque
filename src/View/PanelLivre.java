@@ -203,7 +203,6 @@ public class PanelLivre extends JPanel {
         table.getColumnModel().getColumn(3).setResizable(false);
         table.getColumnModel().getColumn(4).setResizable(false);
         table.getColumnModel().getColumn(5).setResizable(false);
-        table.getColumnModel().getColumn(6).setResizable(false);
         table.setBounds(0, 0, 500, 90);
 
         scrollPane.setViewportView(table);
@@ -211,7 +210,7 @@ public class PanelLivre extends JPanel {
         JPanel panel_1 = new JPanel();
         add(panel_1, BorderLayout.SOUTH);
 
-        JButton btnAjouterUnLivre = new JButton("Ajouter un livre");
+        JButton btnAjouterUnLivre = new JButton("Ajouter une oeuvre");
         panel_1.add(btnAjouterUnLivre);
         btnAjouterUnLivre.addActionListener(new ActionListener() {
 
@@ -225,12 +224,12 @@ public class PanelLivre extends JPanel {
 			}
 		});
 
-    	InputMap im = table.getInputMap(JTable.WHEN_FOCUSED);
-    	ActionMap am = table.getActionMap();
-    	im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "delete");
-    	am.put("delete", new AbstractAction() {
+        JButton btnSupprimerUnLivre = new JButton("Supprimer une oeuvre");
+        panel_1.add(btnSupprimerUnLivre);
+        btnSupprimerUnLivre.addActionListener(new ActionListener() {
+
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				int line = table.getSelectedRow();
 				Object obj = table.getModel().getValueAt(line, 0);
 
@@ -239,32 +238,33 @@ public class PanelLivre extends JPanel {
 				try {
 					DBManager.connectDataBase();
 					DBManager.deleteBook(Integer.parseInt(obj.toString()));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} finally {
 					DBManager.closeDatabase();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 
 				populateData(DBManager.getAllBook(),DBManager.getAllBook());
 				updateModel();
 				table.setModel(model);
 			}
-    	});
+		});
 
     	//////////////gestion des elements admin///////////////
     	if(ControllerManager.utilisateur.getDroit().equals(Droit.admin)) {
     		btnAjouterUnLivre.setVisible(true);
+    		btnSupprimerUnLivre.setVisible(true);
     	}else {
     		btnAjouterUnLivre.setVisible(false);
+    		btnSupprimerUnLivre.setVisible(false);
     	}
     }
 
     @SuppressWarnings("serial")
 	public void updateModel() {
-    	model = new DefaultTableModel(data, new String[] {"id", "Titre", "Sous-titre", "Auteur", "ISBN", "Type", "Disponibilit\u00E9"}) {
+    	model = new DefaultTableModel(data, new String[] {"id", "Titre", "Auteur", "ISBN", "Type", "Disponibilit\u00E9"}) {
             boolean[] columnEditables = new boolean[] {
-            	false, false, false, false, false, false, false
+            	false, false, false, false, false, false
             };
             public boolean isCellEditable(int row, int column) {
             	return columnEditables[column];
@@ -278,20 +278,19 @@ public class PanelLivre extends JPanel {
 			while (count.next()) {
 				nbLivres++;
 			}
-			data = new Object[nbLivres][7];
+			data = new Object[nbLivres][6];
 
 			int i = 0;
 			while (resultSet.next()) {
 				data[i][0] = resultSet.getString("id_oeuvre");
 				data[i][1] = resultSet.getString("titre");
-				data[i][2] = "j";
-				data[i][3] = resultSet.getString("auteur");
-				data[i][4] = resultSet.getString("isbn");
-				data[i][5] = resultSet.getString("type");
+				data[i][2] = resultSet.getString("auteur");
+				data[i][3] = resultSet.getString("isbn");
+				data[i][4] = resultSet.getString("type");
 				if(resultSet.getBoolean("est_disponible") == true)
-					data[i][6] = "Disponible";
+					data[i][5] = "Disponible";
 				else
-					data[i][6] = "Non disponible";
+					data[i][5] = "Non disponible";
 				i++;
 		    }
 		} catch (SQLException e) {
