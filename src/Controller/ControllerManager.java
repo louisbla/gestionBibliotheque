@@ -1,9 +1,12 @@
 package Controller;
 
 import View.FrameMain;
+import user.*;
 
 public class ControllerManager {
 
+	public static Utilisateur utilisateur;
+	
     private FrameMain frame;
 
     private ControllerAccueil ca;
@@ -19,6 +22,8 @@ public class ControllerManager {
         accueil();
 
         frame.setVisible(true);
+        
+        utilisateur = new Utilisateur();
     }
 
     public void clear() {
@@ -48,5 +53,9 @@ public class ControllerManager {
 
 	}
 
-
+	////////////// utilisateur ///////////////////////////
+	
+	public void login (String identifiant, String mdp) {
+	
+	}
 }
