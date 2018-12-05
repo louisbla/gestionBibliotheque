@@ -1,6 +1,7 @@
 package View;
 
 import Controller.ControllerManager;
+import user.Droit;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -143,6 +144,13 @@ public class FrameMain extends JFrame {
         });
 
         myMenu.add(myBtProfil);
+        
+        /* gestion des droits */
+        if(ca.utilisateur.getDroit().equals(Droit.admin)) {
+        	myBtUtilisateurs.setVisible(true);
+        }else {
+        	myBtUtilisateurs.setVisible(false);
+        }
     }
 
     //////////////////////////////////////////////////////

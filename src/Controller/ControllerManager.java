@@ -19,6 +19,7 @@ public class ControllerManager {
     /////////////////////////////////////////////////////
 
     public ControllerManager() {
+    	utilisateur = new Utilisateur();
         frame = new FrameMain(this);
 
         accueil();
