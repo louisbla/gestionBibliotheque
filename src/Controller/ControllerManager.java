@@ -5,7 +5,7 @@ import user.*;
 
 public class ControllerManager {
 
-	private Utilisateur utilisateur;
+	public static Utilisateur utilisateur;
 	
     private FrameMain frame;
 
@@ -59,7 +59,7 @@ public class ControllerManager {
 	
 	}
 	
-	public Droit getDroit() {
-		return this.utilisateur.getDroit();
+	public void deconnecte() {
+		utilisateur = new Utilisateur();
 	}
 }
