@@ -266,7 +266,7 @@ public class PanelUtilisateurs extends JPanel {
 				table.setModel(model);
 			}
 		});
-/*
+
 		JButton btnSupprimerUnLivre = new JButton("Supprimer un utilisateur");
 		panel_1.add(btnSupprimerUnLivre);
 		btnSupprimerUnLivre.addActionListener(new ActionListener() {
@@ -274,24 +274,24 @@ public class PanelUtilisateurs extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int line = table.getSelectedRow();
-				Object obj = table.getModel().getValueAt(line, 0);
+				Object obj = table.getModel().getValueAt(line, 2);
 
 				System.out.println("Delete utilisateur code=" + obj);
 
 				try {
 					DBManager.connectDataBase();
-					DBManager.deleteBook(Integer.parseInt(obj.toString()));
+					DBManager.deleteUser(obj.toString());
 					DBManager.closeDatabase();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
-				populateData(DBManager.getAllBook(),DBManager.getAllBook());
+				populateData(DBManager.getAllUser(),DBManager.getAllUser());
 				updateModel();
 				table.setModel(model);
 			}
-		});*/
+		});
 
 		
 	}

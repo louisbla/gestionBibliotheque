@@ -103,6 +103,19 @@ public class DBManager {
 			e.printStackTrace();
 		}
     }
+    
+  //Supprime un utilisateur
+    public static void deleteUser(String code) {
+    	try {
+			preparedStatement = connect
+				      .prepareStatement("DELETE FROM utilisateur WHERE codePermanent= ?;");
+			preparedStatement.setString(1, code);
+		    preparedStatement.executeUpdate();
+    	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     //R�cup�re les utilisateur dans un ResultSet
     public static ResultSet getAllUser() {
