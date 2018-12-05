@@ -134,7 +134,7 @@ public class CustomDialog extends JDialog
                     //we're done; clear and dismiss the dialog
                 	try {
 						DBManager.connectDataBase();
-						DBManager.addBook(isbnField.getText(), auteurField.getText(), titleField.getText(), 1);
+						DBManager.addBook(isbnField.getText(), auteurField.getText(), titleField.getText(), "Livre", 1);
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

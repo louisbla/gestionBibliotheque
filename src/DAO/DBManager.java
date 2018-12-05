@@ -72,14 +72,15 @@ public class DBManager {
     }
 
     //Ajoute un livre
-    public static void addBook(String isbn, String author, String title, int available) {
+    public static void addBook(String isbn, String author, String title, String type, int available) {
     	try {
 			preparedStatement = connect
-			          .prepareStatement("INSERT INTO livre VALUES (NULL, ?, ?, ?, ?)");
+			          .prepareStatement("INSERT INTO oeuvre VALUES (NULL, ?, ?, ?, ?, ?)");
 		    preparedStatement.setString(1, isbn);
 		    preparedStatement.setString(2, author);
 		    preparedStatement.setString(3, title);
-		    preparedStatement.setInt(4, available);
+		    preparedStatement.setString(4, type);
+		    preparedStatement.setInt(5, available);
 		    preparedStatement.executeUpdate();
 		    System.out.println(preparedStatement.toString());
 		    System.out.println("Livre ajoute");
@@ -93,7 +94,7 @@ public class DBManager {
     public static void deleteBook(int id) {
     	try {
 			preparedStatement = connect
-				      .prepareStatement("DELETE FROM livre WHERE id_livre= ?;");
+				      .prepareStatement("DELETE FROM oeuvre WHERE id_oeuvre= ?;");
 			preparedStatement.setInt(1, id);
 		    preparedStatement.executeUpdate();
     	} catch (SQLException e) {
@@ -121,12 +122,18 @@ public class DBManager {
 		}
     	return resultSet;
     }
-    
-    public ResultSet getBookByKeyword(String keyword) {
+
+    public static ResultSet getBookByKeyword(String keyword) {
     	try {
+    		try {
+				DBManager.connectDataBase();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			statement = connect.createStatement();
 			resultSet = statement
-			          .executeQuery("SELECT * FROM livre WHERE auteur LIKE \"%?%\" OR titre LIKE \"%?%\"");
+					.executeQuery("SELECT * FROM oeuvre WHERE auteur LIKE \"%" + keyword + "%\" OR titre LIKE \"%" + keyword + "%\"");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -145,7 +152,7 @@ public class DBManager {
 				e.printStackTrace();
 			}
 			statement = connect.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM livre");
+			resultSet = statement.executeQuery("SELECT * FROM oeuvre");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -154,16 +161,18 @@ public class DBManager {
     	return resultSet;
     }
 
-    public static ResultSet searchBook(String id, String title, String author, String isbn) {
+    public static ResultSet searchBook(String id, String title, String author, String isbn, String type) {
     	String requestId = "id_livre=?";
     	String requestTitle = "titre=?";
     	String requestAuthor = "auteur=?";
     	String requestIsbn = "isbn=?";
-    	String request = "SELECT * FROM livre WHERE ";
+    	String requestType = "type=?";
+    	String request = "SELECT * FROM oeuvre WHERE ";
     	boolean isRequestId = false;
     	boolean isrequestTitle = false;
     	boolean isrequestAuthor = false;
     	boolean isrequestIsbn = false;
+    	boolean isrequestType = false;
     	int index = 1;
 
     	if (!id.equals("")) {
@@ -191,15 +200,22 @@ public class DBManager {
     		request = request + requestIsbn;
     		isrequestIsbn = true;
     	}
-    	if (isbn.equals("") && id.equals("") && title.equals("") && author.equals("")) {
-    		request = "SELECT * FROM livre";
+    	if (!type.equals("") && (!isbn.equals("") || !id.equals("") || !title.equals("") || !author.equals(""))) {
+    		request = request + " AND " + requestType;
+    		isrequestType = true;
+    	} else if (!type.equals("")){
+    		request = request + requestType;
+    		isrequestType = true;
+    	}
+    	if (isbn.equals("") && id.equals("") && title.equals("") && author.equals("") && type.equals("")) {
+    		request = "SELECT * FROM oeuvre";
     	}
 
-    	System.out.println("ID :" + isRequestId);
+    	/*System.out.println("ID :" + isRequestId);
     	System.out.println("AUTEUR :" + isrequestAuthor);
     	System.out.println("TITRE :" + isrequestTitle);
     	System.out.println("ISBN :" + isrequestIsbn);
-    	System.out.println(request);
+    	System.out.println(request);*/
 
     	try {
     		try {
@@ -224,9 +240,13 @@ public class DBManager {
     		}
     		if (isrequestIsbn) {
     			preparedStatement.setString(index, isbn);
+    			index++;
+    		}
+    		if (isrequestType) {
+    			preparedStatement.setString(index, type);
     		}
 
-    		System.out.println("INDEX :" + index);
+    		//System.out.println("INDEX :" + index);
     		resultSet = preparedStatement.executeQuery();
 
 		} catch (SQLException e) {
@@ -262,14 +282,14 @@ public class DBManager {
 			resultSet = statement.executeQuery("SELECT * FROM utilisateur WHERE codePermanent LIKE \""+identifiant+"\"");
 
 			if(resultSet.next()) {
-				//Droit droit = Droit.valueOf(resultSet.getString("droit"));
+				Droit droit = Droit.valueOf(resultSet.getString("droit"));
 				String nom = resultSet.getString("nom");
 				String prenom = resultSet.getString("prenom");
 				String login = resultSet.getString("codePermanent");
 				String mdp = resultSet.getString("password");
 				float solde = resultSet.getFloat("solde");
-				
-				user = new Utilisateur(Droit.etudiant, nom, prenom, login, mdp, solde);
+
+				user = new Utilisateur(droit, nom, prenom, login, mdp, solde);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
