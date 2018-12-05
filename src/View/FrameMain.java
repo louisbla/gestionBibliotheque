@@ -20,7 +20,6 @@ public class FrameMain extends JFrame {
 
     private JPanel myMenu;
     private JPanel myDesktop;
-    private JPanel panelUtilisateurs;
 
     private JButton myBtAccueil=new JButton();
     private JButton myBtLivre=new JButton();
@@ -111,7 +110,7 @@ public class FrameMain extends JFrame {
         myMenu.add(myBtEmprunt);
         
         myBtLivre.setText("Livres");
-        myBtLivre.setBounds(147, 0, 146, 30);
+        myBtLivre.setBounds(ongletLargeur, 0, ongletLargeur, ongletHauteur);
         myBtLivre.setEnabled(true);
         myBtLivre.addActionListener(new ActionListener(){
 
@@ -128,8 +127,8 @@ public class FrameMain extends JFrame {
         myMenu.add(myBtLivre);
         
         
-        myBtProfil.setText("Profil");
-        myBtProfil.setBounds(147*4, 0, 146, 30);
+        myBtProfil.setText("Mon compte");
+        myBtProfil.setBounds(ongletLargeur*4, 0, ongletLargeur, ongletHauteur);
         myBtProfil.setEnabled(true);
         myBtProfil.addActionListener(new ActionListener(){
 
@@ -153,6 +152,7 @@ public class FrameMain extends JFrame {
         myBtLivre.setEnabled(true);
         myBtUtilisateurs.setEnabled(true);
         myBtEmprunt.setEnabled(true);
+        myBtProfil.setEnabled(true);
     }
     
     

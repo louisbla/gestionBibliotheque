@@ -26,7 +26,7 @@ public class ControllerManager {
         frame.setVisible(true);
         
         utilisateur = new Utilisateur();
-        login("BLAL19019408", "azery");
+        //login("BLAL19019408", "azerty");
     }
 
     public void clear() {
@@ -61,14 +61,14 @@ public class ControllerManager {
 
 	////////////// utilisateur ///////////////////////////
 	
-	public void login (String identifiant, String mdp) {
+	public static void login (String identifiant, String mdp) {
 		if(DBManager.tryUserPassword(identifiant, mdp)) {
 			System.out.println("combinaison identifiant-password correcte");
 			utilisateur = DBManager.getUser(identifiant);
 		}
 	}
 	
-	public void logout() {
+	public static void logout() {
 		utilisateur = new Utilisateur();
 	}
 	
