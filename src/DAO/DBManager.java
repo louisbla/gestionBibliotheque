@@ -103,6 +103,24 @@ public class DBManager {
 		}
     }
 
+  //Ajoute un livre
+    public static void addRoom(String number, int size, int table, int projector, int available) {
+    	try {
+			preparedStatement = connect
+			          .prepareStatement("INSERT INTO oeuvre VALUES (NULL, ?, ?, ?, ?, ?)");
+		    preparedStatement.setString(1, number);
+		    preparedStatement.setInt(2, size);
+		    preparedStatement.setInt(3, table);
+		    preparedStatement.setInt(4, projector);
+		    preparedStatement.setInt(5, available);
+		    preparedStatement.executeUpdate();
+		    System.out.println("Salle ajoutee");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
     //R�cup�re les utilisateur dans un ResultSet
     public static ResultSet getAllUser() {
     	try {
@@ -134,6 +152,93 @@ public class DBManager {
 			}
 			statement = connect.createStatement();
 			resultSet = statement.executeQuery("SELECT * FROM oeuvre");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resultSet;
+    }
+
+    public static ResultSet getAllRoom() {
+    	try {
+    		try {
+				DBManager.connectDataBase();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			statement = connect.createStatement();
+			resultSet = statement
+			          .executeQuery("SELECT * FROM salle");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resultSet;
+    }
+
+    public static ResultSet searchRoom(String size, String table, String projector) {
+    	String requestSize = "nb_place=?";
+    	String requestTable = "have_tableau=?";
+    	String requestProjector = "have_projecteur=?";
+    	String request = "SELECT * FROM salle WHERE ";
+
+    	boolean isrequestSize = false;
+    	boolean isrequestTable = false;
+    	boolean isrequestProjector = false;
+
+    	int index = 1;
+
+    	if (!size.equals("")){
+    		request = request + requestSize;
+    		isrequestSize = true;
+    	}
+    	if (!table.equals("") && !size.equals("")) {
+    		request = request + " AND " + requestTable;
+    		isrequestTable = true;
+    	} else if (!table.equals("")){
+    		request = request + requestTable;
+    		isrequestTable = true;
+    	}
+    	if (!projector.equals("") && (!table.equals("") || !size.equals(""))) {
+    		request = request + " AND " + requestProjector;
+    		isrequestProjector = true;
+    	} else if (!projector.equals("")){
+    		request = request + requestProjector;
+    		isrequestProjector = true;
+    	}
+    	if (projector.equals("") && table.equals("") && size.equals("")) {
+    		request = "SELECT * FROM salle";
+    	}
+
+    	System.out.println(request);
+
+    	try {
+    		try {
+				connectDataBase();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		preparedStatement = connect.prepareStatement(request);
+
+    		if (isrequestSize) {
+    			preparedStatement.setString(index, size);
+    			index++;
+    		}
+    		if (isrequestTable) {
+    			preparedStatement.setString(index, table);
+    			index++;
+    			System.out.println("table : " + table);
+    		}
+    		if (isrequestProjector) {
+    			preparedStatement.setString(index, projector);
+    			System.out.println("projector : " + projector);
+    		}
+
+    		resultSet = preparedStatement.executeQuery();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

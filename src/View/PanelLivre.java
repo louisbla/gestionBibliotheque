@@ -136,7 +136,7 @@ public class PanelLivre extends JPanel {
         panel_2.add(lblNewLabel_3, gbc_lblNewLabel_3);
 
         JComboBox<String> comboBox = new JComboBox<>();
-        comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Livre", "Periodique", "Carte", "DVD"}));
+        comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"", "Livre", "Periodique", "Carte", "DVD"}));
         GridBagConstraints gbc_comboBox = new GridBagConstraints();
         gbc_comboBox.insets = new Insets(0, 0, 5, 0);
         gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
