@@ -49,7 +49,7 @@ public class PanelEmpruntUtilisateur extends JPanel {
 
         //updateModel();
 
-        //table.setModel(model);
+        /*table.setModel(model);
         table.getColumnModel().getColumn(0).setResizable(false);
         table.getColumnModel().getColumn(0).setPreferredWidth(31);
         table.getColumnModel().getColumn(1).setResizable(false);
@@ -57,7 +57,7 @@ public class PanelEmpruntUtilisateur extends JPanel {
         table.getColumnModel().getColumn(3).setResizable(false);
         table.getColumnModel().getColumn(4).setResizable(false);
         table.getColumnModel().getColumn(5).setResizable(false);
-        table.setBounds(0, 0, 500, 90);
+        table.setBounds(0, 0, 500, 90);*/
 
         scrollPane.setViewportView(table);
 

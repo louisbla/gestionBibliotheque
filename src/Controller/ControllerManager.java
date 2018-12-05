@@ -19,14 +19,13 @@ public class ControllerManager {
     /////////////////////////////////////////////////////
 
     public ControllerManager() {
+    	utilisateur = new Utilisateur();
         frame = new FrameMain(this);
 
         accueil();
 
         frame.setVisible(true);
         
-        utilisateur = new Utilisateur();
-        login("BLAL19019408", "azery");
     }
 
     public void clear() {

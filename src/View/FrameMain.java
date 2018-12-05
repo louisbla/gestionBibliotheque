@@ -147,7 +147,7 @@ public class FrameMain extends JFrame {
         myMenu.add(myBtProfil);
         
         /* gestion des droits */
-        if(ControllerManager.utilisateur.getDroit().equals(Droit.admin)) {
+        if(ca.utilisateur.getDroit().equals(Droit.admin)) {
         	myBtUtilisateurs.setVisible(true);
         }else {
         	myBtUtilisateurs.setVisible(false);
