@@ -1,14 +1,23 @@
 package Controller;
 
+import javax.swing.JPanel;
+
 import View.FrameMain;
+import View.PanelEmprunt;
+import View.PanelEmpruntUtilisateur;
 import View.PanelProfil;
+import View.PanelProfilVisiteur;
+import user.Droit;
 
 public class ControllerProfil{
 
-	 public ControllerProfil(ControllerManager controller, FrameMain frame) {
-	        PanelProfil p = new PanelProfil();
+	public ControllerProfil(ControllerManager controller, FrameMain frame) {
 
-	        frame.getDesktopContainer().add(p);
-	        frame.getDesktopContainer().updateUI();
-	    }
+		JPanel p = new JPanel();
+		if(controller.utilisateur.getDroit().equals(Droit.visiteur)) p = new PanelProfilVisiteur(controller);
+		else p = new PanelProfil(controller);
+
+		frame.getDesktopContainer().add(p);
+		frame.getDesktopContainer().updateUI();
+	}
 }
