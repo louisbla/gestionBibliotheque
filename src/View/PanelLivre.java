@@ -38,6 +38,8 @@ import javax.swing.SwingConstants;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class PanelLivre extends JPanel {
 
@@ -49,7 +51,6 @@ public class PanelLivre extends JPanel {
     private JTextField textField_1;
     private JTextField textField_2;
     private JTextField textField_3;
-    private JTextField textField_4;
     private JTextField textField_5;
 
     @SuppressWarnings("serial")
@@ -136,14 +137,14 @@ public class PanelLivre extends JPanel {
         gbc_lblNewLabel_3.gridy = 5;
         panel_2.add(lblNewLabel_3, gbc_lblNewLabel_3);
         
-        textField_4 = new JTextField();
-        GridBagConstraints gbc_textField_4 = new GridBagConstraints();
-        gbc_textField_4.insets = new Insets(0, 0, 5, 0);
-        gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
-        gbc_textField_4.gridx = 1;
-        gbc_textField_4.gridy = 5;
-        panel_2.add(textField_4, gbc_textField_4);
-        textField_4.setColumns(10);
+        JComboBox comboBox = new JComboBox();
+        comboBox.setModel(new DefaultComboBoxModel(new String[] {"Livre", "Periodique", "Carte", "DVD"}));
+        GridBagConstraints gbc_comboBox = new GridBagConstraints();
+        gbc_comboBox.insets = new Insets(0, 0, 5, 0);
+        gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+        gbc_comboBox.gridx = 1;
+        gbc_comboBox.gridy = 5;
+        panel_2.add(comboBox, gbc_comboBox);
         
         JLabel lblNewLabel_4 = new JLabel("Mot-clef");
         GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
