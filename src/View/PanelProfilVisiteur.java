@@ -13,11 +13,14 @@ import Controller.ControllerManager;
 
 public class PanelProfilVisiteur extends JPanel {
 
+	private ControllerManager cm;
+	
 	private JTextField txtIdentifiant;
 	private JTextField txtMotDePasse;
 	
-	public PanelProfilVisiteur() {
+	public PanelProfilVisiteur(ControllerManager controller) {
 		setLayout(null);
+		this.cm = controller;
 		
 		JPanel panelVisiteur = new JPanel();
 		panelVisiteur.setBounds(12, 13, 898, 603);
@@ -48,7 +51,7 @@ public class PanelProfilVisiteur extends JPanel {
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ControllerManager.login(txtIdentifiant.getText(), txtMotDePasse.getText());
+				cm.login(txtIdentifiant.getText(), txtMotDePasse.getText());
 				updateUI();
 			}
 		});

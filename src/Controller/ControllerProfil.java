@@ -14,8 +14,8 @@ public class ControllerProfil{
 	public ControllerProfil(ControllerManager controller, FrameMain frame) {
 
 		JPanel p = new JPanel();
-		if(controller.utilisateur.getDroit().equals(Droit.visiteur)) p = new PanelProfilVisiteur();
-		else p = new PanelProfil();
+		if(controller.utilisateur.getDroit().equals(Droit.visiteur)) p = new PanelProfilVisiteur(controller);
+		else p = new PanelProfil(controller);
 
 		frame.getDesktopContainer().add(p);
 		frame.getDesktopContainer().updateUI();

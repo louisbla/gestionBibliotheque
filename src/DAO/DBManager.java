@@ -27,7 +27,7 @@ public class DBManager {
     		Class.forName("com.mysql.jdbc.Driver");
 
         	connect = DriverManager
-        	          .getConnection("jdbc:mysql://localhost:3306/bibliotheque2?autoReconnect=true&useSSL=false","root", "");
+        	          .getConnection("jdbc:mysql://localhost:3306/bibliotheque2?autoReconnect=true&useSSL=false","root", "root");
         	System.out.println("Database is connected");
     	} catch (Exception e) {
     		e.printStackTrace();
@@ -145,7 +145,7 @@ public class DBManager {
 				e.printStackTrace();
 			}
 			statement = connect.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM livre");
+			resultSet = statement.executeQuery("SELECT * FROM oeuvre");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -159,7 +159,7 @@ public class DBManager {
     	String requestTitle = "titre=?";
     	String requestAuthor = "auteur=?";
     	String requestIsbn = "isbn=?";
-    	String request = "SELECT * FROM livre WHERE ";
+    	String request = "SELECT * FROM oeuvre WHERE ";
     	boolean isRequestId = false;
     	boolean isrequestTitle = false;
     	boolean isrequestAuthor = false;
@@ -192,7 +192,7 @@ public class DBManager {
     		isrequestIsbn = true;
     	}
     	if (isbn.equals("") && id.equals("") && title.equals("") && author.equals("")) {
-    		request = "SELECT * FROM livre";
+    		request = "SELECT * FROM oeuvre";
     	}
 
     	System.out.println("ID :" + isRequestId);

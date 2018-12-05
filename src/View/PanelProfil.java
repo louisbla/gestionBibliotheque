@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 
 public class PanelProfil extends JPanel {
 	
+	private ControllerManager cm;
+	
 	private JTextField textFieldIdentifiant;
 	private JTextField textFieldNom;
 	private JTextField textFieldPrenom;
@@ -27,10 +29,9 @@ public class PanelProfil extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelProfil() {
+	public PanelProfil(ControllerManager controller) {
 		setLayout(null);
-
-
+		this.cm = controller;
 		
 
 		JPanel panelUtilisateur = new JPanel();
@@ -47,7 +48,7 @@ public class PanelProfil extends JPanel {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				ControllerManager.logout();
+				cm.logout();
 				
 			}
 		});

@@ -15,192 +15,194 @@ import javax.swing.JPanel;
 
 public class FrameMain extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private ControllerManager ca;
+	private ControllerManager ca;
 
-    private JPanel myMenu;
-    private JPanel myDesktop;
+	private JPanel myMenu;
+	private JPanel myDesktop;
 
-    private JButton myBtAccueil=new JButton();
-    private JButton myBtLivre=new JButton();
-    private JButton myBtUtilisateurs=new JButton();
-    private JButton myBtEmprunt=new JButton();
-    private JButton myBtProfil = new JButton();
-    private JButton myBtSalle = new JButton();
-    
-    private final int ongletLargeur = 146;
-    private final int ongletHauteur = 30;
+	private JButton myBtAccueil=new JButton();
+	private JButton myBtLivre=new JButton();
+	private JButton myBtUtilisateurs=new JButton();
+	private JButton myBtEmprunt=new JButton();
+	private JButton myBtProfil = new JButton();
+	private JButton myBtSalle = new JButton();
 
-    //////////////////////////////////////////////////////
+	private final int ongletLargeur = 146;
+	private final int ongletHauteur = 30;
 
-    public FrameMain(ControllerManager controller) {
-        this.ca=controller;
+	//////////////////////////////////////////////////////
 
-        this.setTitle("Gestionnaire de Bibliotheque");
-        this.setSize(1024, 768);
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	public FrameMain(ControllerManager controller) {
+		this.ca=controller;
 
-        JPanel myGlobalPane = (JPanel) this.getContentPane();
-        myGlobalPane.setBackground(Color.GRAY);
-        myGlobalPane.setLayout(null);
+		this.setTitle("Gestionnaire de Bibliotheque");
+		this.setSize(1024, 768);
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        myMenu = new JPanel();
-        myMenu.setOpaque(false);
-        myMenu.setLayout(null);
-        myMenu.setBounds(0, 0, 1018, 30);
+		JPanel myGlobalPane = (JPanel) this.getContentPane();
+		myGlobalPane.setBackground(Color.GRAY);
+		myGlobalPane.setLayout(null);
 
-        myGlobalPane.add(myMenu);
+		myMenu = new JPanel();
+		myMenu.setOpaque(false);
+		myMenu.setLayout(null);
+		myMenu.setBounds(0, 0, 1018, 30);
 
-        this.myDesktop = new JPanel();
-        myDesktop.setOpaque(false);
-        myDesktop.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220)));
-        myDesktop.setLayout(new BorderLayout());
-        myDesktop.setBounds(10, 40, 998, 690);
+		myGlobalPane.add(myMenu);
 
-        myGlobalPane.add(myDesktop);
+		this.myDesktop = new JPanel();
+		myDesktop.setOpaque(false);
+		myDesktop.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220)));
+		myDesktop.setLayout(new BorderLayout());
+		myDesktop.setBounds(10, 40, 998, 690);
 
-        initMenu();
-    }
+		myGlobalPane.add(myDesktop);
 
-    //////////////////////////////////////////////////////
-
-    private void initMenu(){
-    	allEnabled();
-    	
-        myBtAccueil.setText("Accueil");
-        myBtAccueil.setBounds(0, 0, ongletLargeur, ongletHauteur);
-        myBtAccueil.setEnabled(false);
-        myBtAccueil.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-            	allEnabled();
-                myBtAccueil.setEnabled(false);
-
-                ca.clear();
-                ca.accueil();
-            }
-        });
-        
-        myBtUtilisateurs.setText("Utilisateur");
-        myBtUtilisateurs.setBounds(ongletLargeur*2, 0, ongletLargeur, ongletHauteur);
-        myBtUtilisateurs.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-            	allEnabled();
-                myBtUtilisateurs.setEnabled(false);
-                ca.clear();
-                ca.utilisateurs();
-            }
-
-        });
-
-        myBtEmprunt.setText("Emprunts");
-        myBtEmprunt.setBounds(ongletLargeur*3, 0, ongletLargeur, ongletHauteur);
-        myBtEmprunt.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-            	allEnabled();
-                myBtEmprunt.setEnabled(false);
-                ca.clear();
-                ca.emprunts();
-            }
-
-        });
-        
-        myMenu.add(myBtAccueil);
-        myMenu.add(myBtUtilisateurs);
-        myMenu.add(myBtEmprunt);
-        
-        myBtLivre.setText("Livres");
-        myBtLivre.setBounds(ongletLargeur, 0, ongletLargeur, ongletHauteur);
-        myBtLivre.setEnabled(true);
-        myBtLivre.addActionListener(new ActionListener(){
-
-            public void actionPerformed(ActionEvent e) {
-                allEnabled();
-                myBtLivre.setEnabled(false);
-
-                ca.clear(); 
-                ca.livre();
-            }
-
-        });
-
-        myMenu.add(myBtLivre);
-        
-        
-        myBtProfil.setText("Mon compte");
-        myBtProfil.setBounds(ongletLargeur*4, 0, ongletLargeur, ongletHauteur);
-        myBtProfil.setEnabled(true);
-        myBtProfil.addActionListener(new ActionListener(){
-
-            public void actionPerformed(ActionEvent e) {
-                allEnabled();
-                myBtProfil.setEnabled(false);
-
-                ca.clear(); 
-                ca.profil();
-            }
-
-        });
-
-        myMenu.add(myBtProfil);
-        
-        myBtProfil.setText("Salles");
-        myBtProfil.setBounds(ongletLargeur*5, 0, ongletLargeur, ongletHauteur);
-        myBtProfil.setEnabled(true);
-        myBtProfil.addActionListener(new ActionListener(){
-
-            public void actionPerformed(ActionEvent e) {
-                allEnabled();
-                myBtSalle.setEnabled(false);
-
-                ca.clear(); 
-                ca.salle();
-            }
-
-        });
-
-        myMenu.add(myBtSalle);
-        
-        /* gestion des droits */
-       switch (ca.utilisateur.getDroit()) {
-	case admin: 
-		myBtUtilisateurs.setVisible(true);
-		myBtSalle.setVisible(true);
-		break;
-		
-	case prof: 
-		myBtUtilisateurs.setVisible(false);
-		myBtSalle.setVisible(true);
-		break;
-		
-	default:
-		myBtUtilisateurs.setVisible(false);
-		myBtSalle.setVisible(false);
-		break;
+		initMenu();
 	}
-    }
 
-    //////////////////////////////////////////////////////
-    
-    private void allEnabled() {
-    	myBtAccueil.setEnabled(true);
-        myBtLivre.setEnabled(true);
-        myBtUtilisateurs.setEnabled(true);
-        myBtEmprunt.setEnabled(true);
-        myBtProfil.setEnabled(true);
-    }
-    
-    
-    //////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////
 
-    public JPanel getMenuContainer() {
-        return myMenu;
-    }
+	private void initMenu(){
+		allEnabled();
 
-    public JPanel getDesktopContainer() {
-        return myDesktop;
-    }
+		myBtAccueil.setText("Accueil");
+		myBtAccueil.setBounds(0, 0, ongletLargeur, ongletHauteur);
+		myBtAccueil.setEnabled(false);
+		myBtAccueil.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				allEnabled();
+				myBtAccueil.setEnabled(false);
+
+				ca.clear();
+				ca.accueil();
+			}
+		});
+
+		myBtUtilisateurs.setText("Utilisateur");
+		myBtUtilisateurs.setBounds(ongletLargeur*2, 0, ongletLargeur, ongletHauteur);
+		myBtUtilisateurs.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				allEnabled();
+				myBtUtilisateurs.setEnabled(false);
+				ca.clear();
+				ca.utilisateurs();
+			}
+
+		});
+
+		myBtEmprunt.setText("Emprunts");
+		myBtEmprunt.setBounds(ongletLargeur*3, 0, ongletLargeur, ongletHauteur);
+		myBtEmprunt.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				allEnabled();
+				myBtEmprunt.setEnabled(false);
+				ca.clear();
+				ca.emprunts();
+			}
+
+		});
+
+
+		myBtLivre.setText("Livres");
+		myBtLivre.setBounds(ongletLargeur, 0, ongletLargeur, ongletHauteur);
+		myBtLivre.setEnabled(true);
+		myBtLivre.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				allEnabled();
+				myBtLivre.setEnabled(false);
+
+				ca.clear(); 
+				ca.livre();
+			}
+
+		});
+
+		myBtProfil.setText("Mon compte");
+		myBtProfil.setBounds(ongletLargeur*4, 0, ongletLargeur, ongletHauteur);
+		myBtProfil.setEnabled(true);
+		myBtProfil.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				allEnabled();
+				myBtProfil.setEnabled(false);
+
+				ca.clear(); 
+				ca.profil();
+			}
+
+		});
+
+		myBtSalle.setText("Salles");
+		myBtSalle.setBounds(ongletLargeur*5, 0, ongletLargeur, ongletHauteur);
+		myBtSalle.setEnabled(true);
+		myBtSalle.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				allEnabled();
+				myBtSalle.setEnabled(false);
+
+				ca.clear(); 
+				ca.salle();
+			}
+
+		});
+
+		myMenu.add(myBtAccueil);
+		myMenu.add(myBtUtilisateurs);
+		myMenu.add(myBtEmprunt);
+		myMenu.add(myBtLivre);
+		myMenu.add(myBtProfil);
+		myMenu.add(myBtSalle);
+		
+		refreshOnglet();
+	}
+	
+		/* gestion des droits */
+	public void refreshOnglet() {
+		switch (ca.utilisateur.getDroit()) {
+		case admin: 
+			myBtUtilisateurs.setVisible(true);
+			myBtSalle.setVisible(true);
+			break;
+
+		case prof: 
+			myBtUtilisateurs.setVisible(false);
+			myBtSalle.setVisible(true);
+			break;
+
+		default:
+			myBtUtilisateurs.setVisible(false);
+			myBtSalle.setVisible(false);
+			break;
+		}
+	}
+
+	//////////////////////////////////////////////////////
+
+	private void allEnabled() {
+		myBtAccueil.setEnabled(true);
+		myBtLivre.setEnabled(true);
+		myBtUtilisateurs.setEnabled(true);
+		myBtEmprunt.setEnabled(true);
+		myBtProfil.setEnabled(true);
+		myBtSalle.setEnabled(true);
+	}
+
+
+	//////////////////////////////////////////////////////
+
+	public JPanel getMenuContainer() {
+		return myMenu;
+	}
+
+	public JPanel getDesktopContainer() {
+		return myDesktop;
+	}
 
 }

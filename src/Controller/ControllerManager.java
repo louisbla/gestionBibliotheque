@@ -68,18 +68,17 @@ public class ControllerManager {
 
 	////////////// utilisateur ///////////////////////////
 	
-	public static void login (String identifiant, String mdp) {
+	public void login (String identifiant, String mdp) {
 		if(DBManager.tryUserPassword(identifiant, mdp)) {
 			System.out.println("combinaison identifiant-password correcte");
 			utilisateur = DBManager.getUser(identifiant);
+			this.frame.refreshOnglet();
 		}
 	}
 	
-	public static void logout() {
+	public void logout() {
 		utilisateur = new Utilisateur();
+		this.frame.refreshOnglet();
 	}
 	
-	public void deconnecte() {
-		utilisateur = new Utilisateur();
-	}
 }
