@@ -183,27 +183,12 @@ public class PanelLivre extends JPanel {
         add(panel, BorderLayout.NORTH);
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-                JLabel myLbl = new JLabel();
-                panel.add(myLbl);
-                myLbl.setText("Onglet de gestion des livres");
-                myLbl.setFont(new Font("Times New Roman", Font.BOLD, 20));
-                myLbl.setForeground(Color.BLACK);
-                myLbl.setHorizontalAlignment(JLabel.CENTER);
-
-                /*textField = new JTextField();
-                textField.addKeyListener(new KeyAdapter() {
-                	@Override
-                	public void keyPressed(KeyEvent arg0) {
-                		if(arg0.getKeyCode() == 10) {
-                			ConnectionToDatabaseAndRetrieveData(textField.getText());
-            				updateModel();
-            				table.setModel(model);
-                		}
-                	}
-                });
-                textField.setToolTipText("Rechercher");
-                panel.add(textField);
-                textField.setColumns(10);*/
+        JLabel myLbl = new JLabel();
+        panel.add(myLbl);
+        myLbl.setText("Onglet de gestion des livres");
+        myLbl.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        myLbl.setForeground(Color.BLACK);
+        myLbl.setHorizontalAlignment(JLabel.CENTER);
 
         JScrollPane scrollPane = new JScrollPane();
         add(scrollPane);
@@ -268,21 +253,7 @@ public class PanelLivre extends JPanel {
 				table.setModel(model);
 			}
     	});
-/*
-    	Scanner sc = new Scanner(System.in);
-    	System.out.println("Auteur : ");
-    	String auteur = sc.nextLine();
-    	System.out.println("Titre : ");
-    	String titre = sc.nextLine();
-    	System.out.println("Titre entr� :" + titre + ":");
-    	System.out.println("Auteur entr� :" + auteur + ":");
-    	String isbn = "";
-    	String id = "";
 
-    	populateData(DBManager.searchBook(id, titre, auteur, isbn), DBManager.searchBook(id, titre, auteur, isbn));
-    	updateModel();*/
-		table.setModel(model);
-    	
     	//////////////gestion des elements admin///////////////
     	if(ControllerManager.utilisateur.getDroit().equals(Droit.admin)) {
     		btnAjouterUnLivre.setVisible(true);
@@ -333,52 +304,5 @@ public class PanelLivre extends JPanel {
 		} finally {
 			DBManager.closeDatabase();
 		}
-    }
-    
-    public void ConnectionToDatabaseAndRetrieveData(String keyword) {
-        try {
-			Statement statement = DBManager.connectDataBase().createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM oeuvre WHERE auteur LIKE \"%" + keyword + "%\" OR titre LIKE \"%" + keyword + "%\"");
-			int nbLivres = 0;
-			if(resultSet.next()) {
-        		nbLivres = resultSet.getInt(1);
-        	}
-			data = new Object[nbLivres][6];
-			System.out.println("nb de livres associe a la recherche = " + nbLivres);
-
-			statement = DBManager.connectDataBase().createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM oeuvre WHERE auteur LIKE \"%" + keyword + "%\" OR titre LIKE \"%" + keyword + "%\"");
-			System.out.println(resultSet.toString());
-			int i = 0;
-			while (resultSet.next()) {
-				data[i][0] = resultSet.getString("id_oeuvre");
-				data[i][1] = resultSet.getString("titre");
-				data[i][2] = "j";
-				data[i][3] = resultSet.getString("auteur");
-				data[i][4] = resultSet.getString("isbn");
-				if(resultSet.getBoolean("est_disponible") == true)
-					data[i][5] = "Disponible";
-				else
-					data[i][5] = "Non disponible";
-				i++;
-
-		          String author = resultSet.getString("auteur");
-		          String title = resultSet.getString("titre");
-		        }
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-
-    public JTable getTable() {
-    	return table;
-    }
-
-    public DefaultTableModel getModel() {
-    	return model;
     }
 }

@@ -123,25 +123,6 @@ public class DBManager {
     	return resultSet;
     }
 
-    public static ResultSet getBookByKeyword(String keyword) {
-    	try {
-    		try {
-				DBManager.connectDataBase();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			statement = connect.createStatement();
-			resultSet = statement
-					.executeQuery("SELECT * FROM oeuvre WHERE auteur LIKE \"%" + keyword + "%\" OR titre LIKE \"%" + keyword + "%\"");
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return resultSet;
-    }
-
     //R�cup�re les livres dans un ResultSet
     public static ResultSet getAllBook() {
     	try {
