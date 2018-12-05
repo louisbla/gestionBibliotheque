@@ -49,7 +49,8 @@ public class PanelProfil extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				cm.logout();
-				
+				controller.clear();
+				controller.profil();
 			}
 		});
 		panelUtilisateur.add(button);

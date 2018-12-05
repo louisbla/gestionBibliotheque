@@ -52,7 +52,8 @@ public class PanelProfilVisiteur extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cm.login(txtIdentifiant.getText(), txtMotDePasse.getText());
-				updateUI();
+				controller.clear();
+				controller.profil();
 			}
 		});
 		panelVisiteur.add(btnLogin);
