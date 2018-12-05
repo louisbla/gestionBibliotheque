@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -37,7 +38,7 @@ public class PanelLivre extends JPanel {
     @SuppressWarnings("serial")
 	public PanelLivre() {
     	//Database
-    	ConnectionToDatabaseAndRetrieveData();
+    	populateData(DBManager.getAllBook(), DBManager.getAllBook());
 
         this.setOpaque(false);
         setLayout(new BorderLayout(0, 0));
@@ -84,7 +85,7 @@ public class PanelLivre extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				CustomDialog dialog = new CustomDialog(new Frame());
 				dialog.setVisible(true);
-				ConnectionToDatabaseAndRetrieveData();
+				populateData(DBManager.getAllBook(), DBManager.getAllBook());
 				updateModel();
 				table.setModel(model);
 			}
@@ -111,11 +112,25 @@ public class PanelLivre extends JPanel {
 					DBManager.closeDatabase();
 				}
 
-				ConnectionToDatabaseAndRetrieveData();
+				populateData(DBManager.getAllBook(),DBManager.getAllBook());
 				updateModel();
 				table.setModel(model);
 			}
     	});
+
+    	Scanner sc = new Scanner(System.in);
+    	System.out.println("Auteur : ");
+    	String auteur = sc.nextLine();
+    	System.out.println("Titre : ");
+    	String titre = sc.nextLine();
+    	System.out.println("Titre entré :" + titre + ":");
+    	System.out.println("Auteur entré :" + auteur + ":");
+    	String isbn = "";
+    	String id = "";
+
+    	populateData(DBManager.searchBook(id, titre, auteur, isbn), DBManager.searchBook(id, titre, auteur, isbn));
+    	updateModel();
+		table.setModel(model);
     }
 
     @SuppressWarnings("serial")
@@ -130,17 +145,14 @@ public class PanelLivre extends JPanel {
         };
     }
 
-    public void ConnectionToDatabaseAndRetrieveData() {
+    public void populateData(ResultSet resultSet, ResultSet count) {
         try {
-			Statement statement = DBManager.connectDataBase().createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM livre");
 			int nbLivres = 0;
-			if(resultSet.next()) {
-        		nbLivres = resultSet.getInt(1);
-        	}
+			while (count.next()) {
+				nbLivres++;
+			}
 			data = new Object[nbLivres][6];
 
-			resultSet = DBManager.getAllBook();
 			int i = 0;
 			while (resultSet.next()) {
 				data[i][0] = resultSet.getString("id_livre");

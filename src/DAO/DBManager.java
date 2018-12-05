@@ -102,6 +102,12 @@ public class DBManager {
     //R�cup�re les utilisateur dans un ResultSet
     public static ResultSet getAllUser() {
     	try {
+    		try {
+				DBManager.connectDataBase();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			statement = connect.createStatement();
 			resultSet = statement
 			          .executeQuery("SELECT * FROM utilisateur");
@@ -116,9 +122,14 @@ public class DBManager {
     //R�cup�re les livres dans un ResultSet
     public static ResultSet getAllBook() {
     	try {
+    		try {
+				DBManager.connectDataBase();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			statement = connect.createStatement();
-			resultSet = statement
-			          .executeQuery("SELECT * FROM livre");
+			resultSet = statement.executeQuery("SELECT * FROM livre");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -139,36 +150,48 @@ public class DBManager {
     	boolean isrequestIsbn = false;
     	int index = 1;
 
-    	if (id != null) {
+    	if (!id.equals("")) {
     		request = request + requestId;
     		isRequestId = true;
     	}
-    	if (title != null && id != null) {
+    	if (!title.equals("") && !id.equals("")) {
     		request = request + " AND " + requestTitle;
     		isrequestTitle = true;
-    	} else if (title != null){
+    	} else if (!title.equals("")){
     		request = request + requestTitle;
     		isrequestTitle = true;
     	}
-    	if (author != null && (id != null || title != null)) {
+    	if (!author.equals("") && (!id.equals("") || !title.equals(""))) {
     		request = request + " AND " + requestAuthor;
     		isrequestAuthor = true;
-    	} else if (author != null){
+    	} else if (!author.equals("")){
     		request = request + requestAuthor;
     		isrequestAuthor = true;
     	}
-    	if (isbn != null && (id != null || title != null || author != null)) {
+    	if (!isbn.equals("") && (!id.equals("") || !title.equals("") || !author.equals(""))) {
     		request = request + " AND " + requestIsbn;
     		isrequestIsbn = true;
-    	} else if (isbn != null){
+    	} else if (!isbn.equals("")){
     		request = request + requestIsbn;
     		isrequestIsbn = true;
     	}
-    	if (isbn == null && id == null && title == null && author == null) {
+    	if (isbn.equals("") && id.equals("") && title.equals("") && author.equals("")) {
     		request = "SELECT * FROM livre";
     	}
 
+    	System.out.println("ID :" + isRequestId);
+    	System.out.println("AUTEUR :" + isrequestAuthor);
+    	System.out.println("TITRE :" + isrequestTitle);
+    	System.out.println("ISBN :" + isrequestIsbn);
+    	System.out.println(request);
+
     	try {
+    		try {
+				DBManager.connectDataBase();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		preparedStatement = connect.prepareStatement(request);
 
     		if (isRequestId) {
@@ -186,6 +209,8 @@ public class DBManager {
     		if (isrequestIsbn) {
     			preparedStatement.setString(index, isbn);
     		}
+
+    		System.out.println("INDEX :" + index);
     		resultSet = preparedStatement.executeQuery();
 
 		} catch (SQLException e) {
