@@ -268,4 +268,89 @@ public class DBManager {
 		}
     	return user;
 	}
+	
+	///////////////////BDD utilisateur /////////////////////////
+	
+	public static ResultSet searchUser(String Nom, String Prenom, String CodePerm, String statut, String keyword) {
+    	String requestNom = "nom=?";
+    	String requestPrenom = "prenom=?";
+    	String requestCodePerm = "codePermanent=?";
+    	String requestStatut = "droit=?";
+    	String requestKeyword = "nom LIKE \"%" + keyword + "%\" OR prenom LIKE \"%" + keyword + "%\"";
+    	String request = "SELECT * FROM utilisateur WHERE ";
+
+    	boolean isrequestTitle = false;
+    	boolean isrequestAuthor = false;
+    	boolean isrequestIsbn = false;
+    	boolean isrequestType = false;
+
+    	int index = 1;
+
+    	if (!Nom.equals("")){
+    		request = request + requestNom;
+    		isrequestTitle = true;
+    	}
+    	if (!Prenom.equals("") && !Nom.equals("")) {
+    		request = request + " AND " + requestPrenom;
+    		isrequestAuthor = true;
+    	} else if (!Prenom.equals("")){
+    		request = request + requestPrenom;
+    		isrequestAuthor = true;
+    	}
+    	if (!CodePerm.equals("") && (!Nom.equals("") || !Prenom.equals(""))) {
+    		request = request + " AND " + requestCodePerm;
+    		isrequestIsbn = true;
+    	} else if (!CodePerm.equals("")){
+    		request = request + requestCodePerm;
+    		isrequestIsbn = true;
+    	}
+    	if (!statut.equals("") && (!CodePerm.equals("") || !Nom.equals("") || !Prenom.equals(""))) {
+    		request = request + " AND " + requestStatut;
+    		isrequestType = true;
+    	} else if (!statut.equals("")){
+    		request = request + requestStatut;
+    		isrequestType = true;
+    	}
+    	if (!keyword.equals("") && (!statut.equals("") || !CodePerm.equals("") || !Nom.equals("") || !Prenom.equals(""))) {
+    		request = request + " AND " + requestKeyword;
+    	} else if (!keyword.equals("")){
+    		request = request + requestKeyword;
+    	}
+    	if (CodePerm.equals("") && Nom.equals("") && Prenom.equals("") && statut.equals("") && keyword.equals("")) {
+    		request = "SELECT * FROM utilisateur";
+    	}
+
+    	try {
+    		try {
+				connectDataBase();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		preparedStatement = connect.prepareStatement(request);
+
+    		if (isrequestTitle) {
+    			preparedStatement.setString(index, Nom);
+    			index++;
+    		}
+    		if (isrequestAuthor) {
+    			preparedStatement.setString(index, Prenom);
+    			index++;
+    		}
+    		if (isrequestIsbn) {
+    			preparedStatement.setString(index, CodePerm);
+    			index++;
+    		}
+    		if (isrequestType) {
+    			preparedStatement.setString(index, statut);
+    		}
+
+    		resultSet = preparedStatement.executeQuery();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resultSet;
+    }
 }
