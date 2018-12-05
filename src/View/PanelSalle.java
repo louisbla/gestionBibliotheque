@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -18,6 +20,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.DBManager;
+import View.dialog.CustomDialog;
+import View.dialog.RoomDialog;
 
 import javax.swing.JComboBox;
 
@@ -32,7 +36,6 @@ public class PanelSalle extends JPanel {
 	 */
 	public PanelSalle() {
 		setLayout(null);
-
 		//Database
     	populateData(DBManager.getAllRoom(), DBManager.getAllRoom());
 
@@ -69,10 +72,6 @@ public class PanelSalle extends JPanel {
 
 		scrollPane.setViewportView(table);
 
-		JButton btnReserverSalle = new JButton("Reserver Salle");
-		btnReserverSalle.setBounds(47, 546, 133, 25);
-		add(btnReserverSalle);
-
 		/*textField = new JTextField();
 		textField.setBounds(490, 187, 155, 22);
 		add(textField);
@@ -102,15 +101,15 @@ public class PanelSalle extends JPanel {
 		JComboBox<String> comboBoxVideoPro = new JComboBox<>();
 		comboBoxVideoPro.setBounds(635, 230, 68, 22);
 		comboBoxVideoPro.addItem("");
-		comboBoxVideoPro.addItem("oui");
-		comboBoxVideoPro.addItem("non");
+		comboBoxVideoPro.addItem("Oui");
+		comboBoxVideoPro.addItem("Non");
 		add(comboBoxVideoPro);
 
 		JComboBox<String> comboBoxTableau = new JComboBox<>();
 		comboBoxTableau.setBounds(635, 270, 68, 22);
 		comboBoxTableau.addItem("");
-		comboBoxTableau.addItem("oui");
-		comboBoxTableau.addItem("non");
+		comboBoxTableau.addItem("Oui");
+		comboBoxTableau.addItem("Non");
 		add(comboBoxTableau);
 
 		JButton btnRechercher = new JButton("Rechercher");
@@ -120,11 +119,32 @@ public class PanelSalle extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				populateData(DBManager.searchRoom(comboBoxSize.getSelectedItem().toString(), comboBoxVideoPro.getSelectedItem().toString(), comboBoxTableau.getSelectedItem().toString()), DBManager.searchRoom(comboBoxSize.getSelectedItem().toString(), comboBoxVideoPro.getSelectedItem().toString(), comboBoxTableau.getSelectedItem().toString()));
+				System.out.println("ComboTableau : " + comboBoxTableau.getSelectedItem().toString());
+				System.out.println("ComboProjecteur : " + comboBoxVideoPro.getSelectedItem().toString());
+				populateData(DBManager.searchRoom(comboBoxSize.getSelectedItem().toString(), comboBoxTableau.getSelectedItem().toString(), comboBoxVideoPro.getSelectedItem().toString()), DBManager.searchRoom(comboBoxSize.getSelectedItem().toString(), comboBoxTableau.getSelectedItem().toString(), comboBoxVideoPro.getSelectedItem().toString()));
 				updateModel();
 				table.setModel(model);
 			}
 		});
+
+		JButton btnAjouterUnLivre = new JButton("Ajouter une salle");
+		btnAjouterUnLivre.setBounds(200, 550, 150, 25);
+        add(btnAjouterUnLivre);
+        btnAjouterUnLivre.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RoomDialog dialog = new RoomDialog(new Frame());
+				dialog.setVisible(true);
+				populateData(DBManager.getAllRoom(), DBManager.getAllRoom());
+				updateModel();
+				table.setModel(model);
+			}
+		});
+
+        JButton btnReserverSalle = new JButton("Reserver Salle");
+        btnReserverSalle.setBounds(400, 550, 150, 25);
+		add(btnReserverSalle);
 	}
 
 	@SuppressWarnings("serial")

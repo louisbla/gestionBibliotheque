@@ -107,7 +107,7 @@ public class DBManager {
     public static void addRoom(String number, int size, int table, int projector, int available) {
     	try {
 			preparedStatement = connect
-			          .prepareStatement("INSERT INTO oeuvre VALUES (NULL, ?, ?, ?, ?, ?)");
+			          .prepareStatement("INSERT INTO salle VALUES (?, ?, ?, ?, ?)");
 		    preparedStatement.setString(1, number);
 		    preparedStatement.setInt(2, size);
 		    preparedStatement.setInt(3, table);
@@ -180,6 +180,20 @@ public class DBManager {
     }
 
     public static ResultSet searchRoom(String size, String table, String projector) {
+    	String tableString = "";
+    	if (table == "Oui") {
+    		tableString = "1";
+    	} else if (table == "Non"){
+    		tableString = "0";
+    	}
+
+    	String projectorString = "";
+    	if (projector == "Oui") {
+    		projectorString = "1";
+    	} else if (projector == "Non"){
+    		projectorString = "0";
+    	}
+
     	String requestSize = "nb_place=?";
     	String requestTable = "have_tableau=?";
     	String requestProjector = "have_projecteur=?";
@@ -229,13 +243,13 @@ public class DBManager {
     			index++;
     		}
     		if (isrequestTable) {
-    			preparedStatement.setString(index, table);
+    			preparedStatement.setString(index, tableString);
     			index++;
-    			System.out.println("table : " + table);
+    			System.out.println("table : " + tableString);
     		}
     		if (isrequestProjector) {
-    			preparedStatement.setString(index, projector);
-    			System.out.println("projector : " + projector);
+    			preparedStatement.setString(index, projectorString);
+    			System.out.println("projector : " + projectorString);
     		}
 
     		resultSet = preparedStatement.executeQuery();
