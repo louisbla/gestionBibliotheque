@@ -26,6 +26,7 @@ public class FrameMain extends JFrame {
     private JButton myBtLivre=new JButton();
     private JButton myBtUtilisateurs=new JButton();
     private JButton myBtEmprunt=new JButton();
+    private JButton myBtProfil = new JButton();
     
     private final int ongletLargeur = 146;
     private final int ongletHauteur = 30;
@@ -125,6 +126,24 @@ public class FrameMain extends JFrame {
         });
 
         myMenu.add(myBtLivre);
+        
+        
+        myBtProfil.setText("Profil");
+        myBtProfil.setBounds(147*4, 0, 146, 30);
+        myBtProfil.setEnabled(true);
+        myBtProfil.addActionListener(new ActionListener(){
+
+            public void actionPerformed(ActionEvent e) {
+                allEnabled();
+                myBtProfil.setEnabled(false);
+
+                ca.clear(); 
+                ca.profil();
+            }
+
+        });
+
+        myMenu.add(myBtProfil);
     }
 
     //////////////////////////////////////////////////////

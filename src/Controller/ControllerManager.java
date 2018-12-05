@@ -14,6 +14,7 @@ public class ControllerManager {
     private ControllerLivre cl;
     private ControllerUtilisateurs cu;
     private ControllerEmprunts ce;
+    private ControllerProfil cp;
 
     /////////////////////////////////////////////////////
 
@@ -25,7 +26,7 @@ public class ControllerManager {
         frame.setVisible(true);
         
         utilisateur = new Utilisateur();
-        login("BLAL19019408", "azerty");
+        login("BLAL19019408", "azery");
     }
 
     public void clear() {
@@ -52,6 +53,10 @@ public class ControllerManager {
 
 	public void livre() {
 		cl = new ControllerLivre(this, frame);
+	}
+	
+	public void profil() {
+		cp = new ControllerProfil(this, frame);
 	}
 
 	////////////// utilisateur ///////////////////////////
