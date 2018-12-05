@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import Controller.ControllerManager;
 import DAO.DBManager;
 import View.dialog.CustomDialog;
+import View.dialog.DialogUser;
 import user.Droit;
 
 import javax.swing.JTextPane;
@@ -258,7 +259,7 @@ public class PanelUtilisateurs extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CustomDialog dialog = new CustomDialog(new Frame());
+				DialogUser dialog = new DialogUser(new Frame());
 				dialog.setVisible(true);
 				populateData(DBManager.getAllUser(), DBManager.getAllUser());
 				updateModel();

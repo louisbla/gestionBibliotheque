@@ -54,15 +54,16 @@ public class DBManager {
     }
 
     //Ajoute un utilisateur
-    public static void addUser(String code, String firstname, String name, String password, int pay) {
+    public static void addUser(String code, String firstname, String name, String droit, String password, int pay) {
     	try {
 			preparedStatement = connect
-			          .prepareStatement("INSERT INTO utilisateur VALUES (?, ?, ?, ?, ?)");
+			          .prepareStatement("INSERT INTO utilisateur VALUES (?, ?, ?, ?, ?, ?)");
 			preparedStatement.setString(1, code);
 		    preparedStatement.setString(2, firstname);
 		    preparedStatement.setString(3, name);
-		    preparedStatement.setString(4, password);
-		    preparedStatement.setInt(5, pay);
+		    preparedStatement.setString(4, droit);
+		    preparedStatement.setString(5, password);
+		    preparedStatement.setInt(6, pay);
 		    preparedStatement.executeUpdate();
 		    System.out.println("Utilisateur ajoute");
 		} catch (SQLException e) {

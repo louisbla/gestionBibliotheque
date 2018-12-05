@@ -36,13 +36,13 @@ public class PanelProfilVisiteur extends JPanel {
 
 		txtIdentifiant = new JTextField();
 		txtIdentifiant.setBounds(251, 203, 116, 22);
-		txtIdentifiant.setText("BLAL19019408");
+		txtIdentifiant.setText("admin");
 		panelVisiteur.add(txtIdentifiant);
 		txtIdentifiant.setColumns(10);
 
 		txtMotDePasse = new JTextField();
 		txtMotDePasse.setBounds(251, 254, 116, 22);
-		txtMotDePasse.setText("azerty");
+		txtMotDePasse.setText("admin");
 		panelVisiteur.add(txtMotDePasse);
 		txtMotDePasse.setColumns(10);
 
