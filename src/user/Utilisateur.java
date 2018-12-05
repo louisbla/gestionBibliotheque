@@ -5,21 +5,21 @@ public class Utilisateur {
 	private Droit droit;
 	private String nom;
 	private String prenom;
-	private String identification;
+	private String login;
 	private String password;
-	private int solde;
+	private float solde;
 	
 	public Utilisateur() {
 		this.droit = Droit.visiteur;
 	}
 	
-	public Utilisateur(Droit d, String nom, String prenom, String id, String mdp, int s) {
+	public Utilisateur(Droit d, String nom, String prenom, String login, String mdp, float solde) {
 		this.droit = d;
 		this.nom = nom;
 		this.prenom = prenom;
-		this.identification = id;
+		this.login = login;
 		this.setPassword(mdp);
-		this.solde = s;
+		this.solde = solde;
 	}
 	
     ////////////// payement ////////////////////////
@@ -63,18 +63,18 @@ public class Utilisateur {
 	}
 
 	public String getIdentification() {
-		return identification;
+		return login;
 	}
 
 	public void setIdentification(String identification) {
-		this.identification = identification;
+		this.login = identification;
 	}
 
-	public int getSolde() {
+	public float getSolde() {
 		return solde;
 	}
 
-	public void setSolde(int solde) {
+	public void setSolde(float solde) {
 		this.solde = solde;
 	}
 

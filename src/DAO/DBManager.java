@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+import user.Droit;
+import user.Utilisateur;
+
 public class DBManager {
 
 	private static Connection connect = null;
@@ -137,4 +140,48 @@ public class DBManager {
 		}
     	return resultSet;
     }
+
+	public static boolean tryUserPassword(String identifiant, String mdp) {
+		try {
+			connectDataBase();
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM utilisateur WHERE codePermanent LIKE \""+identifiant+"\" AND password LIKE \""+mdp+"\"");
+
+			if(resultSet.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeDatabase();
+		}
+    	return false;
+	}
+
+	public static Utilisateur getUser(String identifiant) {
+		Utilisateur user = null;
+		try {
+			connectDataBase();
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM utilisateur WHERE codePermanent LIKE \""+identifiant+"\"");
+
+			if(resultSet.next()) {
+				//Droit droit = Droit.valueOf(resultSet.getString("droit"));
+				String nom = resultSet.getString("nom");
+				String prenom = resultSet.getString("prenom");
+				String login = resultSet.getString("codePermanent");
+				String mdp = resultSet.getString("password");
+				float solde = resultSet.getFloat("solde");
+				
+				user = new Utilisateur(Droit.etudiant, nom, prenom, login, mdp, solde);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeDatabase();
+		}
+    	return user;
+	}
 }
