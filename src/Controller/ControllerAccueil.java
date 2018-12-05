@@ -7,7 +7,7 @@ import View.PanelSalle;
 public class ControllerAccueil {
 
     public ControllerAccueil(ControllerManager controller, FrameMain frame) {
-        PanelAccueil p=new PanelAccueil();
+        PanelAccueil p=new PanelAccueil(controller);
     	
     	
         frame.getDesktopContainer().add(p);
