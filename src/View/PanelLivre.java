@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
+import javax.swing.ComboBoxModel;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -47,11 +48,11 @@ public class PanelLivre extends JPanel {
     private static JTable table;
     private static DefaultTableModel model;
     private static Object[][] data = new Object[0][0];
-    private JTextField textField;
-    private JTextField textField_1;
-    private JTextField textField_2;
-    private JTextField textField_3;
-    private JTextField textField_5;
+    //private JTextField textField;
+    private JTextField titleInput;
+    private JTextField authorInput;
+    private JTextField isbnInput;
+    private JTextField keywordInput;
 
     @SuppressWarnings("serial")
 	public PanelLivre() {
@@ -60,7 +61,7 @@ public class PanelLivre extends JPanel {
 
         this.setOpaque(false);
         setLayout(new BorderLayout(0, 0));
-        
+
         JPanel panel_2 = new JPanel();
         add(panel_2, BorderLayout.EAST);
         GridBagLayout gbl_panel_2 = new GridBagLayout();
@@ -69,14 +70,14 @@ public class PanelLivre extends JPanel {
         gbl_panel_2.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
         gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panel_2.setLayout(gbl_panel_2);
-        
+
         JLabel lblRechercherPar = new JLabel("Recherche");
         GridBagConstraints gbc_lblRechercherPar = new GridBagConstraints();
         gbc_lblRechercherPar.insets = new Insets(0, 0, 5, 0);
         gbc_lblRechercherPar.gridx = 1;
         gbc_lblRechercherPar.gridy = 0;
         panel_2.add(lblRechercherPar, gbc_lblRechercherPar);
-        
+
         JLabel lblNewLabel = new JLabel("Titre");
         GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
         gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
@@ -84,16 +85,16 @@ public class PanelLivre extends JPanel {
         gbc_lblNewLabel.gridx = 0;
         gbc_lblNewLabel.gridy = 2;
         panel_2.add(lblNewLabel, gbc_lblNewLabel);
-        
-        textField_1 = new JTextField();
+
+        titleInput = new JTextField();
         GridBagConstraints gbc_textField_1 = new GridBagConstraints();
         gbc_textField_1.insets = new Insets(0, 0, 5, 0);
         gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
         gbc_textField_1.gridx = 1;
         gbc_textField_1.gridy = 2;
-        panel_2.add(textField_1, gbc_textField_1);
-        textField_1.setColumns(10);
-        
+        panel_2.add(titleInput, gbc_textField_1);
+        titleInput.setColumns(10);
+
         JLabel lblNewLabel_1 = new JLabel("Auteur");
         GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
         gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
@@ -101,16 +102,16 @@ public class PanelLivre extends JPanel {
         gbc_lblNewLabel_1.gridx = 0;
         gbc_lblNewLabel_1.gridy = 3;
         panel_2.add(lblNewLabel_1, gbc_lblNewLabel_1);
-        
-        textField_2 = new JTextField();
+
+        authorInput = new JTextField();
         GridBagConstraints gbc_textField_2 = new GridBagConstraints();
         gbc_textField_2.insets = new Insets(0, 0, 5, 0);
         gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
         gbc_textField_2.gridx = 1;
         gbc_textField_2.gridy = 3;
-        panel_2.add(textField_2, gbc_textField_2);
-        textField_2.setColumns(10);
-        
+        panel_2.add(authorInput, gbc_textField_2);
+        authorInput.setColumns(10);
+
         JLabel lblNewLabel_2 = new JLabel("ISBN");
         GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
         gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
@@ -118,16 +119,16 @@ public class PanelLivre extends JPanel {
         gbc_lblNewLabel_2.gridx = 0;
         gbc_lblNewLabel_2.gridy = 4;
         panel_2.add(lblNewLabel_2, gbc_lblNewLabel_2);
-        
-        textField_3 = new JTextField();
+
+        isbnInput = new JTextField();
         GridBagConstraints gbc_textField_3 = new GridBagConstraints();
         gbc_textField_3.insets = new Insets(0, 0, 5, 0);
         gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
         gbc_textField_3.gridx = 1;
         gbc_textField_3.gridy = 4;
-        panel_2.add(textField_3, gbc_textField_3);
-        textField_3.setColumns(10);
-        
+        panel_2.add(isbnInput, gbc_textField_3);
+        isbnInput.setColumns(10);
+
         JLabel lblNewLabel_3 = new JLabel("Type");
         lblNewLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
         GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
@@ -136,16 +137,16 @@ public class PanelLivre extends JPanel {
         gbc_lblNewLabel_3.gridx = 0;
         gbc_lblNewLabel_3.gridy = 5;
         panel_2.add(lblNewLabel_3, gbc_lblNewLabel_3);
-        
-        JComboBox comboBox = new JComboBox();
-        comboBox.setModel(new DefaultComboBoxModel(new String[] {"Livre", "Periodique", "Carte", "DVD"}));
+
+        JComboBox<String> comboBox = new JComboBox<>();
+        comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Livre", "Periodique", "Carte", "DVD"}));
         GridBagConstraints gbc_comboBox = new GridBagConstraints();
         gbc_comboBox.insets = new Insets(0, 0, 5, 0);
         gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
         gbc_comboBox.gridx = 1;
         gbc_comboBox.gridy = 5;
         panel_2.add(comboBox, gbc_comboBox);
-        
+
         JLabel lblNewLabel_4 = new JLabel("Mot-clef");
         GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
         gbc_lblNewLabel_4.anchor = GridBagConstraints.EAST;
@@ -153,21 +154,30 @@ public class PanelLivre extends JPanel {
         gbc_lblNewLabel_4.gridx = 0;
         gbc_lblNewLabel_4.gridy = 6;
         panel_2.add(lblNewLabel_4, gbc_lblNewLabel_4);
-        
-        textField_5 = new JTextField();
+
+        keywordInput = new JTextField();
         GridBagConstraints gbc_textField_5 = new GridBagConstraints();
         gbc_textField_5.insets = new Insets(0, 0, 5, 0);
         gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
         gbc_textField_5.gridx = 1;
         gbc_textField_5.gridy = 6;
-        panel_2.add(textField_5, gbc_textField_5);
-        textField_5.setColumns(10);
-        
+        panel_2.add(keywordInput, gbc_textField_5);
+        keywordInput.setColumns(10);
+
         JButton btnRechercher = new JButton("Rechercher");
         GridBagConstraints gbc_btnRechercher = new GridBagConstraints();
         gbc_btnRechercher.gridx = 1;
         gbc_btnRechercher.gridy = 8;
         panel_2.add(btnRechercher, gbc_btnRechercher);
+        btnRechercher.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				populateData(DBManager.searchBook(titleInput.getText(), authorInput.getText(), isbnInput.getText(), comboBox.getSelectedItem().toString(), keywordInput.getText()), DBManager.searchBook(titleInput.getText(), authorInput.getText(), isbnInput.getText(), comboBox.getSelectedItem().toString(), keywordInput.getText()));
+				updateModel();
+				table.setModel(model);
+			}
+		});
 
         JPanel panel = new JPanel();
         add(panel, BorderLayout.NORTH);
@@ -180,7 +190,7 @@ public class PanelLivre extends JPanel {
                 myLbl.setForeground(Color.BLACK);
                 myLbl.setHorizontalAlignment(JLabel.CENTER);
 
-                textField = new JTextField();
+                /*textField = new JTextField();
                 textField.addKeyListener(new KeyAdapter() {
                 	@Override
                 	public void keyPressed(KeyEvent arg0) {
@@ -193,7 +203,7 @@ public class PanelLivre extends JPanel {
                 });
                 textField.setToolTipText("Rechercher");
                 panel.add(textField);
-                textField.setColumns(10);
+                textField.setColumns(10);*/
 
         JScrollPane scrollPane = new JScrollPane();
         add(scrollPane);

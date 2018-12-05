@@ -161,75 +161,64 @@ public class DBManager {
     	return resultSet;
     }
 
-    public static ResultSet searchBook(String id, String title, String author, String isbn, String type) {
-    	String requestId = "id_livre=?";
+    public static ResultSet searchBook(String title, String author, String isbn, String type, String keyword) {
     	String requestTitle = "titre=?";
     	String requestAuthor = "auteur=?";
     	String requestIsbn = "isbn=?";
     	String requestType = "type=?";
+    	String requestKeyword = "auteur LIKE \"%" + keyword + "%\" OR titre LIKE \"%" + keyword + "%\"";
     	String request = "SELECT * FROM oeuvre WHERE ";
-    	boolean isRequestId = false;
+
     	boolean isrequestTitle = false;
     	boolean isrequestAuthor = false;
     	boolean isrequestIsbn = false;
     	boolean isrequestType = false;
+
     	int index = 1;
 
-    	if (!id.equals("")) {
-    		request = request + requestId;
-    		isRequestId = true;
-    	}
-    	if (!title.equals("") && !id.equals("")) {
-    		request = request + " AND " + requestTitle;
-    		isrequestTitle = true;
-    	} else if (!title.equals("")){
+    	if (!title.equals("")){
     		request = request + requestTitle;
     		isrequestTitle = true;
     	}
-    	if (!author.equals("") && (!id.equals("") || !title.equals(""))) {
+    	if (!author.equals("") && !title.equals("")) {
     		request = request + " AND " + requestAuthor;
     		isrequestAuthor = true;
     	} else if (!author.equals("")){
     		request = request + requestAuthor;
     		isrequestAuthor = true;
     	}
-    	if (!isbn.equals("") && (!id.equals("") || !title.equals("") || !author.equals(""))) {
+    	if (!isbn.equals("") && (!title.equals("") || !author.equals(""))) {
     		request = request + " AND " + requestIsbn;
     		isrequestIsbn = true;
     	} else if (!isbn.equals("")){
     		request = request + requestIsbn;
     		isrequestIsbn = true;
     	}
-    	if (!type.equals("") && (!isbn.equals("") || !id.equals("") || !title.equals("") || !author.equals(""))) {
+    	if (!type.equals("") && (!isbn.equals("") || !title.equals("") || !author.equals(""))) {
     		request = request + " AND " + requestType;
     		isrequestType = true;
     	} else if (!type.equals("")){
     		request = request + requestType;
     		isrequestType = true;
     	}
-    	if (isbn.equals("") && id.equals("") && title.equals("") && author.equals("") && type.equals("")) {
+    	if (!keyword.equals("") && (!type.equals("") || !isbn.equals("") || !title.equals("") || !author.equals(""))) {
+    		request = request + " AND " + requestKeyword;
+    	} else if (!keyword.equals("")){
+    		request = request + requestKeyword;
+    	}
+    	if (isbn.equals("") && title.equals("") && author.equals("") && type.equals("") && keyword.equals("")) {
     		request = "SELECT * FROM oeuvre";
     	}
 
-    	/*System.out.println("ID :" + isRequestId);
-    	System.out.println("AUTEUR :" + isrequestAuthor);
-    	System.out.println("TITRE :" + isrequestTitle);
-    	System.out.println("ISBN :" + isrequestIsbn);
-    	System.out.println(request);*/
-
     	try {
     		try {
-				DBManager.connectDataBase();
+				connectDataBase();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     		preparedStatement = connect.prepareStatement(request);
 
-    		if (isRequestId) {
-    			preparedStatement.setString(index, id);
-    			index++;
-    		}
     		if (isrequestTitle) {
     			preparedStatement.setString(index, title);
     			index++;
@@ -246,7 +235,6 @@ public class DBManager {
     			preparedStatement.setString(index, type);
     		}
 
-    		//System.out.println("INDEX :" + index);
     		resultSet = preparedStatement.executeQuery();
 
 		} catch (SQLException e) {
