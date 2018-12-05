@@ -54,15 +54,16 @@ public class DBManager {
     }
 
     //Ajoute un utilisateur
-    public static void addUser(String code, String firstname, String name, String password, int pay) {
+    public static void addUser(String code, String firstname, String name, String droit, String password, int pay) {
     	try {
 			preparedStatement = connect
-			          .prepareStatement("INSERT INTO utilisateur VALUES (?, ?, ?, ?, ?)");
+			          .prepareStatement("INSERT INTO utilisateur VALUES (?, ?, ?, ?, ?, ?)");
 			preparedStatement.setString(1, code);
 		    preparedStatement.setString(2, firstname);
 		    preparedStatement.setString(3, name);
-		    preparedStatement.setString(4, password);
-		    preparedStatement.setInt(5, pay);
+		    preparedStatement.setString(4, droit);
+		    preparedStatement.setString(5, password);
+		    preparedStatement.setInt(6, pay);
 		    preparedStatement.executeUpdate();
 		    System.out.println("Utilisateur ajoute");
 		} catch (SQLException e) {
@@ -96,6 +97,19 @@ public class DBManager {
 			preparedStatement = connect
 				      .prepareStatement("DELETE FROM oeuvre WHERE id_oeuvre= ?;");
 			preparedStatement.setInt(1, id);
+		    preparedStatement.executeUpdate();
+    	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+  //Supprime un utilisateur
+    public static void deleteUser(String code) {
+    	try {
+			preparedStatement = connect
+				      .prepareStatement("DELETE FROM utilisateur WHERE codePermanent= ?;");
+			preparedStatement.setString(1, code);
 		    preparedStatement.executeUpdate();
     	} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -304,4 +318,89 @@ public class DBManager {
 		}
     	return nbEmprunts;
 	}
+	
+	///////////////////BDD utilisateur /////////////////////////
+	
+	public static ResultSet searchUser(String Nom, String Prenom, String CodePerm, String statut, String keyword) {
+    	String requestNom = "nom=?";
+    	String requestPrenom = "prenom=?";
+    	String requestCodePerm = "codePermanent=?";
+    	String requestStatut = "droit=?";
+    	String requestKeyword = "nom LIKE \"%" + keyword + "%\" OR prenom LIKE \"%" + keyword + "%\"";
+    	String request = "SELECT * FROM utilisateur WHERE ";
+
+    	boolean isrequestTitle = false;
+    	boolean isrequestAuthor = false;
+    	boolean isrequestIsbn = false;
+    	boolean isrequestType = false;
+
+    	int index = 1;
+
+    	if (!Nom.equals("")){
+    		request = request + requestNom;
+    		isrequestTitle = true;
+    	}
+    	if (!Prenom.equals("") && !Nom.equals("")) {
+    		request = request + " AND " + requestPrenom;
+    		isrequestAuthor = true;
+    	} else if (!Prenom.equals("")){
+    		request = request + requestPrenom;
+    		isrequestAuthor = true;
+    	}
+    	if (!CodePerm.equals("") && (!Nom.equals("") || !Prenom.equals(""))) {
+    		request = request + " AND " + requestCodePerm;
+    		isrequestIsbn = true;
+    	} else if (!CodePerm.equals("")){
+    		request = request + requestCodePerm;
+    		isrequestIsbn = true;
+    	}
+    	if (!statut.equals("") && (!CodePerm.equals("") || !Nom.equals("") || !Prenom.equals(""))) {
+    		request = request + " AND " + requestStatut;
+    		isrequestType = true;
+    	} else if (!statut.equals("")){
+    		request = request + requestStatut;
+    		isrequestType = true;
+    	}
+    	if (!keyword.equals("") && (!statut.equals("") || !CodePerm.equals("") || !Nom.equals("") || !Prenom.equals(""))) {
+    		request = request + " AND " + requestKeyword;
+    	} else if (!keyword.equals("")){
+    		request = request + requestKeyword;
+    	}
+    	if (CodePerm.equals("") && Nom.equals("") && Prenom.equals("") && statut.equals("") && keyword.equals("")) {
+    		request = "SELECT * FROM utilisateur";
+    	}
+
+    	try {
+    		try {
+				connectDataBase();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		preparedStatement = connect.prepareStatement(request);
+
+    		if (isrequestTitle) {
+    			preparedStatement.setString(index, Nom);
+    			index++;
+    		}
+    		if (isrequestAuthor) {
+    			preparedStatement.setString(index, Prenom);
+    			index++;
+    		}
+    		if (isrequestIsbn) {
+    			preparedStatement.setString(index, CodePerm);
+    			index++;
+    		}
+    		if (isrequestType) {
+    			preparedStatement.setString(index, statut);
+    		}
+
+    		resultSet = preparedStatement.executeQuery();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resultSet;
+    }
 }

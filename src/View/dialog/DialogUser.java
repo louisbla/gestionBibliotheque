@@ -1,29 +1,31 @@
 package View.dialog;
 
-import javax.swing.JOptionPane;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import Controller.ControllerLivre;
 import DAO.DBManager;
 import View.PanelLivre;
 
-import java.beans.*; //property change stuff
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.awt.*;
-import java.awt.event.*;
+public class DialogUser extends JDialog implements ActionListener, PropertyChangeListener {
 
-/* 1.4 example used by DialogDemo.java. */
-public class CustomDialog extends JDialog
-                   implements ActionListener,
-                              PropertyChangeListener {
-    private String titleText = null;
-    private JTextField titleField;
-    private JTextField auteurField;
-    private JTextField isbnField;
+	private String titleText = null;
+    private JTextField nomField;
+    private JTextField prenomField;
+    private JTextField codePerm;
+    private JTextField passwordField;
 
     private JComboBox<String> comboBox = new JComboBox<>();
 
@@ -34,35 +36,32 @@ public class CustomDialog extends JDialog
 
     private String btnString1 = "Enter";
     private String btnString2 = "Cancel";
-
-    /**
-     * Returns null if the typed string was invalid;
-     * otherwise, returns the string as the user entered it.
-     */
+    
     public String getValidatedText() {
         return titleText;
     }
 
     /** Creates the reusable dialog. */
-    public CustomDialog(Frame aFrame) {
+    public DialogUser(Frame aFrame) {
         super(aFrame, true);
+        
+        setBounds(500, 400, 450, 350);
 
-        setTitle("Ajouter une oeuvre");
-        setBounds(500, 400, 450, 300);
+        nomField = new JTextField(10);
+        prenomField = new JTextField(10);
+        codePerm = new JTextField(10);
+        passwordField = new JTextField(10);
 
-        titleField = new JTextField(10);
-        auteurField = new JTextField(10);
-        isbnField = new JTextField(10);
-
-        comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Livre", "Periodique", "Carte", "DVD"}));
+        comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"admin", "professeur", "etudiant"}));
 
         //Create an array of the text and components to be displayed.
-        String msgString1 = "Titre du livre : ";
-        String msgString2 = "Auteur :";
-        String msgString3 = "N° ISBN :";
-        String msgString4 = "Type :";
+        String msgString1 = "Nom : ";
+        String msgString2 = "Prenom :";
+        String msgString3 = "Code Permanent :";
+        String msgString4 = "Mot de Passe";
+        String msgString5 = "statut :";
 
-        Object[] array = {msgString1, titleField, msgString2, auteurField, msgString3, isbnField, msgString4, comboBox};
+        Object[] array = {msgString1, nomField, msgString2, prenomField, msgString3, codePerm,msgString4, passwordField, msgString5, comboBox};
 
         //Create an array specifying the number of dialog buttons
         //and their text.
@@ -96,12 +95,12 @@ public class CustomDialog extends JDialog
         //Ensure the text field always gets the first focus.
         addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent ce) {
-            	titleField.requestFocusInWindow();
+            	nomField.requestFocusInWindow();
             }
         });
 
         //Register an event handler that puts the text into the option pane.
-        titleField.addActionListener(this);
+        nomField.addActionListener(this);
 
         //Register an event handler that reacts to option pane state changes.
         optionPane.addPropertyChangeListener(this);
@@ -135,13 +134,13 @@ public class CustomDialog extends JDialog
                     JOptionPane.UNINITIALIZED_VALUE);
 
             if (btnString1.equals(value)) {
-                    titleText = titleField.getText();
+                    titleText = nomField.getText();
                 String ucText = titleText.toUpperCase();
-                if (!titleField.getText().equals("") && !auteurField.getText().equals("") && !isbnField.getText().equals("")) {
+                if (!nomField.getText().equals("") && !prenomField.getText().equals("") && !codePerm.getText().equals("")) {
                     //we're done; clear and dismiss the dialog
                 	try {
 						DBManager.connectDataBase();
-						DBManager.addBook(isbnField.getText(), auteurField.getText(), titleField.getText(), comboBox.getSelectedItem().toString(), 1);
+						DBManager.addUser(codePerm.getText(), prenomField.getText(), nomField.getText(), comboBox.getSelectedItem().toString(), passwordField.getText(), 0);
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -151,14 +150,14 @@ public class CustomDialog extends JDialog
                     clearAndHide();
                 } else {
                     //text was invalid
-                	titleField.selectAll();
+                	nomField.selectAll();
                     JOptionPane.showMessageDialog(
-                                    CustomDialog.this,
+                                    DialogUser.this,
                                     "Veuillez entrer toutes les informations",
                                     "Erreur",
                                     JOptionPane.ERROR_MESSAGE);
                     titleText = null;
-                    titleField.requestFocusInWindow();
+                    nomField.requestFocusInWindow();
                 }
             } else { //user closed dialog or clicked cancel
                 clearAndHide();
@@ -168,7 +167,7 @@ public class CustomDialog extends JDialog
 
     /** This method clears the dialog and hides it. */
     public void clearAndHide() {
-    	titleField.setText(null);
+    	nomField.setText(null);
         setVisible(false);
     }
 }
