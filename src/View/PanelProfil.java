@@ -17,8 +17,9 @@ import user.Droit;
 import javax.swing.JLabel;
 
 public class PanelProfil extends JPanel {
-	private JTextField txtIdentifiant;
-	private JTextField txtMotDePasse;
+	
+	private ControllerManager cm;
+	
 	private JTextField textFieldIdentifiant;
 	private JTextField textFieldNom;
 	private JTextField textFieldPrenom;
@@ -28,44 +29,10 @@ public class PanelProfil extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelProfil() {
+	public PanelProfil(ControllerManager controller) {
 		setLayout(null);
-
-
-		JPanel panelVisiteur = new JPanel();
-		panelVisiteur.setBounds(12, 13, 898, 603);
-		add(panelVisiteur);
-		panelVisiteur.setLayout(null);
-
+		this.cm = controller;
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(251, 99, 364, 43);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel.setText("Vous \u00EAtes connecte en tant que " + ControllerManager.utilisateur.getDroit());
-		panelVisiteur.add(lblNewLabel);
-
-		txtIdentifiant = new JTextField();
-		txtIdentifiant.setBounds(251, 203, 116, 22);
-		txtIdentifiant.setText("BLAL19019408");
-		panelVisiteur.add(txtIdentifiant);
-		txtIdentifiant.setColumns(10);
-
-		txtMotDePasse = new JTextField();
-		txtMotDePasse.setBounds(251, 254, 116, 22);
-		txtMotDePasse.setText("azerty");
-		panelVisiteur.add(txtMotDePasse);
-		txtMotDePasse.setColumns(10);
-
-		JButton btnLogin = new JButton("login");
-		btnLogin.setBounds(251, 307, 97, 25);
-		btnLogin.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ControllerManager.login(txtIdentifiant.getText(), txtMotDePasse.getText());
-				updateUI();
-			}
-		});
-		panelVisiteur.add(btnLogin);
 
 		JPanel panelUtilisateur = new JPanel();
 		panelUtilisateur.setBounds(12, 13, 898, 603);
@@ -81,7 +48,7 @@ public class PanelProfil extends JPanel {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				ControllerManager.logout();
+				cm.logout();
 				
 			}
 		});
@@ -158,14 +125,6 @@ public class PanelProfil extends JPanel {
 		textFieldSolde.setText(Float.toString(ControllerManager.utilisateur.getSolde()));
 		panel.add(textFieldSolde);
 		textFieldSolde.setColumns(10);
-		
-		if( ControllerManager.utilisateur.getDroit().equals(Droit.visiteur)) {
-			panelVisiteur.setVisible(true);
-			panelUtilisateur.setVisible(false);
-		}else {
-			panelVisiteur.setVisible(false);
-			panelUtilisateur.setVisible(true);
-		}
 
 	}
 }

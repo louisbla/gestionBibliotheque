@@ -15,6 +15,7 @@ public class ControllerManager {
     private ControllerUtilisateurs cu;
     private ControllerEmprunts ce;
     private ControllerProfil cp;
+    private ControllerSalle cs;
 
     /////////////////////////////////////////////////////
 
@@ -37,6 +38,7 @@ public class ControllerManager {
 		cl = null;
 		cu = null;
 		ce = null;
+		cs = null;
 	}
     /////////////////////////////////////////////////////
 
@@ -59,21 +61,24 @@ public class ControllerManager {
 	public void profil() {
 		cp = new ControllerProfil(this, frame);
 	}
+	
+	public void salle() {
+		cs = new ControllerSalle(this, frame);
+	}
 
 	////////////// utilisateur ///////////////////////////
 	
-	public static void login (String identifiant, String mdp) {
+	public void login (String identifiant, String mdp) {
 		if(DBManager.tryUserPassword(identifiant, mdp)) {
 			System.out.println("combinaison identifiant-password correcte");
 			utilisateur = DBManager.getUser(identifiant);
+			this.frame.refreshOnglet();
 		}
 	}
 	
-	public static void logout() {
+	public void logout() {
 		utilisateur = new Utilisateur();
+		this.frame.refreshOnglet();
 	}
 	
-	public void deconnecte() {
-		utilisateur = new Utilisateur();
-	}
 }

@@ -27,7 +27,7 @@ public class DBManager {
     		Class.forName("com.mysql.jdbc.Driver");
 
         	connect = DriverManager
-        	          .getConnection("jdbc:mysql://localhost:3306/bibliotheque2?autoReconnect=true&useSSL=false","root", "");
+        	          .getConnection("jdbc:mysql://localhost:3306/bibliotheque2?autoReconnect=true&useSSL=false","root", "root");
         	System.out.println("Database is connected");
     	} catch (Exception e) {
     		e.printStackTrace();
