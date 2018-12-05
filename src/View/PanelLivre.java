@@ -8,8 +8,6 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,7 +17,6 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -37,7 +34,8 @@ public class PanelLivre extends JPanel {
     private static DefaultTableModel model;
     private static Object[][] data = new Object[0][0];
 
-    public PanelLivre() {
+    @SuppressWarnings("serial")
+	public PanelLivre() {
     	//Database
     	ConnectionToDatabaseAndRetrieveData();
 
@@ -99,10 +97,19 @@ public class PanelLivre extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int line = table.getSelectedRow();
-				Object obj = table.getModel().getValueAt(table.getSelectedRow(), 0);
+				Object obj = table.getModel().getValueAt(line, 0);
 
 				System.out.println("Delete livre id=" + obj);
-				DBManager.deleteBook(Integer.parseInt(obj.toString()));
+
+				try {
+					DBManager.connectDataBase();
+					DBManager.deleteBook(Integer.parseInt(obj.toString()));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					DBManager.closeDatabase();
+				}
 
 				ConnectionToDatabaseAndRetrieveData();
 				updateModel();
@@ -111,7 +118,8 @@ public class PanelLivre extends JPanel {
     	});
     }
 
-    public void updateModel() {
+    @SuppressWarnings("serial")
+	public void updateModel() {
     	model = new DefaultTableModel(data, new String[] {"id", "Titre", "Sous-titre", "Auteur", "ISBN", "Disponibilit\u00E9"}) {
             boolean[] columnEditables = new boolean[] {
             	false, false, false, false, false, false
@@ -132,8 +140,7 @@ public class PanelLivre extends JPanel {
         	}
 			data = new Object[nbLivres][6];
 
-			statement = DBManager.connectDataBase().createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM livre");
+			resultSet = DBManager.getAllBook();
 			int i = 0;
 			while (resultSet.next()) {
 				data[i][0] = resultSet.getString("id_livre");
@@ -146,24 +153,15 @@ public class PanelLivre extends JPanel {
 				else
 					data[i][5] = "Non disponible";
 				i++;
-
-		          String author = resultSet.getString("auteur");
-		          String title = resultSet.getString("titre");
-		        }
+		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			DBManager.closeDatabase();
 		}
-    }
-
-    public JTable getTable() {
-    	return table;
-    }
-
-    public DefaultTableModel getModel() {
-    	return model;
     }
 }
