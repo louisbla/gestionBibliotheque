@@ -27,9 +27,11 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.ControllerManager;
 import DAO.DBManager;
 import View.dialog.CustomDialog;
 import javafx.scene.input.KeyCode;
+import user.Droit;
 
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
@@ -129,6 +131,13 @@ public class PanelLivre extends JPanel {
 				table.setModel(model);
 			}
     	});
+    	
+    	//////////////gestion des elements admin///////////////
+    	if(ControllerManager.utilisateur.getDroit().equals(Droit.admin)) {
+    		btnAjouterUnLivre.setVisible(true);
+    	}else {
+    		btnAjouterUnLivre.setVisible(false);
+    	}
     }
 
     public void updateModel() {
