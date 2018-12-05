@@ -3,6 +3,8 @@ package View;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -10,7 +12,9 @@ import java.awt.Canvas;
 import java.awt.Button;
 
 import Controller.ControllerManager;
+import DAO.DBManager;
 import user.Droit;
+import javax.swing.JLabel;
 
 public class PanelProfil extends JPanel {
 	private JTextField txtIdentifiant;
@@ -33,28 +37,34 @@ public class PanelProfil extends JPanel {
 		add(panelVisiteur);
 		panelVisiteur.setLayout(null);
 
-		JTextPane txtpnVoustesEn = new JTextPane();
-		txtpnVoustesEn.setBounds(251, 99, 364, 43);
-		txtpnVoustesEn.setForeground(new Color(0, 0, 0));
-		txtpnVoustesEn.setToolTipText("");
-		txtpnVoustesEn.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		txtpnVoustesEn.setText("Vous \u00EAtes en mode visiteur");
-		panelVisiteur.add(txtpnVoustesEn);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(251, 99, 364, 43);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel.setText("Vous \u00EAtes connecte en tant que " + ControllerManager.utilisateur.getDroit());
+		panelVisiteur.add(lblNewLabel);
 
 		txtIdentifiant = new JTextField();
 		txtIdentifiant.setBounds(251, 203, 116, 22);
-		txtIdentifiant.setText("identifiant");
+		txtIdentifiant.setText("BLAL19019408");
 		panelVisiteur.add(txtIdentifiant);
 		txtIdentifiant.setColumns(10);
 
 		txtMotDePasse = new JTextField();
 		txtMotDePasse.setBounds(251, 254, 116, 22);
-		txtMotDePasse.setText("mot de passe");
+		txtMotDePasse.setText("azerty");
 		panelVisiteur.add(txtMotDePasse);
 		txtMotDePasse.setColumns(10);
 
 		JButton btnLogin = new JButton("login");
 		btnLogin.setBounds(251, 307, 97, 25);
+		btnLogin.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ControllerManager.login(txtIdentifiant.getText(), txtMotDePasse.getText());
+				updateUI();
+			}
+		});
 		panelVisiteur.add(btnLogin);
 
 		JPanel panelUtilisateur = new JPanel();
@@ -68,6 +78,13 @@ public class PanelProfil extends JPanel {
 
 		Button button = new Button("Deconnexion");
 		button.setBounds(564, 254, 105, 24);
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ControllerManager.logout();
+				
+			}
+		});
 		panelUtilisateur.add(button);
 
 		JTextPane txtpnProfilUtilisateur = new JTextPane();
@@ -110,30 +127,35 @@ public class PanelProfil extends JPanel {
 		textFieldIdentifiant = new JTextField();
 		textFieldIdentifiant.setEditable(false);
 		textFieldIdentifiant.setBounds(197, 42, 116, 22);
+		textFieldIdentifiant.setText(ControllerManager.utilisateur.getIdentification());
 		panel.add(textFieldIdentifiant);
 		textFieldIdentifiant.setColumns(10);
 
 		textFieldNom = new JTextField();
 		textFieldNom.setEditable(false);
 		textFieldNom.setBounds(197, 95, 116, 22);
+		textFieldNom.setText(ControllerManager.utilisateur.getNom());
 		panel.add(textFieldNom);
 		textFieldNom.setColumns(10);
 
 		textFieldPrenom = new JTextField();
 		textFieldPrenom.setEditable(false);
 		textFieldPrenom.setBounds(197, 130, 116, 22);
+		textFieldPrenom.setText(ControllerManager.utilisateur.getPrenom());
 		panel.add(textFieldPrenom);
 		textFieldPrenom.setColumns(10);
 
 		textFieldStatut = new JTextField();
 		textFieldStatut.setEditable(false);
 		textFieldStatut.setBounds(197, 203, 116, 22);
+		textFieldStatut.setText(ControllerManager.utilisateur.getDroit().toString());
 		panel.add(textFieldStatut);
 		textFieldStatut.setColumns(10);
 
 		textFieldSolde = new JTextField();
 		textFieldSolde.setEditable(false);
 		textFieldSolde.setBounds(197, 252, 116, 22);
+		textFieldSolde.setText(Float.toString(ControllerManager.utilisateur.getSolde()));
 		panel.add(textFieldSolde);
 		textFieldSolde.setColumns(10);
 		
