@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 03 déc. 2018 à 20:38
--- Version du serveur :  5.7.21
--- Version de PHP :  7.2.4
+-- Généré le :  mar. 04 déc. 2018 à 23:43
+-- Version du serveur :  5.7.23
+-- Version de PHP :  7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -41,25 +41,41 @@ CREATE TABLE IF NOT EXISTS `emprunt` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `livre`
+-- Structure de la table `oeuvre`
 --
 
-DROP TABLE IF EXISTS `livre`;
-CREATE TABLE IF NOT EXISTS `livre` (
-  `id_livre` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `oeuvre`;
+CREATE TABLE IF NOT EXISTS `oeuvre` (
+  `id_oeuvre` int(11) NOT NULL AUTO_INCREMENT,
   `isbn` varchar(32) NOT NULL,
   `auteur` varchar(32) NOT NULL,
   `titre` varchar(128) NOT NULL,
+  `type` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `est_disponible` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id_livre`)
+  PRIMARY KEY (`id_oeuvre`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `livre`
+-- Déchargement des données de la table `oeuvre`
 --
 
-INSERT INTO `livre` (`id_livre`, `isbn`, `auteur`, `titre`, `est_disponible`) VALUES
-(1, '852863', 'J K Rowling', 'Harry Potter à l\'école des sorciers', 1);
+INSERT INTO `oeuvre` (`id_oeuvre`, `isbn`, `auteur`, `titre`, `type`, `est_disponible`) VALUES
+(1, '852863', 'J K Rowling', 'Harry Potter à l\'école des sorciers', 'Livre', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `salle`
+--
+
+DROP TABLE IF EXISTS `salle`;
+CREATE TABLE IF NOT EXISTS `salle` (
+  `numero_salle` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `nb_place` int(8) NOT NULL,
+  `have_tableau` tinyint(1) NOT NULL DEFAULT '0',
+  `have_projecteur` tinyint(1) NOT NULL DEFAULT '0',
+  `is_disponible` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -72,6 +88,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `codePermanent` varchar(32) NOT NULL,
   `prenom` varchar(32) NOT NULL,
   `nom` varchar(32) NOT NULL,
+  `droit` varchar(16) NOT NULL,
   `password` varchar(32) NOT NULL,
   `solde` int(11) NOT NULL,
   PRIMARY KEY (`codePermanent`)
@@ -81,8 +98,11 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 -- Déchargement des données de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`codePermanent`, `prenom`, `nom`, `password`, `solde`) VALUES
-('BLAL19019408', 'Louis', 'Blasselle', 'azerty', 0);
+INSERT INTO `utilisateur` (`codePermanent`, `prenom`, `nom`, `droit`, `password`, `solde`) VALUES
+('BLAL19019408', 'Louis', 'Blasselle', 'etudiant', 'azerty', 0),
+('MANB22079601', 'Benoît', 'MANHES', 'etudiant', '1234', 5),
+('WANB01010101', 'Bob', 'WANSKI', 'professeur', 'wanski', 15),
+('THEP20047001', 'Patricia', 'THEZE', 'admin', 'theze', 50);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
