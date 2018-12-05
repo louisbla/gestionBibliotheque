@@ -29,12 +29,9 @@ import javax.swing.table.DefaultTableModel;
 import Controller.ControllerManager;
 import DAO.DBManager;
 import View.dialog.CustomDialog;
-import javafx.scene.input.KeyCode;
 import user.Droit;
 
 import javax.swing.JTextField;
-import java.awt.event.KeyAdapter;
-import java.awt.GridLayout;
 import javax.swing.SwingConstants;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -206,6 +203,7 @@ public class PanelLivre extends JPanel {
         table.getColumnModel().getColumn(3).setResizable(false);
         table.getColumnModel().getColumn(4).setResizable(false);
         table.getColumnModel().getColumn(5).setResizable(false);
+        table.getColumnModel().getColumn(6).setResizable(false);
         table.setBounds(0, 0, 500, 90);
 
         scrollPane.setViewportView(table);
@@ -264,9 +262,9 @@ public class PanelLivre extends JPanel {
 
     @SuppressWarnings("serial")
 	public void updateModel() {
-    	model = new DefaultTableModel(data, new String[] {"id", "Titre", "Sous-titre", "Auteur", "ISBN", "Disponibilit\u00E9"}) {
+    	model = new DefaultTableModel(data, new String[] {"id", "Titre", "Sous-titre", "Auteur", "ISBN", "Type", "Disponibilit\u00E9"}) {
             boolean[] columnEditables = new boolean[] {
-            	false, false, false, false, false, false
+            	false, false, false, false, false, false, false
             };
             public boolean isCellEditable(int row, int column) {
             	return columnEditables[column];
@@ -280,7 +278,7 @@ public class PanelLivre extends JPanel {
 			while (count.next()) {
 				nbLivres++;
 			}
-			data = new Object[nbLivres][6];
+			data = new Object[nbLivres][7];
 
 			int i = 0;
 			while (resultSet.next()) {
@@ -289,10 +287,11 @@ public class PanelLivre extends JPanel {
 				data[i][2] = "j";
 				data[i][3] = resultSet.getString("auteur");
 				data[i][4] = resultSet.getString("isbn");
+				data[i][5] = resultSet.getString("type");
 				if(resultSet.getBoolean("est_disponible") == true)
-					data[i][5] = "Disponible";
+					data[i][6] = "Disponible";
 				else
-					data[i][5] = "Non disponible";
+					data[i][6] = "Non disponible";
 				i++;
 		    }
 		} catch (SQLException e) {

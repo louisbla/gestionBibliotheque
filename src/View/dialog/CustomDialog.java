@@ -1,6 +1,8 @@
 package View.dialog;
 
 import javax.swing.JOptionPane;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
 
@@ -22,6 +24,8 @@ public class CustomDialog extends JDialog
     private JTextField titleField;
     private JTextField auteurField;
     private JTextField isbnField;
+
+    private JComboBox<String> comboBox = new JComboBox<>();
 
     private PanelLivre dd;
 
@@ -50,12 +54,15 @@ public class CustomDialog extends JDialog
         auteurField = new JTextField(10);
         isbnField = new JTextField(10);
 
+        comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Livre", "Periodique", "Carte", "DVD"}));
+
         //Create an array of the text and components to be displayed.
         String msgString1 = "Titre du livre : ";
         String msgString2 = "Auteur :";
         String msgString3 = "N° ISBN :";
+        String msgString4 = "Type :";
 
-        Object[] array = {msgString1, titleField, msgString2, auteurField, msgString3, isbnField};
+        Object[] array = {msgString1, titleField, msgString2, auteurField, msgString3, isbnField, msgString4, comboBox};
 
         //Create an array specifying the number of dialog buttons
         //and their text.
@@ -134,7 +141,7 @@ public class CustomDialog extends JDialog
                     //we're done; clear and dismiss the dialog
                 	try {
 						DBManager.connectDataBase();
-						DBManager.addBook(isbnField.getText(), auteurField.getText(), titleField.getText(), "Livre", 1);
+						DBManager.addBook(isbnField.getText(), auteurField.getText(), titleField.getText(), comboBox.getSelectedItem().toString(), 1);
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
