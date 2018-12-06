@@ -195,7 +195,7 @@ public class PanelLivre extends JPanel {
 
         JLabel myLbl = new JLabel();
         titlePanel.add(myLbl);
-        myLbl.setText("GESTION DES OEUVRES");
+        myLbl.setText("RECHERCHER DES OEUVRES");
         myLbl.setFont(new Font(null, 0, 20));
         myLbl.setForeground(Color.BLACK);
         myLbl.setHorizontalAlignment(JLabel.CENTER);

@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 public class FrameMain extends JFrame {
 
@@ -39,26 +40,23 @@ public class FrameMain extends JFrame {
 
 		this.setTitle("Gestionnaire de Bibliotheque");
 		this.setSize(1024, 768);
-		this.setResizable(false);
+		this.setResizable(true);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		JPanel myGlobalPane = (JPanel) this.getContentPane();
 		myGlobalPane.setBackground(Color.GRAY);
-		myGlobalPane.setLayout(null);
+		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		myMenu = new JPanel();
 		myMenu.setOpaque(false);
-		myMenu.setLayout(null);
-		myMenu.setBounds(0, 0, 1018, 30);
 
-		myGlobalPane.add(myMenu);
+		myGlobalPane.add(myMenu, BorderLayout.NORTH);
 
 		this.myDesktop = new JPanel();
 		myDesktop.setOpaque(false);
 		myDesktop.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220)));
 		myDesktop.setLayout(new BorderLayout());
-		myDesktop.setBounds(10, 40, 998, 690);
 
 		myGlobalPane.add(myDesktop);
 
@@ -71,7 +69,6 @@ public class FrameMain extends JFrame {
 		allEnabled();
 
 		myBtAccueil.setText("ACCUEIL");
-		myBtAccueil.setBounds(0, 0, ongletLargeur, ongletHauteur);
 		myBtAccueil.setEnabled(false);
 		myBtAccueil.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -84,7 +81,6 @@ public class FrameMain extends JFrame {
 		});
 
 		myBtUtilisateurs.setText("UTILISATEURS");
-		myBtUtilisateurs.setBounds(ongletLargeur*4, 0, ongletLargeur, ongletHauteur);
 		myBtUtilisateurs.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				allEnabled();
@@ -95,51 +91,7 @@ public class FrameMain extends JFrame {
 
 		});
 
-		myBtEmprunt.setText("EMPRUNTS");
-		myBtEmprunt.setBounds(ongletLargeur*2, 0, ongletLargeur, ongletHauteur);
-		myBtEmprunt.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				allEnabled();
-				myBtEmprunt.setEnabled(false);
-				ca.clear();
-				ca.emprunts();
-			}
-
-		});
-
-
-		myBtLivre.setText("OEUVRES");
-		myBtLivre.setBounds(ongletLargeur, 0, ongletLargeur, ongletHauteur);
-		myBtLivre.setEnabled(true);
-		myBtLivre.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				allEnabled();
-				myBtLivre.setEnabled(false);
-
-				ca.clear();
-				ca.livre();
-			}
-
-		});
-
-		myBtProfil.setText("MON COMPTE");
-		myBtProfil.setBounds(ongletLargeur*3, 0, ongletLargeur, ongletHauteur);
-		myBtProfil.setEnabled(true);
-		myBtProfil.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				allEnabled();
-				myBtProfil.setEnabled(false);
-
-				ca.clear();
-				ca.profil();
-			}
-
-		});
-
 		myBtSalle.setText("SALLES");
-		myBtSalle.setBounds(ongletLargeur*5, 0, ongletLargeur, ongletHauteur);
 		myBtSalle.setEnabled(true);
 		myBtSalle.addActionListener(new ActionListener(){
 
@@ -152,12 +104,53 @@ public class FrameMain extends JFrame {
 			}
 
 		});
+		myMenu.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
 		myMenu.add(myBtAccueil);
+		
+		
+				myBtLivre.setText("OEUVRES");
+				myBtLivre.setEnabled(true);
+				myBtLivre.addActionListener(new ActionListener(){
+
+					public void actionPerformed(ActionEvent e) {
+						allEnabled();
+						myBtLivre.setEnabled(false);
+
+						ca.clear();
+						ca.livre();
+					}
+
+				});
+				myMenu.add(myBtLivre);
+		
+				myBtEmprunt.setText("EMPRUNTS");
+				myBtEmprunt.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e) {
+						allEnabled();
+						myBtEmprunt.setEnabled(false);
+						ca.clear();
+						ca.emprunts();
+					}
+
+				});
+				myMenu.add(myBtEmprunt);
+		
+				myBtProfil.setText("MON COMPTE");
+				myBtProfil.setEnabled(true);
+				myBtProfil.addActionListener(new ActionListener(){
+
+					public void actionPerformed(ActionEvent e) {
+						allEnabled();
+						myBtProfil.setEnabled(false);
+
+						ca.clear();
+						ca.profil();
+					}
+
+				});
+				myMenu.add(myBtProfil);
 		myMenu.add(myBtUtilisateurs);
-		myMenu.add(myBtEmprunt);
-		myMenu.add(myBtLivre);
-		myMenu.add(myBtProfil);
 		myMenu.add(myBtSalle);
 
 		refreshOnglet();

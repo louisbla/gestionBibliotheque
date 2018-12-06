@@ -64,7 +64,6 @@ public class PanelProfil extends JPanel {
 		titleLabel.setFont(new Font(null, 0, 20));
 		titleLabel.setText("PROFIL UTILISATEUR");
 		titlePanel.add(titleLabel);
-		add(titlePanel, )
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(10, 10, 10 ,10));
