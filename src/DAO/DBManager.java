@@ -403,4 +403,116 @@ public class DBManager {
 		}
     	return resultSet;
     }
+
+	public static ResultSet getAllEmprunts() {
+    	try {
+    		try {
+				DBManager.connectDataBase();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM oeuvre, emprunt, utilisateur WHERE emprunt.id_livre = oeuvre.id_oeuvre AND emprunt.codePermanent = utilisateur.codePermanent ORDER BY date");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resultSet;
+	}
+
+	public static String[] getAllUserId() {
+		String[] list = new String[0];
+		
+		try {
+			ResultSet set = getAllUser();
+			int i = 0;
+			
+				while(set.next()) {
+					i++;
+				}
+			
+			list = new String[i];
+			
+			set = getAllUser();
+			i = 0;
+			while(set.next()) {
+				list[i] = set.getString("codePermanent");
+				i++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	public static String[] getAllISBN() {
+		String[] list = new String[0];
+		
+		try {
+			ResultSet set = getAllBook();
+			int i = 0;
+			
+				while(set.next()) {
+					i++;
+				}
+			
+			list = new String[i];
+			
+			set = getAllBook();
+			i = 0;
+			while(set.next()) {
+				list[i] = set.getString("isbn");
+				i++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	public static void addEmprunt(String codePermanent, String ISBN, int duree) {
+		try {
+			String date = new Date().toString();
+			DBManager.connectDataBase();
+
+			statement = connect.createStatement();
+			int idBook = getIdBookByISBN(ISBN);
+
+			if(1 == statement.executeUpdate("INSERT INTO `emprunt` (`id_emprunt`, `id_livre`, `codePermanent`, `date`, `duree`) VALUES (NULL, '"+idBook+"', '"+codePermanent+"', '"+date+"', '"+duree+"')")) {
+				System.out.println(codePermanent + " a emprunte le livre " + ISBN + " pendant " + duree + " jours");
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBManager.closeDatabase();
+		}
+		
+	}
+
+	private static int getIdBookByISBN(String ISBN) {
+		int idBook = 0;
+		try {
+			DBManager.connectDataBase();
+
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("SELECT id_oeuvre FROM oeuvre WHERE isbn LIKE '"+ISBN+"'");
+
+			if(resultSet.next()) {
+				idBook = resultSet.getInt(1);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return idBook;
+	}
 }
