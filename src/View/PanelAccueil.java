@@ -1,6 +1,7 @@
 package View;
 
 import DAO.DBManager;
+import user.Droit;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -38,7 +39,7 @@ public class PanelAccueil extends JPanel {
 	private ControllerManager cm;
 
     private static final long serialVersionUID = 1L;
-    private JPanel panel;
+    private JPanel panelLogin;
 
     public PanelAccueil(ControllerManager controller) {
         this.setOpaque(false);
@@ -53,32 +54,38 @@ public class PanelAccueil extends JPanel {
 
         this.add(myLbl, BorderLayout.NORTH);
         
-        panel = new JPanel();
-        add(panel, BorderLayout.CENTER);
-        				SpringLayout sl_panel = new SpringLayout();
-        				panel.setLayout(sl_panel);
+        panelLogin = new JPanel();
+        add(panelLogin, BorderLayout.CENTER);
+        				panelLogin.setLayout(null);
         				
-        				txtIdentifiant = new JTextField();
-        				sl_panel.putConstraint(SpringLayout.NORTH, txtIdentifiant, -236, SpringLayout.SOUTH, panel);
-        				sl_panel.putConstraint(SpringLayout.WEST, txtIdentifiant, 130, SpringLayout.WEST, panel);
-        				sl_panel.putConstraint(SpringLayout.SOUTH, txtIdentifiant, -214, SpringLayout.SOUTH, panel);
-        				panel.add(txtIdentifiant);
-        				txtIdentifiant.setText("BLAL19019408");
-        				txtIdentifiant.setColumns(10);
-        		
-        				txtMotDePasse = new JTextField();
-        				sl_panel.putConstraint(SpringLayout.NORTH, txtMotDePasse, -236, SpringLayout.SOUTH, panel);
-        				sl_panel.putConstraint(SpringLayout.WEST, txtMotDePasse, 18, SpringLayout.EAST, txtIdentifiant);
-        				sl_panel.putConstraint(SpringLayout.SOUTH, txtMotDePasse, -214, SpringLayout.SOUTH, panel);
-        				panel.add(txtMotDePasse);
-        				txtMotDePasse.setText("azerty");
-        				txtMotDePasse.setColumns(10);
-        		
-        				JButton btnLogin = new JButton("login");
-        				sl_panel.putConstraint(SpringLayout.NORTH, btnLogin, -237, SpringLayout.SOUTH, panel);
-        				sl_panel.putConstraint(SpringLayout.WEST, btnLogin, 21, SpringLayout.EAST, txtMotDePasse);
-        				sl_panel.putConstraint(SpringLayout.SOUTH, btnLogin, -212, SpringLayout.SOUTH, panel);
-        				panel.add(btnLogin);
+        				JPanel panel = new JPanel();
+        				panel.setBounds(228, 159, 255, 160);
+        				panelLogin.add(panel);
+        				panel.setLayout(null);
+        				
+        						JButton btnLogin = new JButton("login");
+        						btnLogin.setBounds(70, 113, 116, 25);
+        						panel.add(btnLogin);
+        						
+        						txtMotDePasse = new JTextField();
+        						txtMotDePasse.setBounds(123, 63, 116, 22);
+        						panel.add(txtMotDePasse);
+        						txtMotDePasse.setColumns(10);
+        								
+        						txtIdentifiant = new JTextField();
+        						txtIdentifiant.setBounds(123, 13, 116, 22);
+        						panel.add(txtIdentifiant);
+        						txtIdentifiant.setColumns(10);
+        								
+        						JLabel lblLogin = new JLabel("login :");
+        						lblLogin.setBounds(37, 13, 56, 22);
+        						panel.add(lblLogin);
+        						lblLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
+        								
+        						JLabel lblPassword = new JLabel("password :");
+        						lblPassword.setBounds(12, 64, 81, 19);
+        						panel.add(lblPassword);
+        						lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
         				btnLogin.addActionListener(new ActionListener() {
         					@Override
         					public void actionPerformed(ActionEvent e) {
@@ -87,6 +94,9 @@ public class PanelAccueil extends JPanel {
         						cm.profil();
         					}
         				});
+        				
+        				if(controller.utilisateur.getDroit().equals(Droit.visiteur)) panelLogin.setVisible(true);
+        				else panelLogin.setVisible(false);
         
     }
 
