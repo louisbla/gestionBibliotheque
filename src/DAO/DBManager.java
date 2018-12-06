@@ -620,6 +620,12 @@ public class DBManager {
 				System.out.println(codePermanent + " a emprunte le livre " + ISBN + " pendant " + duree + " jours");
 			}
 			
+			//changement de disponibilité du livre
+			preparedStatement = connect
+			          .prepareStatement("UPDATE `oeuvre` SET `est_disponible` = 0 WHERE `id_oeuvre` = ?;");
+			preparedStatement.setFloat(1, idBook);
+		    preparedStatement.executeUpdate();
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
