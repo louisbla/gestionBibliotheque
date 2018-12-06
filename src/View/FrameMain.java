@@ -83,8 +83,8 @@ public class FrameMain extends JFrame {
 			}
 		});
 
-		myBtUtilisateurs.setText("Utilisateur");
-		myBtUtilisateurs.setBounds(ongletLargeur*2, 0, ongletLargeur, ongletHauteur);
+		myBtUtilisateurs.setText("Utilisateurs");
+		myBtUtilisateurs.setBounds(ongletLargeur*4, 0, ongletLargeur, ongletHauteur);
 		myBtUtilisateurs.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				allEnabled();
@@ -96,7 +96,7 @@ public class FrameMain extends JFrame {
 		});
 
 		myBtEmprunt.setText("Emprunts");
-		myBtEmprunt.setBounds(ongletLargeur*3, 0, ongletLargeur, ongletHauteur);
+		myBtEmprunt.setBounds(ongletLargeur*2, 0, ongletLargeur, ongletHauteur);
 		myBtEmprunt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				allEnabled();
@@ -124,7 +124,7 @@ public class FrameMain extends JFrame {
 		});
 
 		myBtProfil.setText("Mon compte");
-		myBtProfil.setBounds(ongletLargeur*4, 0, ongletLargeur, ongletHauteur);
+		myBtProfil.setBounds(ongletLargeur*3, 0, ongletLargeur, ongletHauteur);
 		myBtProfil.setEnabled(true);
 		myBtProfil.addActionListener(new ActionListener(){
 
