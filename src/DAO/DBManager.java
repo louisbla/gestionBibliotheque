@@ -405,18 +405,23 @@ public class DBManager {
     }
 
 	public static void addSoldeTo(int montant, String codeUtilisateur) {
+		
+		
 		Utilisateur user = getUser(codeUtilisateur);
 		
 		try {
+			connectDataBase();
 			preparedStatement = connect
-			          .prepareStatement("UPDATE `utilisateur` SET `solde` = '?' WHERE `utilisateur`.`codePermanent` = '?';");
+			          .prepareStatement("UPDATE `utilisateur` SET `solde` = ? WHERE `utilisateur`.`codePermanent` = ?;");
 			preparedStatement.setFloat(1, user.getSolde()+montant);
 		    preparedStatement.setString(2, codeUtilisateur);
 		    preparedStatement.executeUpdate();
 		    System.out.println("Ancien solde : " + user.getSolde() + " Nouveau solde : " + user.getSolde()+montant);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			closeDatabase();
 		}
 	}
 
