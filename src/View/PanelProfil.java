@@ -105,7 +105,7 @@ public class PanelProfil extends JPanel {
 		gbc_nameLabel.gridy = 2;
 		panel_2.add(nameLabel, gbc_nameLabel);
 
-		JLabel firstNameLabel = new JLabel("Prénom : " + ControllerManager.utilisateur.getPrenom());
+		JLabel firstNameLabel = new JLabel("Prï¿½nom : " + ControllerManager.utilisateur.getPrenom());
 		GridBagConstraints gbc_firstNameLabel = new GridBagConstraints();
 		gbc_firstNameLabel.anchor = GridBagConstraints.WEST;
 		gbc_firstNameLabel.insets = new Insets(0, 0, 5, 0);
