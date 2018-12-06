@@ -103,7 +103,7 @@ public class DBManager {
 			e.printStackTrace();
 		}
     }
-    
+
   //Supprime un utilisateur
     public static void deleteUser(String code) {
     	try {
@@ -130,6 +130,18 @@ public class DBManager {
 		    preparedStatement.executeUpdate();
 		    System.out.println("Salle ajoutee");
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
+    public static void deleteRoom(String id) {
+    	try {
+			preparedStatement = connect
+				      .prepareStatement("DELETE FROM salle WHERE numero_salle= ?;");
+			preparedStatement.setString(1, id);
+		    preparedStatement.executeUpdate();
+    	} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -437,9 +449,9 @@ public class DBManager {
 		}
     	return nbEmprunts;
 	}
-	
+
 	///////////////////BDD utilisateur /////////////////////////
-	
+
 	public static ResultSet searchUser(String Nom, String Prenom, String CodePerm, String statut, String keyword) {
     	String requestNom = "nom=?";
     	String requestPrenom = "prenom=?";

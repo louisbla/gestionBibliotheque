@@ -142,9 +142,30 @@ public class PanelSalle extends JPanel {
 			}
 		});
 
-        JButton btnReserverSalle = new JButton("Reserver Salle");
-        btnReserverSalle.setBounds(400, 550, 150, 25);
-		add(btnReserverSalle);
+        JButton btnSupprimerSalle = new JButton("Supprimer une salle");
+        btnSupprimerSalle.setBounds(400, 550, 150, 25);
+		add(btnSupprimerSalle);
+		btnSupprimerSalle.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int line = table.getSelectedRow();
+				Object obj = table.getModel().getValueAt(line, 0);
+
+				try {
+					DBManager.connectDataBase();
+					DBManager.deleteRoom(obj.toString());
+					DBManager.closeDatabase();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				populateData(DBManager.getAllRoom(), DBManager.getAllRoom());
+				updateModel();
+				table.setModel(model);
+			}
+		});
 	}
 
 	@SuppressWarnings("serial")
