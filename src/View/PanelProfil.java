@@ -5,10 +5,15 @@ import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
+import java.awt.FlowLayout;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Canvas;
@@ -41,11 +46,11 @@ public class PanelProfil extends JPanel {
 		buttonPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         add(buttonPanel, BorderLayout.SOUTH);
 
-		Button buttonSolde = new Button("Ajouter Solde");
+		JButton buttonSolde = new JButton("Ajouter Solde");
 		buttonSolde.setBounds(200, 550, 150, 25);
 		buttonPanel.add(buttonSolde);
 
-		Button button = new Button("Deconnexion");
+		JButton button = new JButton("Deconnexion");
 		button.setBounds(400, 550, 150, 25);
 		button.addActionListener(new ActionListener() {
 			@Override
@@ -58,87 +63,70 @@ public class PanelProfil extends JPanel {
 		buttonPanel.add(button);
 
 		JPanel titlePanel = new JPanel();
+        titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JLabel titleLabel = new JLabel();
-		titleLabel.setBorder(new EmptyBorder(10, 10, 10 ,10));
+		titleLabel.setBorder(new EmptyBorder(10, 10, 0 ,10));
 		titleLabel.setFont(new Font(null, 0, 20));
 		titleLabel.setText("PROFIL UTILISATEUR");
 		titlePanel.add(titleLabel);
-		add(titlePanel, )
+		add(titlePanel, BorderLayout.NORTH);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(10, 10, 10 ,10));
 		add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 
-		//--------------------------------Identifiant--------------------------------------
+		//--------------------------------Profil--------------------------------------
 
-		JTextPane txtpnIdentifiant = new JTextPane();
-		txtpnIdentifiant.setBounds(32, 42, 72, 22);
-		panel.add(txtpnIdentifiant);
-		txtpnIdentifiant.setText("Identifiant :");
+		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new EmptyBorder(10, 10, 10, 10));
+		add(panel_2, BorderLayout.CENTER);
+		GridBagLayout gbl_panel_2 = new GridBagLayout();
+		gbl_panel_2.columnWidths = new int[]{60, 116, 0};
+		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_2.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel_2.setLayout(gbl_panel_2);
 
-		textFieldIdentifiant = new JTextField();
-		textFieldIdentifiant.setEditable(false);
-		textFieldIdentifiant.setBounds(197, 42, 116, 22);
-		textFieldIdentifiant.setText(ControllerManager.utilisateur.getIdentification());
-		panel.add(textFieldIdentifiant);
-		textFieldIdentifiant.setColumns(10);
+		JLabel codeLabel = new JLabel("Code permanent : " + ControllerManager.utilisateur.getIdentification());
+		GridBagConstraints gbc_codeLabel = new GridBagConstraints();
+		gbc_codeLabel.anchor = GridBagConstraints.WEST;
+		gbc_codeLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_codeLabel.gridx = 0;
+		gbc_codeLabel.gridy = 1;
+		panel_2.add(codeLabel, gbc_codeLabel);
 
-		//--------------------------------Nom--------------------------------------
+		JLabel nameLabel = new JLabel("Nom : " + ControllerManager.utilisateur.getNom());
+		GridBagConstraints gbc_nameLabel = new GridBagConstraints();
+		gbc_nameLabel.anchor = GridBagConstraints.WEST;
+		gbc_nameLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_nameLabel.gridx = 0;
+		gbc_nameLabel.gridy = 2;
+		panel_2.add(nameLabel, gbc_nameLabel);
 
-		JTextPane txtpnNom = new JTextPane();
-		txtpnNom.setText("Nom :");
-		txtpnNom.setBounds(32, 95, 72, 22);
-		panel.add(txtpnNom);
+		JLabel firstNameLabel = new JLabel("Prénom : " + ControllerManager.utilisateur.getPrenom());
+		GridBagConstraints gbc_firstNameLabel = new GridBagConstraints();
+		gbc_firstNameLabel.anchor = GridBagConstraints.WEST;
+		gbc_firstNameLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_firstNameLabel.gridx = 0;
+		gbc_firstNameLabel.gridy = 3;
+		panel_2.add(firstNameLabel, gbc_firstNameLabel);
 
-		textFieldNom = new JTextField();
-		textFieldNom.setEditable(false);
-		textFieldNom.setBounds(197, 95, 116, 22);
-		textFieldNom.setText(ControllerManager.utilisateur.getNom());
-		panel.add(textFieldNom);
-		textFieldNom.setColumns(10);
+		JLabel statusLabel = new JLabel("Statut : " + ControllerManager.utilisateur.getDroit().toString());
+		GridBagConstraints gbc_statusLabel = new GridBagConstraints();
+		gbc_statusLabel.anchor = GridBagConstraints.WEST;
+		gbc_statusLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_statusLabel.gridx = 0;
+		gbc_statusLabel.gridy = 4;
+		panel_2.add(statusLabel, gbc_statusLabel);
 
-		//--------------------------------Prénom--------------------------------------
-
-		JTextPane txtpnPrnom = new JTextPane();
-		txtpnPrnom.setText("Pr\u00E9nom :");
-		txtpnPrnom.setBounds(32, 130, 72, 22);
-		panel.add(txtpnPrnom);
-
-		textFieldPrenom = new JTextField();
-		textFieldPrenom.setEditable(false);
-		textFieldPrenom.setBounds(197, 130, 116, 22);
-		textFieldPrenom.setText(ControllerManager.utilisateur.getPrenom());
-		panel.add(textFieldPrenom);
-		textFieldPrenom.setColumns(10);
-
-		//--------------------------------Statut--------------------------------------
-
-		JTextPane txtpnStatut = new JTextPane();
-		txtpnStatut.setText("Statut :");
-		txtpnStatut.setBounds(32, 203, 99, 22);
-		panel.add(txtpnStatut);
-
-		textFieldStatut = new JTextField();
-		textFieldStatut.setEditable(false);
-		textFieldStatut.setBounds(197, 203, 116, 22);
-		textFieldStatut.setText(ControllerManager.utilisateur.getDroit().toString());
-		panel.add(textFieldStatut);
-		textFieldStatut.setColumns(10);
-
-		//--------------------------------Solde--------------------------------------
-
-		JTextPane txtpnSolde = new JTextPane();
-		txtpnSolde.setText("Solde :");
-		txtpnSolde.setBounds(32, 252, 72, 22);
-		panel.add(txtpnSolde);
-
-		textFieldSolde = new JTextField();
-		textFieldSolde.setEditable(false);
-		textFieldSolde.setBounds(197, 252, 116, 22);
-		textFieldSolde.setText(Float.toString(ControllerManager.utilisateur.getSolde()));
-		panel.add(textFieldSolde);
-		textFieldSolde.setColumns(10);
+		JLabel payLabel = new JLabel("Solde : " + ControllerManager.utilisateur.getSolde());
+		GridBagConstraints gbc_payLabel = new GridBagConstraints();
+		gbc_payLabel.anchor = GridBagConstraints.WEST;
+		gbc_payLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_payLabel.gridx = 0;
+		gbc_payLabel.gridy = 5;
+		panel_2.add(payLabel, gbc_payLabel);
 	}
 }
