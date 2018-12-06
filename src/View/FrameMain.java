@@ -171,7 +171,7 @@ public class FrameMain extends JFrame {
 			myBtSalle.setVisible(true);
 			break;
 
-		case prof:
+		case professeur: 
 			myBtUtilisateurs.setVisible(false);
 			myBtSalle.setVisible(true);
 			break;

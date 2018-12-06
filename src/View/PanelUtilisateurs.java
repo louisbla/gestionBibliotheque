@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import Controller.ControllerManager;
 import DAO.DBManager;
 import View.dialog.CustomDialog;
+import View.dialog.DialogAddCredit;
 import View.dialog.DialogUser;
 import user.Droit;
 
@@ -107,9 +108,9 @@ public class PanelUtilisateurs extends JPanel {
 		add(panel_2, BorderLayout.EAST);
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
 		gbl_panel_2.columnWidths = new int[]{60, 116, 0};
-		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel_2.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_2.setLayout(gbl_panel_2);
 
 		JLabel lblRechercherPar = new JLabel("Recherche");
@@ -207,11 +208,11 @@ public class PanelUtilisateurs extends JPanel {
 
 		JButton btnRechercher = new JButton("Rechercher");
 		GridBagConstraints gbc_btnRechercher = new GridBagConstraints();
+		gbc_btnRechercher.insets = new Insets(0, 0, 5, 0);
 		gbc_btnRechercher.gridx = 1;
 		gbc_btnRechercher.gridy = 8;
 		panel_2.add(btnRechercher, gbc_btnRechercher);
 		btnRechercher.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				populateData(DBManager.searchUser(nomInput.getText(), prenomInput.getText(), codePermInput.getText(), comboBox.getSelectedItem().toString(), keywordInput.getText()), DBManager.searchUser(nomInput.getText(), prenomInput.getText(), codePermInput.getText(), comboBox.getSelectedItem().toString(), keywordInput.getText()));
@@ -219,6 +220,29 @@ public class PanelUtilisateurs extends JPanel {
 				table.setModel(model);
 			}
 		});
+		
+		JButton btnAjouterSolde = new JButton("Ajouter Solde");
+		btnAjouterSolde.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				int line = table.getSelectedRow();
+				Object nom = table.getModel().getValueAt(line, 0);
+				Object prenom = table.getModel().getValueAt(line, 1);
+				Object code = table.getModel().getValueAt(line, 2);
+				Object solde = table.getModel().getValueAt(line, 4);
+				
+				DialogAddCredit dialog = new DialogAddCredit(new Frame(),
+						nom.toString(), prenom.toString(), code.toString(), solde.toString());
+				dialog.setVisible(true);
+				populateData(DBManager.getAllUser(), DBManager.getAllUser());
+				updateModel();
+				table.setModel(model);
+			}
+		});
+		GridBagConstraints gbc_btnAjouterSolde = new GridBagConstraints();
+		gbc_btnAjouterSolde.gridx = 1;
+		gbc_btnAjouterSolde.gridy = 10;
+		panel_2.add(btnAjouterSolde, gbc_btnAjouterSolde);
 
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.NORTH);
