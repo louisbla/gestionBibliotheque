@@ -73,15 +73,16 @@ public class DBManager {
     }
 
     //Ajoute un livre
-    public static void addBook(String isbn, String author, String title, String type, int available) {
+    public static void addBook(String isbn, String author, String title, String type, int available, String resume) {
     	try {
 			preparedStatement = connect
-			          .prepareStatement("INSERT INTO oeuvre VALUES (NULL, ?, ?, ?, ?, ?)");
+			          .prepareStatement("INSERT INTO oeuvre VALUES (NULL, ?, ?, ?, ?, ?, ?)");
 		    preparedStatement.setString(1, isbn);
 		    preparedStatement.setString(2, author);
 		    preparedStatement.setString(3, title);
 		    preparedStatement.setString(4, type);
 		    preparedStatement.setInt(5, available);
+		    preparedStatement.setString(6, resume);
 		    preparedStatement.executeUpdate();
 		    System.out.println(preparedStatement.toString());
 		    System.out.println("Livre ajoute");
@@ -117,7 +118,7 @@ public class DBManager {
 		}
     }
 
-  //Ajoute un livre
+  //Ajoute une salle
     public static void addRoom(String number, int size, int table, int projector, int available) {
     	try {
 			preparedStatement = connect
@@ -147,7 +148,7 @@ public class DBManager {
 		}
     }
 
-    //R�cup�re les utilisateur dans un ResultSet
+    //----------------------------------------GET ALL USER------------------------------
     public static ResultSet getAllUser() {
     	try {
     		try {
@@ -167,7 +168,7 @@ public class DBManager {
     	return resultSet;
     }
 
-    //R�cup�re les livres dans un ResultSet
+    //----------------------------------------GET ALL BOOK------------------------------
     public static ResultSet getAllBook() {
     	try {
     		try {
@@ -534,4 +535,21 @@ public class DBManager {
 		}
     	return resultSet;
     }
+
+	public static String getResume(int id) {
+		String result = "";
+		try {
+			preparedStatement = connect
+				      .prepareStatement("SELECT resume FROM oeuvre WHERE id_oeuvre= ?;");
+			preparedStatement.setInt(1, id);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				result = resultSet.getString("resume");
+			}
+    	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

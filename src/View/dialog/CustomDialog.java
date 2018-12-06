@@ -24,6 +24,7 @@ public class CustomDialog extends JDialog
     private JTextField titleField;
     private JTextField auteurField;
     private JTextField isbnField;
+    private JTextField resumeField;
 
     private JComboBox<String> comboBox = new JComboBox<>();
 
@@ -53,6 +54,7 @@ public class CustomDialog extends JDialog
         titleField = new JTextField(10);
         auteurField = new JTextField(10);
         isbnField = new JTextField(10);
+        resumeField = new JTextField(500);
 
         comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Livre", "Periodique", "Carte", "DVD"}));
 
@@ -61,8 +63,10 @@ public class CustomDialog extends JDialog
         String msgString2 = "Auteur :";
         String msgString3 = "N° ISBN :";
         String msgString4 = "Type :";
+        String msgString5 = "Résumé :";
 
-        Object[] array = {msgString1, titleField, msgString2, auteurField, msgString3, isbnField, msgString4, comboBox};
+        Object[] array = {msgString1, titleField, msgString2, auteurField
+        		, msgString3, isbnField, msgString4, comboBox, msgString5, resumeField};
 
         //Create an array specifying the number of dialog buttons
         //and their text.
@@ -137,11 +141,11 @@ public class CustomDialog extends JDialog
             if (btnString1.equals(value)) {
                     titleText = titleField.getText();
                 String ucText = titleText.toUpperCase();
-                if (!titleField.getText().equals("") && !auteurField.getText().equals("") && !isbnField.getText().equals("")) {
+                if (!titleField.getText().equals("") && !auteurField.getText().equals("") && !isbnField.getText().equals("") && !resumeField.getText().equals("")) {
                     //we're done; clear and dismiss the dialog
                 	try {
 						DBManager.connectDataBase();
-						DBManager.addBook(isbnField.getText(), auteurField.getText(), titleField.getText(), comboBox.getSelectedItem().toString(), 1);
+						DBManager.addBook(isbnField.getText(), auteurField.getText(), titleField.getText(), comboBox.getSelectedItem().toString(), 1, resumeField.getText());
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

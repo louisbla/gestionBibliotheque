@@ -8,6 +8,9 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +22,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,6 +32,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.ControllerManager;
 import DAO.DBManager;
+import View.dialog.BookDetailDialog;
 import View.dialog.CustomDialog;
 import user.Droit;
 
@@ -36,6 +41,8 @@ import javax.swing.SwingConstants;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Point;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
@@ -210,6 +217,8 @@ public class PanelLivre extends JPanel {
         JPanel panel_1 = new JPanel();
         add(panel_1, BorderLayout.SOUTH);
 
+        //------------------------Ajouter une oeuvre-----------------------------------------
+
         JButton btnAjouterUnLivre = new JButton("Ajouter une oeuvre");
         panel_1.add(btnAjouterUnLivre);
         btnAjouterUnLivre.addActionListener(new ActionListener() {
@@ -223,6 +232,8 @@ public class PanelLivre extends JPanel {
 				table.setModel(model);
 			}
 		});
+
+        //------------------------Supprimer une oeuvre-----------------------------------------
 
         JButton btnSupprimerUnLivre = new JButton("Supprimer une oeuvre");
         panel_1.add(btnSupprimerUnLivre);
@@ -248,7 +259,20 @@ public class PanelLivre extends JPanel {
 				updateModel();
 				table.setModel(model);
 			}
-		});
+        });
+
+        //------------------------Affichage résumé d'une oeuvre-----------------------------------------
+
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    Point pnt = evt.getPoint();
+                    int row = table.rowAtPoint(pnt);
+                    BookDetailDialog dialog = new BookDetailDialog(new Frame(), table, row);
+    				dialog.setVisible(true);
+                }
+            }
+        });
 
     	//////////////gestion des elements admin///////////////
     	if(ControllerManager.utilisateur.getDroit().equals(Droit.admin)) {
