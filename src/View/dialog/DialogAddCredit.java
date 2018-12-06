@@ -137,14 +137,14 @@ PropertyChangeListener {
 	
 	//////////////////////////////////////////////////////////////////////
 	
-	private void valider(String codeUtulisateur) {
+	private void valider(String codeUtilisateur) {
 		if (!soldeField.getText().equals("") ) {
 			//we're done; clear and dismiss the dialog
 			try {
 				montant = (int) Integer.parseInt(soldeField.getText());
 				DBManager.connectDataBase();
 				System.out.println("solde ajouté : "+montant);
-				DBManager.addSoldeTo(montant,codeUtulisateur);
+				DBManager.addSoldeTo(montant,codeUtilisateur);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
