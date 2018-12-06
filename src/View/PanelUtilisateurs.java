@@ -29,6 +29,7 @@ import user.Droit;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import java.awt.Font;
 import java.awt.Frame;
@@ -105,6 +106,7 @@ public class PanelUtilisateurs extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new EmptyBorder(10, 10, 10, 10));
 		add(panel_2, BorderLayout.EAST);
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
 		gbl_panel_2.columnWidths = new int[]{60, 116, 0};
@@ -220,17 +222,17 @@ public class PanelUtilisateurs extends JPanel {
 				table.setModel(model);
 			}
 		});
-		
+
 		JButton btnAjouterSolde = new JButton("Ajouter Solde");
 		btnAjouterSolde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				int line = table.getSelectedRow();
 				Object nom = table.getModel().getValueAt(line, 0);
 				Object prenom = table.getModel().getValueAt(line, 1);
 				Object code = table.getModel().getValueAt(line, 2);
 				Object solde = table.getModel().getValueAt(line, 4);
-				
+
 				DialogAddCredit dialog = new DialogAddCredit(new Frame(),
 						nom.toString(), prenom.toString(), code.toString(), solde.toString());
 				dialog.setVisible(true);
@@ -245,18 +247,20 @@ public class PanelUtilisateurs extends JPanel {
 		panel_2.add(btnAjouterSolde, gbc_btnAjouterSolde);
 
 		JPanel panel = new JPanel();
+		panel.setBorder(new EmptyBorder(10, 10, 0, 10));
 		add(panel, BorderLayout.NORTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JLabel myLbl = new JLabel();
 		panel.add(myLbl);
-		myLbl.setText("Onglet de gestion des utilisateurs");
-		myLbl.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		myLbl.setText("GESTION DES UTILISATEURS");
+		myLbl.setFont(new Font(null, 0, 20));
 		myLbl.setForeground(Color.BLACK);
 		myLbl.setHorizontalAlignment(JLabel.CENTER);
 
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane);
+		scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -275,6 +279,7 @@ public class PanelUtilisateurs extends JPanel {
 		scrollPane.setViewportView(table);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new EmptyBorder(10, 10, 10, 10));
 		add(panel_1, BorderLayout.SOUTH);
 
 		JButton btnAjouterUnLivre = new JButton("Ajouter un utilisateur");
@@ -317,7 +322,7 @@ public class PanelUtilisateurs extends JPanel {
 			}
 		});
 
-		
+
 	}
 
 	@SuppressWarnings("serial")

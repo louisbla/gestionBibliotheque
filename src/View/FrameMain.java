@@ -70,7 +70,7 @@ public class FrameMain extends JFrame {
 	private void initMenu(){
 		allEnabled();
 
-		myBtAccueil.setText("Accueil");
+		myBtAccueil.setText("ACCUEIL");
 		myBtAccueil.setBounds(0, 0, ongletLargeur, ongletHauteur);
 		myBtAccueil.setEnabled(false);
 		myBtAccueil.addActionListener(new ActionListener(){
@@ -83,7 +83,7 @@ public class FrameMain extends JFrame {
 			}
 		});
 
-		myBtUtilisateurs.setText("Utilisateurs");
+		myBtUtilisateurs.setText("UTILISATEURS");
 		myBtUtilisateurs.setBounds(ongletLargeur*4, 0, ongletLargeur, ongletHauteur);
 		myBtUtilisateurs.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -95,7 +95,7 @@ public class FrameMain extends JFrame {
 
 		});
 
-		myBtEmprunt.setText("Emprunts");
+		myBtEmprunt.setText("EMPRUNTS");
 		myBtEmprunt.setBounds(ongletLargeur*2, 0, ongletLargeur, ongletHauteur);
 		myBtEmprunt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -108,7 +108,7 @@ public class FrameMain extends JFrame {
 		});
 
 
-		myBtLivre.setText("Livres");
+		myBtLivre.setText("OEUVRES");
 		myBtLivre.setBounds(ongletLargeur, 0, ongletLargeur, ongletHauteur);
 		myBtLivre.setEnabled(true);
 		myBtLivre.addActionListener(new ActionListener(){
@@ -123,7 +123,7 @@ public class FrameMain extends JFrame {
 
 		});
 
-		myBtProfil.setText("Mon compte");
+		myBtProfil.setText("MON COMPTE");
 		myBtProfil.setBounds(ongletLargeur*3, 0, ongletLargeur, ongletHauteur);
 		myBtProfil.setEnabled(true);
 		myBtProfil.addActionListener(new ActionListener(){
@@ -138,7 +138,7 @@ public class FrameMain extends JFrame {
 
 		});
 
-		myBtSalle.setText("Salles");
+		myBtSalle.setText("SALLES");
 		myBtSalle.setBounds(ongletLargeur*5, 0, ongletLargeur, ongletHauteur);
 		myBtSalle.setEnabled(true);
 		myBtSalle.addActionListener(new ActionListener(){
@@ -171,7 +171,7 @@ public class FrameMain extends JFrame {
 			myBtSalle.setVisible(true);
 			break;
 
-		case professeur: 
+		case professeur:
 			myBtUtilisateurs.setVisible(false);
 			myBtSalle.setVisible(true);
 			break;

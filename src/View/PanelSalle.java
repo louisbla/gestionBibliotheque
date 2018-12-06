@@ -5,7 +5,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -13,10 +15,13 @@ import java.sql.SQLException;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.DBManager;
@@ -35,27 +40,25 @@ public class PanelSalle extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelSalle() {
-		setLayout(null);
+		setLayout(new BorderLayout());
+
 		//Database
     	populateData(DBManager.getAllRoom(), DBManager.getAllRoom());
 
-		JLabel lblReservationDesSalles = new JLabel("Reservation des salles");
+    	JPanel titlePanel = new JPanel();
+    	titlePanel.setBorder(new EmptyBorder(10, 10, 0, 10));
+		add(titlePanel, BorderLayout.NORTH);
+
+		JLabel lblReservationDesSalles = new JLabel("RESERVATION DES SALLES");
 		lblReservationDesSalles.setBounds(302, 13, 200, 50);
-		lblReservationDesSalles.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblReservationDesSalles.setFont(new Font(null, 0, 20));
 		lblReservationDesSalles.setForeground(Color.BLACK);
 		lblReservationDesSalles.setHorizontalAlignment(JLabel.CENTER);
-		add(lblReservationDesSalles);
-
-		JLabel lblSallesDisponibles = new JLabel("Salles disponibles :");
-		lblSallesDisponibles.setBounds(134, 111, 200, 33);
-		lblSallesDisponibles.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblSallesDisponibles.setForeground(Color.BLACK);
-		lblSallesDisponibles.setHorizontalAlignment(JLabel.CENTER);
-		add(lblSallesDisponibles);
+		titlePanel.add(lblReservationDesSalles);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(47, 159, 411, 344);
-		add(scrollPane);
+		scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+		add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -72,49 +75,83 @@ public class PanelSalle extends JPanel {
 
 		scrollPane.setViewportView(table);
 
-		/*textField = new JTextField();
-		textField.setBounds(490, 187, 155, 22);
-		add(textField);
-		textField.setColumns(10);*/
+		JPanel searchPanel = new JPanel();
+		searchPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		add(searchPanel, BorderLayout.EAST);
 
-		JLabel lblNbDePlaces = new JLabel("Nb de places :");
-		lblNbDePlaces.setBounds(486, 187, 89, 16);
-		add(lblNbDePlaces);
+		GridBagLayout gbl_panel_2 = new GridBagLayout();
+        gbl_panel_2.columnWidths = new int[]{60, 116, 0};
+        gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gbl_panel_2.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+        gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        searchPanel.setLayout(gbl_panel_2);
 
-		JLabel lblVideoprojecteur = new JLabel("Video-projecteur :");
-		lblVideoprojecteur.setBounds(486, 233, 105, 16);
-		add(lblVideoprojecteur);
+        JLabel lblRechercherPar = new JLabel("Recherche");
+        GridBagConstraints gbc_lblRechercherPar = new GridBagConstraints();
+        gbc_lblRechercherPar.insets = new Insets(0, 0, 5, 0);
+        gbc_lblRechercherPar.gridx = 1;
+        gbc_lblRechercherPar.gridy = 0;
+        searchPanel.add(lblRechercherPar, gbc_lblRechercherPar);
 
-		JLabel lblTableau = new JLabel("tableau :");
-		lblTableau.setBounds(486, 273, 105, 16);
-		add(lblTableau);
+        JLabel sizeLabel = new JLabel("Nombre de places :");
+        sizeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        GridBagConstraints gbc_sizeLabel = new GridBagConstraints();
+        gbc_sizeLabel.anchor = GridBagConstraints.EAST;
+        gbc_sizeLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_sizeLabel.gridx = 0;
+        gbc_sizeLabel.gridy = 2;
+        searchPanel.add(sizeLabel, gbc_sizeLabel);
+
+        JLabel projectorLabel = new JLabel("Video-projecteur :");
+        projectorLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        GridBagConstraints gbc_projectorLabel = new GridBagConstraints();
+        gbc_projectorLabel.anchor = GridBagConstraints.EAST;
+        gbc_projectorLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_projectorLabel.gridx = 0;
+        gbc_projectorLabel.gridy = 3;
+        searchPanel.add(projectorLabel, gbc_projectorLabel);
+
+        JLabel tableLabel = new JLabel("Tableau :");
+        tableLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        GridBagConstraints gbc_tableLabel = new GridBagConstraints();
+        gbc_tableLabel.anchor = GridBagConstraints.EAST;
+        gbc_tableLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_tableLabel.gridx = 0;
+        gbc_tableLabel.gridy = 4;
+        searchPanel.add(tableLabel, gbc_tableLabel);
 
 		JComboBox<String> comboBoxSize = new JComboBox<>();
-		comboBoxSize.setBounds(635, 184, 68, 22);
-		comboBoxSize.addItem("");
-		comboBoxSize.addItem("1");
-		comboBoxSize.addItem("2");
-		comboBoxSize.addItem("3");
-		comboBoxSize.addItem("4");
-		add(comboBoxSize);
+		comboBoxSize.setModel(new DefaultComboBoxModel<String>(new String[] {"", "1", "2", "3", "4"}));
+		GridBagConstraints gbc_comboBoxSize = new GridBagConstraints();
+		gbc_comboBoxSize.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBoxSize.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxSize.gridx = 1;
+		gbc_comboBoxSize.gridy = 2;
+        searchPanel.add(comboBoxSize, gbc_comboBoxSize);
 
 		JComboBox<String> comboBoxVideoPro = new JComboBox<>();
-		comboBoxVideoPro.setBounds(635, 230, 68, 22);
-		comboBoxVideoPro.addItem("");
-		comboBoxVideoPro.addItem("Oui");
-		comboBoxVideoPro.addItem("Non");
-		add(comboBoxVideoPro);
+		comboBoxVideoPro.setModel(new DefaultComboBoxModel<String>(new String[] {"", "Oui", "Non"}));
+		GridBagConstraints gbc_comboBoxVideoPro = new GridBagConstraints();
+		gbc_comboBoxVideoPro.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBoxVideoPro.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxVideoPro.gridx = 1;
+		gbc_comboBoxVideoPro.gridy = 3;
+        searchPanel.add(comboBoxVideoPro, gbc_comboBoxVideoPro);
 
 		JComboBox<String> comboBoxTableau = new JComboBox<>();
-		comboBoxTableau.setBounds(635, 270, 68, 22);
-		comboBoxTableau.addItem("");
-		comboBoxTableau.addItem("Oui");
-		comboBoxTableau.addItem("Non");
-		add(comboBoxTableau);
+		comboBoxTableau.setModel(new DefaultComboBoxModel<String>(new String[] {"", "Oui", "Non"}));
+		GridBagConstraints gbc_comboBoxTableau = new GridBagConstraints();
+		gbc_comboBoxTableau.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBoxTableau.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxTableau.gridx = 1;
+		gbc_comboBoxTableau.gridy = 4;
+        searchPanel.add(comboBoxTableau, gbc_comboBoxTableau);
 
 		JButton btnRechercher = new JButton("Rechercher");
-		btnRechercher.setBounds(563, 331, 97, 25);
-		add(btnRechercher);
+		GridBagConstraints gbc_btnRechercher = new GridBagConstraints();
+        gbc_btnRechercher.gridx = 1;
+        gbc_btnRechercher.gridy = 5;
+        searchPanel.add(btnRechercher, gbc_btnRechercher);
 		btnRechercher.addActionListener(new ActionListener() {
 
 			@Override
@@ -127,9 +164,13 @@ public class PanelSalle extends JPanel {
 			}
 		});
 
+		JPanel adminPanel = new JPanel();
+		adminPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		add(adminPanel, BorderLayout.SOUTH);
+
 		JButton btnAjouterUnLivre = new JButton("Ajouter une salle");
 		btnAjouterUnLivre.setBounds(200, 550, 150, 25);
-        add(btnAjouterUnLivre);
+		adminPanel.add(btnAjouterUnLivre);
         btnAjouterUnLivre.addActionListener(new ActionListener() {
 
 			@Override
@@ -144,7 +185,7 @@ public class PanelSalle extends JPanel {
 
         JButton btnSupprimerSalle = new JButton("Supprimer une salle");
         btnSupprimerSalle.setBounds(400, 550, 150, 25);
-		add(btnSupprimerSalle);
+        adminPanel.add(btnSupprimerSalle);
 		btnSupprimerSalle.addActionListener(new ActionListener() {
 
 			@Override

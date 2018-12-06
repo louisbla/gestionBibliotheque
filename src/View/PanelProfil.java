@@ -2,13 +2,17 @@ package View;
 
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Canvas;
+import java.awt.BorderLayout;
 import java.awt.Button;
 
 import Controller.ControllerManager;
@@ -17,9 +21,9 @@ import user.Droit;
 import javax.swing.JLabel;
 
 public class PanelProfil extends JPanel {
-	
+
 	private ControllerManager cm;
-	
+
 	private JTextField textFieldIdentifiant;
 	private JTextField textFieldNom;
 	private JTextField textFieldPrenom;
@@ -30,21 +34,19 @@ public class PanelProfil extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelProfil(ControllerManager controller) {
-		setLayout(null);
+		setLayout(new BorderLayout());
 		this.cm = controller;
-		
 
-		JPanel panelUtilisateur = new JPanel();
-		panelUtilisateur.setBounds(12, 13, 898, 603);
-		add(panelUtilisateur);
-		panelUtilisateur.setLayout(null);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        add(buttonPanel, BorderLayout.SOUTH);
 
 		Button buttonSolde = new Button("Ajouter Solde");
-		buttonSolde.setBounds(564, 135, 105, 24);
-		panelUtilisateur.add(buttonSolde);
+		buttonSolde.setBounds(200, 550, 150, 25);
+		buttonPanel.add(buttonSolde);
 
 		Button button = new Button("Deconnexion");
-		button.setBounds(564, 254, 105, 24);
+		button.setBounds(400, 550, 150, 25);
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -53,44 +55,28 @@ public class PanelProfil extends JPanel {
 				controller.profil();
 			}
 		});
-		panelUtilisateur.add(button);
+		buttonPanel.add(button);
 
-		JTextPane txtpnProfilUtilisateur = new JTextPane();
-		txtpnProfilUtilisateur.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		txtpnProfilUtilisateur.setText("Profil Utilisateur");
-		txtpnProfilUtilisateur.setBounds(169, 28, 227, 51);
-		panelUtilisateur.add(txtpnProfilUtilisateur);
+		JPanel titlePanel = new JPanel();
+
+		JLabel titleLabel = new JLabel();
+		titleLabel.setBorder(new EmptyBorder(10, 10, 10 ,10));
+		titleLabel.setFont(new Font(null, 0, 20));
+		titleLabel.setText("PROFIL UTILISATEUR");
+		titlePanel.add(titleLabel);
+		add(titlePanel, )
 
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(62, 110, 440, 303);
-		panelUtilisateur.add(panel);
+		panel.setBorder(new EmptyBorder(10, 10, 10 ,10));
+		add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
+
+		//--------------------------------Identifiant--------------------------------------
 
 		JTextPane txtpnIdentifiant = new JTextPane();
 		txtpnIdentifiant.setBounds(32, 42, 72, 22);
 		panel.add(txtpnIdentifiant);
 		txtpnIdentifiant.setText("Identifiant :");
-
-		JTextPane txtpnNom = new JTextPane();
-		txtpnNom.setText("Nom :");
-		txtpnNom.setBounds(32, 95, 72, 22);
-		panel.add(txtpnNom);
-
-		JTextPane txtpnPrnom = new JTextPane();
-		txtpnPrnom.setText("Pr\u00E9nom :");
-		txtpnPrnom.setBounds(32, 130, 72, 22);
-		panel.add(txtpnPrnom);
-
-		JTextPane txtpnStatut = new JTextPane();
-		txtpnStatut.setText("Statut :");
-		txtpnStatut.setBounds(32, 203, 99, 22);
-		panel.add(txtpnStatut);
-
-		JTextPane txtpnSolde = new JTextPane();
-		txtpnSolde.setText("Solde :");
-		txtpnSolde.setBounds(32, 252, 72, 22);
-		panel.add(txtpnSolde);
 
 		textFieldIdentifiant = new JTextField();
 		textFieldIdentifiant.setEditable(false);
@@ -99,12 +85,26 @@ public class PanelProfil extends JPanel {
 		panel.add(textFieldIdentifiant);
 		textFieldIdentifiant.setColumns(10);
 
+		//--------------------------------Nom--------------------------------------
+
+		JTextPane txtpnNom = new JTextPane();
+		txtpnNom.setText("Nom :");
+		txtpnNom.setBounds(32, 95, 72, 22);
+		panel.add(txtpnNom);
+
 		textFieldNom = new JTextField();
 		textFieldNom.setEditable(false);
 		textFieldNom.setBounds(197, 95, 116, 22);
 		textFieldNom.setText(ControllerManager.utilisateur.getNom());
 		panel.add(textFieldNom);
 		textFieldNom.setColumns(10);
+
+		//--------------------------------Prénom--------------------------------------
+
+		JTextPane txtpnPrnom = new JTextPane();
+		txtpnPrnom.setText("Pr\u00E9nom :");
+		txtpnPrnom.setBounds(32, 130, 72, 22);
+		panel.add(txtpnPrnom);
 
 		textFieldPrenom = new JTextField();
 		textFieldPrenom.setEditable(false);
@@ -113,6 +113,13 @@ public class PanelProfil extends JPanel {
 		panel.add(textFieldPrenom);
 		textFieldPrenom.setColumns(10);
 
+		//--------------------------------Statut--------------------------------------
+
+		JTextPane txtpnStatut = new JTextPane();
+		txtpnStatut.setText("Statut :");
+		txtpnStatut.setBounds(32, 203, 99, 22);
+		panel.add(txtpnStatut);
+
 		textFieldStatut = new JTextField();
 		textFieldStatut.setEditable(false);
 		textFieldStatut.setBounds(197, 203, 116, 22);
@@ -120,12 +127,18 @@ public class PanelProfil extends JPanel {
 		panel.add(textFieldStatut);
 		textFieldStatut.setColumns(10);
 
+		//--------------------------------Solde--------------------------------------
+
+		JTextPane txtpnSolde = new JTextPane();
+		txtpnSolde.setText("Solde :");
+		txtpnSolde.setBounds(32, 252, 72, 22);
+		panel.add(txtpnSolde);
+
 		textFieldSolde = new JTextField();
 		textFieldSolde.setEditable(false);
 		textFieldSolde.setBounds(197, 252, 116, 22);
 		textFieldSolde.setText(Float.toString(ControllerManager.utilisateur.getSolde()));
 		panel.add(textFieldSolde);
 		textFieldSolde.setColumns(10);
-
 	}
 }
