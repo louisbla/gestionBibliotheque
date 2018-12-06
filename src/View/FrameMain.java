@@ -117,7 +117,7 @@ public class FrameMain extends JFrame {
 				allEnabled();
 				myBtLivre.setEnabled(false);
 
-				ca.clear(); 
+				ca.clear();
 				ca.livre();
 			}
 
@@ -132,7 +132,7 @@ public class FrameMain extends JFrame {
 				allEnabled();
 				myBtProfil.setEnabled(false);
 
-				ca.clear(); 
+				ca.clear();
 				ca.profil();
 			}
 
@@ -147,7 +147,7 @@ public class FrameMain extends JFrame {
 				allEnabled();
 				myBtSalle.setEnabled(false);
 
-				ca.clear(); 
+				ca.clear();
 				ca.salle();
 			}
 
@@ -159,19 +159,19 @@ public class FrameMain extends JFrame {
 		myMenu.add(myBtLivre);
 		myMenu.add(myBtProfil);
 		myMenu.add(myBtSalle);
-		
+
 		refreshOnglet();
 	}
-	
+
 		/* gestion des droits */
 	public void refreshOnglet() {
 		switch (ca.utilisateur.getDroit()) {
-		case admin: 
+		case admin:
 			myBtUtilisateurs.setVisible(true);
 			myBtSalle.setVisible(true);
 			break;
 
-		case prof: 
+		case prof:
 			myBtUtilisateurs.setVisible(false);
 			myBtSalle.setVisible(true);
 			break;
