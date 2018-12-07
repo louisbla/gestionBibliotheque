@@ -1,53 +1,84 @@
 package View;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import Controller.ControllerManager;
 
 public class PanelProfilVisiteur extends JPanel {
 
 	private ControllerManager cm;
-	
+
 	private JTextField txtIdentifiant;
 	private JTextField txtMotDePasse;
-	
-	public PanelProfilVisiteur(ControllerManager controller) {
-		setLayout(null);
-		this.cm = controller;
-		
-		JPanel panelVisiteur = new JPanel();
-		panelVisiteur.setBounds(12, 13, 898, 603);
-		add(panelVisiteur);
-		panelVisiteur.setLayout(null);
 
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(251, 99, 364, 43);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel.setText("Vous \u00EAtes connecte en tant que " + ControllerManager.utilisateur.getDroit());
-		panelVisiteur.add(lblNewLabel);
+	public PanelProfilVisiteur(ControllerManager controller) {
+		setLayout(new BorderLayout());
+		this.cm = controller;
+
+		JPanel statusPanel = new JPanel();
+		statusPanel.setBorder(new EmptyBorder(10, 10, 0, 10));
+		add(statusPanel, BorderLayout.NORTH);
+		statusPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		JLabel statusLabel = new JLabel("Vous \u00EAtes connecte en tant que visiteur");
+		statusPanel.add(statusLabel);
+		statusLabel.setFont(new Font(null, 0, 20));
+		statusLabel.setForeground(Color.BLACK);
+		statusLabel.setHorizontalAlignment(JLabel.CENTER);
+
+		//-------------------------Login----------------------------------------
+
+		JPanel loginPanel = new JPanel();
+		add(loginPanel, BorderLayout.CENTER);
+
+		GridBagLayout gbl_panel_2 = new GridBagLayout();
+        gbl_panel_2.columnWidths = new int[]{60, 116, 0};
+        gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gbl_panel_2.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+        gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        loginPanel.setLayout(gbl_panel_2);
 
 		txtIdentifiant = new JTextField();
-		txtIdentifiant.setBounds(251, 203, 116, 22);
-		txtIdentifiant.setText("admin");
-		panelVisiteur.add(txtIdentifiant);
+		GridBagConstraints gbc_txtIdentifiant = new GridBagConstraints();
+		gbc_txtIdentifiant.anchor = GridBagConstraints.CENTER;
+		gbc_txtIdentifiant.insets = new Insets(0, 0, 5, 0);
+		gbc_txtIdentifiant.gridx = 0;
+		gbc_txtIdentifiant.gridy = 1;
+		loginPanel.add(txtIdentifiant, gbc_txtIdentifiant);
 		txtIdentifiant.setColumns(10);
 
 		txtMotDePasse = new JTextField();
-		txtMotDePasse.setBounds(251, 254, 116, 22);
-		txtMotDePasse.setText("admin");
-		panelVisiteur.add(txtMotDePasse);
+		GridBagConstraints gbc_txtMotDePasse = new GridBagConstraints();
+		gbc_txtMotDePasse.anchor = GridBagConstraints.CENTER;
+		gbc_txtMotDePasse.insets = new Insets(0, 0, 5, 0);
+		gbc_txtMotDePasse.gridx = 0;
+		gbc_txtMotDePasse.gridy = 2;
+		loginPanel.add(txtMotDePasse, gbc_txtMotDePasse);
 		txtMotDePasse.setColumns(10);
 
-		JButton btnLogin = new JButton("login");
-		btnLogin.setBounds(251, 307, 97, 25);
+		JButton btnLogin = new JButton("Login");
+		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
+		gbc_btnLogin.anchor = GridBagConstraints.CENTER;
+		gbc_btnLogin.insets = new Insets(0, 0, 5, 0);
+		gbc_btnLogin.gridx = 0;
+		gbc_btnLogin.gridy = 3;
+		loginPanel.add(btnLogin, gbc_btnLogin);
+
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -56,7 +87,7 @@ public class PanelProfilVisiteur extends JPanel {
 				controller.profil();
 			}
 		});
-		panelVisiteur.add(btnLogin);
+		loginPanel.add(btnLogin);
 	}
 
 }

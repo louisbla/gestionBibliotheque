@@ -47,11 +47,9 @@ public class PanelProfil extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
 
 		JButton buttonSolde = new JButton("Ajouter Solde");
-		buttonSolde.setBounds(200, 550, 150, 25);
 		buttonPanel.add(buttonSolde);
 
 		JButton button = new JButton("Deconnexion");
-		button.setBounds(400, 550, 150, 25);
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

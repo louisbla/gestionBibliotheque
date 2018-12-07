@@ -1,5 +1,8 @@
 package View;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -8,10 +11,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.DBManager;
@@ -19,7 +24,7 @@ import View.dialog.CustomDialog;
 import View.dialog.DialogEmprunt;
 
 public class PanelEmprunt extends JPanel {
-	
+
 	private JTable table;
     private static DefaultTableModel model;
     private static Object[][] data = new Object[0][0];
@@ -30,41 +35,51 @@ public class PanelEmprunt extends JPanel {
 	public PanelEmprunt() {
 		updateModel();
 		populateData(DBManager.getAllEmprunts(), DBManager.getAllEmprunts());
-		
-		setLayout(null);
-		
+
+		setLayout(new BorderLayout());
+
+		//-------------------------------Button--------------------------------
+
+		JPanel adminPanel = new JPanel();
 		JButton buttonAdd = new JButton("Ajouter");
 		buttonAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				addEmprunt();
 			}
 		});
-		buttonAdd.setBounds(687, 155, 97, 25);
-		add(buttonAdd);
-		
+		adminPanel.add(buttonAdd);
+		add(adminPanel, BorderLayout.SOUTH);
+
+		//-----------------------------Tableau-------------------------
+
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 77, 600, 520);
-		add(scrollPane);
-		
+		scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+		add(scrollPane, BorderLayout.CENTER);
+
 		table = new JTable();
 		populateData(DBManager.getAllEmprunts(), DBManager.getAllEmprunts());
 		updateModel();
 		table.setModel(model);
 		scrollPane.setViewportView(table);
-		
-		JTextPane txtpnUtilisateurs = new JTextPane();
-		txtpnUtilisateurs.setEditable(false);
-		txtpnUtilisateurs.setAlignmentX(CENTER_ALIGNMENT);
-		txtpnUtilisateurs.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		txtpnUtilisateurs.setText("Emprunts");
-		txtpnUtilisateurs.setBounds(192, 26, 284, 38);
-		add(txtpnUtilisateurs);
 
+		//--------------------------Titre-----------------------------
+
+		JPanel titlePanel = new JPanel();
+		titlePanel.setBorder(new EmptyBorder(10, 10, 0, 10));
+		add(titlePanel, BorderLayout.NORTH);
+		titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		JLabel titleLabel = new JLabel();
+		titlePanel.add(titleLabel);
+		titleLabel.setText("EMPRUNTS");
+		titleLabel.setFont(new Font(null, 0, 20));
+		titleLabel.setForeground(Color.BLACK);
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
 	}
-	
+
     @SuppressWarnings("serial")
 	public void updateModel() {
-    	model = new DefaultTableModel(data, new String[] {"Date d'emprunt", "Duree (en jours)", "Titre", "ISBN", "Personne", "Code permanent"}) {
+    	model = new DefaultTableModel(data, new String[] {"Date d'emprunt", "Duree(jour)", "Titre", "ISBN", "Personne", "Code permanent"}) {
             boolean[] columnEditables = new boolean[] {
             	false, false, false, false, false, false
             };
@@ -73,7 +88,7 @@ public class PanelEmprunt extends JPanel {
             }
         };
     }
-	
+
 	private void populateData(ResultSet resultSet, ResultSet count) {
 		try {
 			int nbEmprunts = 0;
@@ -105,7 +120,7 @@ public class PanelEmprunt extends JPanel {
 	}
 
 	/////////////////////////////////////////////////////////////////////
-	 
+
 	public void addEmprunt() {
 		DialogEmprunt dialog = new DialogEmprunt(new Frame());
 		dialog.setVisible(true);
