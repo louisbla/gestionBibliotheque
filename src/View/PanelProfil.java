@@ -70,21 +70,12 @@ public class PanelProfil extends JPanel {
 		titlePanel.add(titleLabel);
 		add(titlePanel, BorderLayout.NORTH);
 
-		JPanel panel = new JPanel();
-		panel.setBorder(new EmptyBorder(10, 10, 10 ,10));
-		add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
-
 		//--------------------------------Profil--------------------------------------
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new EmptyBorder(10, 10, 10, 10));
 		add(panel_2, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
-		gbl_panel_2.columnWidths = new int[]{60, 116, 0};
-		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_panel_2.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_2.setLayout(gbl_panel_2);
 
 		JLabel codeLabel = new JLabel("Code permanent : " + ControllerManager.utilisateur.getIdentification());
@@ -103,7 +94,7 @@ public class PanelProfil extends JPanel {
 		gbc_nameLabel.gridy = 2;
 		panel_2.add(nameLabel, gbc_nameLabel);
 
-		JLabel firstNameLabel = new JLabel("Prï¿½nom : " + ControllerManager.utilisateur.getPrenom());
+		JLabel firstNameLabel = new JLabel("Prénom : " + ControllerManager.utilisateur.getPrenom());
 		GridBagConstraints gbc_firstNameLabel = new GridBagConstraints();
 		gbc_firstNameLabel.anchor = GridBagConstraints.WEST;
 		gbc_firstNameLabel.insets = new Insets(0, 0, 5, 0);

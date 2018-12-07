@@ -47,10 +47,6 @@ public class PanelProfilVisiteur extends JPanel {
 		add(loginPanel, BorderLayout.CENTER);
 
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
-        gbl_panel_2.columnWidths = new int[]{60, 116, 0};
-        gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        gbl_panel_2.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-        gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         loginPanel.setLayout(gbl_panel_2);
 
 		txtIdentifiant = new JTextField();
@@ -87,7 +83,6 @@ public class PanelProfilVisiteur extends JPanel {
 				controller.profil();
 			}
 		});
-		loginPanel.add(btnLogin);
 	}
 
 }
