@@ -59,7 +59,7 @@ public class CustomDialog extends JDialog
         comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Livre", "Periodique", "Carte", "DVD"}));
 
         //Create an array of the text and components to be displayed.
-        String msgString1 = "Titre du livre : ";
+        String msgString1 = "Titre de l'oeuvre : ";
         String msgString2 = "Auteur :";
         String msgString3 = "N° ISBN :";
         String msgString4 = "Type :";

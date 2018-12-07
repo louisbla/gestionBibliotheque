@@ -35,7 +35,7 @@ public class PanelProfilVisiteur extends JPanel {
 		add(statusPanel, BorderLayout.NORTH);
 		statusPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		JLabel statusLabel = new JLabel("Vous \u00EAtes connecte en tant que visiteur");
+		JLabel statusLabel = new JLabel("Vous \u00EAtes connecté en tant que visiteur");
 		statusPanel.add(statusLabel);
 		statusLabel.setFont(new Font(null, 0, 20));
 		statusLabel.setForeground(Color.BLACK);

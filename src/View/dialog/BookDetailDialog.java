@@ -20,7 +20,7 @@ public class BookDetailDialog extends JDialog {
 
 	public BookDetailDialog(Frame aFrame, JTable table, int row) {
         super(aFrame, true);
-        setTitle("Détail");
+        setTitle("Détail de l'oeuvre");
         setBounds(500, 400, 450, 300);
 
         messagePane = new JPanel();

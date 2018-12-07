@@ -36,7 +36,7 @@ public class DialogUser extends JDialog implements ActionListener, PropertyChang
 
     private String btnString1 = "Enter";
     private String btnString2 = "Cancel";
-    
+
     public String getValidatedText() {
         return titleText;
     }
@@ -44,7 +44,8 @@ public class DialogUser extends JDialog implements ActionListener, PropertyChang
     /** Creates the reusable dialog. */
     public DialogUser(Frame aFrame) {
         super(aFrame, true);
-        
+
+        setTitle("Ajouter un utilisateur");
         setBounds(500, 400, 450, 350);
 
         nomField = new JTextField(10);

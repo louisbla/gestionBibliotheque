@@ -43,7 +43,7 @@ public class RoomDialog extends JDialog
     public RoomDialog(Frame aFrame) {
         super(aFrame, true);
 
-        setTitle("Quiz");
+        setTitle("Ajouter une salle");
         setBounds(500, 400, 450, 300);
 
         nameField = new JTextField(10);

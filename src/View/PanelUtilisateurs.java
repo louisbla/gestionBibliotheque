@@ -38,60 +38,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 public class PanelUtilisateurs extends JPanel {
-	/*private JTable table;
-
-	public PanelUtilisateurs() {
-		setLayout(null);
-
-		JButton buttonAdd = new JButton("Ajouter");
-		buttonAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				addUser();
-			}
-		});
-		buttonAdd.setBounds(719, 135, 97, 25);
-		add(buttonAdd);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 77, 612, 507);
-		add(scrollPane);
-
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"", "", "", "", null},
-			},
-			new String[] {
-				"id", "Nom", "Pr\u00E9nom", "Statut", "Nb d'emprunt"
-			}
-		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(95);
-		table.getColumnModel().getColumn(1).setPreferredWidth(92);
-		table.getColumnModel().getColumn(2).setPreferredWidth(85);
-		table.getColumnModel().getColumn(3).setPreferredWidth(89);
-		scrollPane.setViewportView(table);
-
-		JTextPane txtpnUtilisateurs = new JTextPane();
-		txtpnUtilisateurs.setEditable(false);
-		txtpnUtilisateurs.setAlignmentX(CENTER_ALIGNMENT);
-		txtpnUtilisateurs.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		txtpnUtilisateurs.setText("Utilisateurs");
-		txtpnUtilisateurs.setBounds(140, 26, 284, 38);
-		add(txtpnUtilisateurs);
-
-	}
-
-	/////////////////////////////////////////////////////////////////////
-
-	public void addUser() {
-		// TO DO
-	 */
-
 	private static final long serialVersionUID = 1L;
 	private static JTable table;
 	private static DefaultTableModel model;
 	private static Object[][] data = new Object[0][0];
-	//private JTextField textField;
 	private JTextField nomInput;
 	private JTextField prenomInput;
 	private JTextField codePermInput;
@@ -226,19 +176,20 @@ public class PanelUtilisateurs extends JPanel {
 		JButton btnAjouterSolde = new JButton("Ajouter Solde");
 		btnAjouterSolde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				int line = table.getSelectedRow();
-				Object nom = table.getModel().getValueAt(line, 0);
-				Object prenom = table.getModel().getValueAt(line, 1);
-				Object code = table.getModel().getValueAt(line, 2);
-				Object solde = table.getModel().getValueAt(line, 4);
+				if (line != -1) {
+					Object nom = table.getModel().getValueAt(line, 0);
+					Object prenom = table.getModel().getValueAt(line, 1);
+					Object code = table.getModel().getValueAt(line, 2);
+					Object solde = table.getModel().getValueAt(line, 4);
 
-				DialogAddCredit dialog = new DialogAddCredit(new Frame(),
-						nom.toString(), prenom.toString(), code.toString(), solde.toString());
-				dialog.setVisible(true);
-				populateData(DBManager.getAllUser(), DBManager.getAllUser());
-				updateModel();
-				table.setModel(model);
+					DialogAddCredit dialog = new DialogAddCredit(new Frame(),
+							nom.toString(), prenom.toString(), code.toString(), solde.toString());
+					dialog.setVisible(true);
+					populateData(DBManager.getAllUser(), DBManager.getAllUser());
+					updateModel();
+					table.setModel(model);
+				}
 			}
 		});
 		GridBagConstraints gbc_btnAjouterSolde = new GridBagConstraints();

@@ -79,6 +79,7 @@ public class PanelProfil extends JPanel {
 		panel_2.setLayout(gbl_panel_2);
 
 		JLabel codeLabel = new JLabel("Code permanent : " + ControllerManager.utilisateur.getIdentification());
+		codeLabel.setFont(new Font(null, 0, 20));
 		GridBagConstraints gbc_codeLabel = new GridBagConstraints();
 		gbc_codeLabel.anchor = GridBagConstraints.WEST;
 		gbc_codeLabel.insets = new Insets(0, 0, 5, 0);
@@ -87,6 +88,7 @@ public class PanelProfil extends JPanel {
 		panel_2.add(codeLabel, gbc_codeLabel);
 
 		JLabel nameLabel = new JLabel("Nom : " + ControllerManager.utilisateur.getNom());
+		nameLabel.setFont(new Font(null, 0, 20));
 		GridBagConstraints gbc_nameLabel = new GridBagConstraints();
 		gbc_nameLabel.anchor = GridBagConstraints.WEST;
 		gbc_nameLabel.insets = new Insets(0, 0, 5, 0);
@@ -95,6 +97,7 @@ public class PanelProfil extends JPanel {
 		panel_2.add(nameLabel, gbc_nameLabel);
 
 		JLabel firstNameLabel = new JLabel("Prénom : " + ControllerManager.utilisateur.getPrenom());
+		firstNameLabel.setFont(new Font(null, 0, 20));
 		GridBagConstraints gbc_firstNameLabel = new GridBagConstraints();
 		gbc_firstNameLabel.anchor = GridBagConstraints.WEST;
 		gbc_firstNameLabel.insets = new Insets(0, 0, 5, 0);
@@ -103,6 +106,7 @@ public class PanelProfil extends JPanel {
 		panel_2.add(firstNameLabel, gbc_firstNameLabel);
 
 		JLabel statusLabel = new JLabel("Statut : " + ControllerManager.utilisateur.getDroit().toString());
+		statusLabel.setFont(new Font(null, 0, 20));
 		GridBagConstraints gbc_statusLabel = new GridBagConstraints();
 		gbc_statusLabel.anchor = GridBagConstraints.WEST;
 		gbc_statusLabel.insets = new Insets(0, 0, 5, 0);
@@ -111,6 +115,7 @@ public class PanelProfil extends JPanel {
 		panel_2.add(statusLabel, gbc_statusLabel);
 
 		JLabel payLabel = new JLabel("Solde : " + ControllerManager.utilisateur.getSolde());
+		payLabel.setFont(new Font(null, 0, 20));
 		GridBagConstraints gbc_payLabel = new GridBagConstraints();
 		gbc_payLabel.anchor = GridBagConstraints.WEST;
 		gbc_payLabel.insets = new Insets(0, 0, 5, 0);

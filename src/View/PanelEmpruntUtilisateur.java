@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.ControllerManager;
@@ -25,31 +26,29 @@ public class PanelEmpruntUtilisateur extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelEmpruntUtilisateur() {
-		setLayout(null);
-		
-		
-		this.setOpaque(false);
-        setLayout(new BorderLayout(0, 0));
+		setLayout(new BorderLayout());
 
         JPanel panel = new JPanel();
         add(panel, BorderLayout.NORTH);
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        panel.setBorder(new EmptyBorder(10, 10, 0, 10));
 
-            JLabel myLbl = new JLabel();
-            panel.add(myLbl);
-            myLbl.setText("Mes Emprunts");
-            myLbl.setFont(new Font("Times New Roman", Font.BOLD, 20));
-            myLbl.setForeground(Color.BLACK);
-            myLbl.setHorizontalAlignment(JLabel.CENTER);
-                
+        JLabel myLbl = new JLabel();
+        panel.add(myLbl);
+        myLbl.setText("MES EMPRUNTS");
+        myLbl.setFont(new Font(null, 0, 20));
+        myLbl.setForeground(Color.BLACK);
+        myLbl.setHorizontalAlignment(JLabel.CENTER);
+
         JScrollPane scrollPane = new JScrollPane();
-        add(scrollPane);
-        
+        scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+        add(scrollPane, BorderLayout.CENTER);
+
         int NbEmprunts = DBManager.getNbEmpruntsOfUser(ControllerManager.utilisateur.getIdentification());
         System.out.println("nb emprunts : " + NbEmprunts);
         Object[][] data = new Object[NbEmprunts][5];
-        
-        
+
+
         try {
         	ResultSet resultSet = DBManager.getEmpruntsOfUser(ControllerManager.utilisateur.getIdentification());
         	int i=0;
@@ -70,7 +69,7 @@ public class PanelEmpruntUtilisateur extends JPanel {
         table.setModel(new DefaultTableModel(
         	data,
         	new String[] {
-        		"Titre", "Auteur", "ISBN", "Date d'emprunt", "Duree (en jours)"
+        		"Titre", "Auteur", "ISBN", "Date d'emprunt", "Duree(jour)"
         	}
         ) {
         	boolean[] columnEditables = new boolean[] {
@@ -93,9 +92,6 @@ public class PanelEmpruntUtilisateur extends JPanel {
         table.getColumnModel().getColumn(4).setMaxWidth(100);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-
-
         scrollPane.setViewportView(table);
-
 	}
 }

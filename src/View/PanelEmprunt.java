@@ -125,7 +125,9 @@ public class PanelEmprunt extends JPanel {
 		DialogEmprunt dialog = new DialogEmprunt(new Frame());
 		dialog.setVisible(true);
 
-		updateModel();
+
 		populateData(DBManager.getAllEmprunts(), DBManager.getAllEmprunts());
+		updateModel();
+		table.setModel(model);
 	}
 }

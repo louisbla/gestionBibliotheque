@@ -28,12 +28,13 @@ import java.awt.Insets;
 import java.awt.FlowLayout;
 import java.awt.Component;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class PanelAccueil extends JPanel {
 
 	private Statement statement = null;
 	private ResultSet resultSet = null;
-	
+
 	private JTextField txtIdentifiant;
 	private JTextField txtMotDePasse;
 	private ControllerManager cm;
@@ -42,75 +43,80 @@ public class PanelAccueil extends JPanel {
     private JPanel panelLogin;
 
     public PanelAccueil(ControllerManager controller) {
-        this.setOpaque(false);
         this.cm = controller;
-        setLayout(new BorderLayout(0, 0));
+        setLayout(new BorderLayout());
 
-        JLabel myLbl = new JLabel();
-        myLbl.setText("Bienvenue dans le gestionnaire de bibliotheque");
-        myLbl.setFont(new Font("Times New Roman", Font.BOLD, 40));
-        myLbl.setForeground(Color.BLACK);
-        myLbl.setHorizontalAlignment(JLabel.CENTER);
+        JPanel statusPanel = new JPanel();
+		statusPanel.setBorder(new EmptyBorder(10, 10, 0, 10));
+		add(statusPanel, BorderLayout.NORTH);
+		statusPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-        this.add(myLbl, BorderLayout.NORTH);
-        
-        panelLogin = new JPanel();
-        add(panelLogin, BorderLayout.CENTER);
-        				panelLogin.setLayout(null);
-        				
-        				JPanel panel = new JPanel();
-        				panel.setBounds(228, 159, 255, 160);
-        				panelLogin.add(panel);
-        				panel.setLayout(null);
-        				
-        						JButton btnLogin = new JButton("login");
-        						btnLogin.setBounds(70, 113, 116, 25);
-        						panel.add(btnLogin);
-        						
-        						txtMotDePasse = new JTextField();
-        						txtMotDePasse.setBounds(123, 63, 116, 22);
-        						panel.add(txtMotDePasse);
-        						txtMotDePasse.setColumns(10);
-        								
-        						txtIdentifiant = new JTextField();
-        						txtIdentifiant.setBounds(123, 13, 116, 22);
-        						panel.add(txtIdentifiant);
-        						txtIdentifiant.setColumns(10);
-        								
-        						JLabel lblLogin = new JLabel("login :");
-        						lblLogin.setBounds(37, 13, 56, 22);
-        						panel.add(lblLogin);
-        						lblLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
-        								
-        						JLabel lblPassword = new JLabel("password :");
-        						lblPassword.setBounds(12, 64, 81, 19);
-        						panel.add(lblPassword);
-        						lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
-        				btnLogin.addActionListener(new ActionListener() {
-        					@Override
-        					public void actionPerformed(ActionEvent e) {
-        						cm.login(txtIdentifiant.getText(), txtMotDePasse.getText());
-        						cm.clear();
-        						cm.profil();
-        					}
-        				});
-        				
-        				if(controller.utilisateur.getDroit().equals(Droit.visiteur)) panelLogin.setVisible(true);
-        				else panelLogin.setVisible(false);
-        
-    }
+		JLabel statusLabel = new JLabel("Bienvenue dans le gestionnaire de bibliotheque");
+		statusPanel.add(statusLabel);
+		statusLabel.setFont(new Font(null, 0, 20));
+		statusLabel.setForeground(Color.BLACK);
+		statusLabel.setHorizontalAlignment(JLabel.CENTER);
 
-  //R�cup�re les strings dans le resultSet
-    private void writeUsers(ResultSet resultSet) throws SQLException {
-        while (resultSet.next()) {
-        	String code = resultSet.getString("codePermanent");
-        	String firstname = resultSet.getString("prenom");
-        	String name = resultSet.getString("nom");
-        	int pay = resultSet.getInt("solde");
-        	System.out.println("Code permanent : " + code);
-        	System.out.println("Pr�nom : " + firstname);
-        	System.out.println("Nom : " + name);
-        	System.out.println("Solde : " + pay);
-        }
+		//-------------------------Login----------------------------------------
+
+		JPanel loginPanel = new JPanel();
+		add(loginPanel, BorderLayout.CENTER);
+
+		GridBagLayout gbl_panel_2 = new GridBagLayout();
+        loginPanel.setLayout(gbl_panel_2);
+
+		txtIdentifiant = new JTextField();
+		GridBagConstraints gbc_txtIdentifiant = new GridBagConstraints();
+		gbc_txtIdentifiant.anchor = GridBagConstraints.CENTER;
+		gbc_txtIdentifiant.insets = new Insets(0, 0, 5, 0);
+		gbc_txtIdentifiant.gridx = 1;
+		gbc_txtIdentifiant.gridy = 1;
+		loginPanel.add(txtIdentifiant, gbc_txtIdentifiant);
+		txtIdentifiant.setColumns(10);
+
+		txtMotDePasse = new JTextField();
+		GridBagConstraints gbc_txtMotDePasse = new GridBagConstraints();
+		gbc_txtMotDePasse.anchor = GridBagConstraints.CENTER;
+		gbc_txtMotDePasse.insets = new Insets(0, 0, 5, 0);
+		gbc_txtMotDePasse.gridx = 1;
+		gbc_txtMotDePasse.gridy = 2;
+		loginPanel.add(txtMotDePasse, gbc_txtMotDePasse);
+		txtMotDePasse.setColumns(10);
+
+		JButton btnLogin = new JButton("Login");
+		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
+		gbc_btnLogin.anchor = GridBagConstraints.CENTER;
+		gbc_btnLogin.insets = new Insets(0, 0, 5, 0);
+		gbc_btnLogin.gridx = 1;
+		gbc_btnLogin.gridy = 3;
+		loginPanel.add(btnLogin, gbc_btnLogin);
+
+		JLabel codeLabel = new JLabel("Code permanent : ");
+		GridBagConstraints gbc_codeLabel = new GridBagConstraints();
+		gbc_codeLabel.anchor = GridBagConstraints.WEST;
+		gbc_codeLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_codeLabel.gridx = 0;
+		gbc_codeLabel.gridy = 1;
+		loginPanel.add(codeLabel, gbc_codeLabel);
+
+		JLabel passwordLabel = new JLabel("Mot de passe : ");
+		GridBagConstraints gbc_passwordLabel = new GridBagConstraints();
+		gbc_passwordLabel.anchor = GridBagConstraints.WEST;
+		gbc_passwordLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_passwordLabel.gridx = 0;
+		gbc_passwordLabel.gridy = 2;
+		loginPanel.add(passwordLabel, gbc_passwordLabel);
+
+		btnLogin.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cm.login(txtIdentifiant.getText(), txtMotDePasse.getText());
+				cm.clear();
+				cm.profil();
+			}
+		});
+
+		if(controller.utilisateur.getDroit().equals(Droit.visiteur)) loginPanel.setVisible(true);
+        else loginPanel.setVisible(false);
     }
 }
